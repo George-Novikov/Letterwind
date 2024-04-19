@@ -1,4 +1,4 @@
 package com.georgen.letterwind.api;
 
-public class Letterwind {
+public class Letterwind extends MessageBroker {
 }

@@ -6,20 +6,20 @@ import com.georgen.letterwind.model.constants.ConfigProperty;
 import com.georgen.letterwind.model.settings.LetterwindProperties;
 
 public class YamlProperties extends LetterwindProperties {
-    private LetterwindNode hawthorne;
+    private LetterwindNode letterwind;
 
-    public LetterwindNode getHawthorne() {
-        return hawthorne;
+    public LetterwindNode getLetterwind() {
+        return letterwind;
     }
 
-    public void setHawthorne(LetterwindNode hawthorne) {
-        this.hawthorne = hawthorne;
+    public void setLetterwind(LetterwindNode letterwind) {
+        this.letterwind = letterwind;
     }
 
     @Override
     public String getProperty(ConfigProperty property){
-        if (hawthorne == null || hawthorne.isEmpty()) return null;
-        NamingNode naming = hawthorne.getNaming();
+        if (letterwind == null || letterwind.isEmpty()) return null;
+        NamingNode naming = letterwind.getNaming();
 
         switch (property){
             case CONTROL_FILE_NAME:
@@ -36,6 +36,6 @@ public class YamlProperties extends LetterwindProperties {
     @Override
     @JsonIgnore
     public boolean isEmpty(){
-        return hawthorne == null || hawthorne.isEmpty();
+        return letterwind == null || letterwind.isEmpty();
     }
 }

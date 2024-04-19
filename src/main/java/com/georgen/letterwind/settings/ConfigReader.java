@@ -70,7 +70,7 @@ public class ConfigReader {
     }
 
     private LetterwindProperties tryLoadFromRootPath() {
-        try (InputStream stream = new FileInputStream(SystemProperty.HAWTHORNE_PROPERTIES_NAME.getValue())){
+        try (InputStream stream = new FileInputStream(SystemProperty.LETTERWIND_PROPERTIES_NAME.getValue())){
             RegularProperties regularProperties = new RegularProperties();
             regularProperties.load(stream);
             return regularProperties;
@@ -85,8 +85,8 @@ public class ConfigReader {
             ObjectMapper mapper = new ObjectMapper(yamlFactory);
             mapper.findAndRegisterModules();
 
-            File yamlFile = new File(SystemProperty.HAWTHORNE_YAML_NAME.getValue());
-            if (!yamlFile.exists()) yamlFile = new File(SystemProperty.HAWTHORNE_YML_NAME.getValue());
+            File yamlFile = new File(SystemProperty.LETTERWIND_YAML_NAME.getValue());
+            if (!yamlFile.exists()) yamlFile = new File(SystemProperty.LETTERWIND_YML_NAME.getValue());
             if (!yamlFile.exists()) yamlFile = new File(SystemProperty.APPLICATION_YAML_NAME.getValue());
             if (!yamlFile.exists()) yamlFile = new File(SystemProperty.APPLICATION_YML_NAME.getValue());
             if (!yamlFile.exists()) return null;

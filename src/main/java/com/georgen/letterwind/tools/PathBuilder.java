@@ -2,13 +2,6 @@ package com.georgen.letterwind.tools;
 
 import java.io.File;
 
-/**
- * SingletonEntity path: hawthorneRoot/entities/customPath/classSimpleName/classSimpleName.json
- * BinaryData (singleton) path: hawthorneRoot/entities/customPath/classSimpleName/classSimpleName.bin
- *
- * EntityCollection path: hawthorneRoot/entities/customPath/classSimpleName/partitionNumber/id.json
- * BinaryData (collection) path: hawthorneRoot/entities/customPath/classSimpleName/partitionNumber/id.bin
- */
 public class PathBuilder {
 
     public static String concatenate(String parentPath, String childPath){

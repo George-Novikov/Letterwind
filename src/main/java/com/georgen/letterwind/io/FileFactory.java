@@ -66,19 +66,6 @@ public class FileFactory {
     }
 
     public static FileFactory getInstance() {
-        /**
-         * There is no direct threat to calling this class as a factory for regular files.
-         *
-         * But if all files created this way are not freed from the cache, it will lead to a memory leak.
-         *
-         * I omitted the caller class check to improve performance because Thread.currentThread().getStackTrace(); is a very expensive operation.
-         *
-         * So this task will have to be addressed in future releases.
-         *
-         * StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-         * boolean isPermittedCaller = PERMITTED_CALLERS.stream().anyMatch(caller -> caller.getName().equals(stackTrace[2].getClassName()));
-         * if (!isPermittedCaller) throw new HawthorneException(Message.PERMISSION_DENIED);
-        */
         return FileFactoryHolder.INSTANCE;
     }
 

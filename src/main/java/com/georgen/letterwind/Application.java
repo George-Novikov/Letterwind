@@ -49,6 +49,8 @@ public class Application {
                 log("future from list result: {}", task.get());
             }
 
+            executorService.shutdown();
+
         } catch (Exception e){
             log(e.getMessage());
         }

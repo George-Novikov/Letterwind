@@ -2,7 +2,7 @@ package com.georgen.letterwind.model.constants;
 
 public enum ConfigProperty {
     CONTROL_FILE_NAME("letterwind.naming.control-file", "storage-schema.json"),
-    ROOT_PATH("letterwind.naming.root-directory", "hawthorne"),
+    ROOT_PATH("letterwind.naming.root-directory", "letterwind"),
     ENTITIES_PATH("letterwind.naming.entities-directory", "entities")
     ;
 

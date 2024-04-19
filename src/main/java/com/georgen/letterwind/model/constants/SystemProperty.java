@@ -5,9 +5,9 @@ public enum SystemProperty {
     APPLICATION_YAML_NAME("src/main/resources/application.yaml"),
     APPLICATION_YML_NAME("src/main/resources/application.yml"),
 
-    HAWTHORNE_PROPERTIES_NAME("hawthorne.properties"),
-    HAWTHORNE_YAML_NAME("hawthorne.yaml"),
-    HAWTHORNE_YML_NAME("hawthorne.yml"),
+    LETTERWIND_PROPERTIES_NAME("letterwind.properties"),
+    LETTERWIND_YAML_NAME("letterwind.yaml"),
+    LETTERWIND_YML_NAME("letterwind.yml"),
 
     ID_COUNTER_NAME("id-counter"),
 

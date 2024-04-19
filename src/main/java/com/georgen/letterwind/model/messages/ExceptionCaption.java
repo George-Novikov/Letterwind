@@ -2,8 +2,8 @@ package com.georgen.letterwind.model.messages;
 
 
 public enum ExceptionCaption implements Descriptive {
-    INITIALIZATION_EXCEPTION("Hawthorne initialization error: %s"),
-    HAWTHORNE_EXCEPTION("Hawthorne error: %s")
+    INITIALIZATION_EXCEPTION("Letterwind initialization error: %s"),
+    LETTERWIND_EXCEPTION("Letterwind error: %s")
     ;
 
     private String description;
