@@ -7,6 +7,7 @@ import java.util.List;
 
 public class LetterwindTopic {
     private String name;
+    private int capacity;
     private List<@LetterwindConsumer Object> consumers = new ArrayList<>();
 
     public String getName() {
@@ -15,6 +16,14 @@ public class LetterwindTopic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public List<Object> getConsumers() {

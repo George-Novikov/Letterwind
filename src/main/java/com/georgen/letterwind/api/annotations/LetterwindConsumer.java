@@ -8,7 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.TYPE_USE})
 public @interface LetterwindConsumer {
-    int concurrentCopies() default 0;
+    int concurrentInstances() default 0;
     boolean isPreActivated() default false;
-    boolean isCrossTopic() default false;
+    boolean isCrossTopic() default true;
+
 }
