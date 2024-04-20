@@ -11,16 +11,16 @@ import java.io.File;
 
 import static com.georgen.letterwind.model.constants.ConfigProperty.*;
 
-public class StorageSettings {
+public class Configuration {
 
     private ConfigReader configReader;
 
-    private static class StorageSettingsInitializer {
-        private static final StorageSettings INSTANCE = new StorageSettings();
+    private static class ConfigurationInitializer {
+        private static final Configuration INSTANCE = new Configuration();
     }
 
-    public static StorageSettings getInstance(){
-        return StorageSettingsInitializer.INSTANCE;
+    public static Configuration getInstance(){
+        return ConfigurationInitializer.INSTANCE;
     }
 
     public String getRootPath() {
@@ -34,11 +34,11 @@ public class StorageSettings {
 
     public String getEntitiesPath() {
         try {
-            String entitiesPath = this.configReader.getProperty(ENTITIES_PATH);
+            String entitiesPath = this.configReader.getProperty(EXCHANGE_PATH);
             boolean isValidPath = Validator.isValid(entitiesPath);
-            return getPathRelativeToRoot(isValidPath ? entitiesPath : ENTITIES_PATH.getDefaultValue());
+            return getPathRelativeToRoot(isValidPath ? entitiesPath : EXCHANGE_PATH.getDefaultValue());
         } catch (Exception e){
-            return ENTITIES_PATH.getDefaultValue();
+            return EXCHANGE_PATH.getDefaultValue();
         }
     }
 

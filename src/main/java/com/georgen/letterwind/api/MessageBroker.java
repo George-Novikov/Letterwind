@@ -1,8 +1,5 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.api.annotations.LetterwindMessage;
-import com.georgen.letterwind.api.annotations.LetterwindProducer;
-
 public class MessageBroker {
 
 //    public static boolean send(String message){
@@ -29,7 +26,21 @@ public class MessageBroker {
 //
 //    }
 //
-//    public static boolean configure(LetterwindControls controls){
+//
+//    public static LetterwindControls getControls(){
 //
 //    }
+//
+//    public static boolean addTopic(LetterwindTopic topic){
+//
+//    }
+//
+//    public static LetterwindTopic getTopic(String name){
+//
+//    }
+//
+//    public static LetterwindTopic deleteTopic(String name){
+//
+//    }
+
 }

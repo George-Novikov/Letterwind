@@ -26,7 +26,7 @@ public class YamlProperties extends LetterwindProperties {
                 return naming.getControlFile();
             case ROOT_PATH:
                 return naming.getRootDirectory();
-            case ENTITIES_PATH:
+            case EXCHANGE_PATH:
                 return naming.getEntitiesDirectory();
             default:
                 return null;

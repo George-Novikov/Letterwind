@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BacklogManager {
-    private List<ExecutorBacklog> backlogs = new ArrayList<>();
+    private List<TaskBacklog> backlogs = new ArrayList<>();
 
-    public void consume(ExecutorBacklog backlog){
+    public void consume(TaskBacklog backlog){
         backlogs.add(backlog);
     }
 
-    public List<ExecutorBacklog> getBacklogs() {
+    public List<TaskBacklog> getBacklogs() {
         return backlogs;
     }
 }

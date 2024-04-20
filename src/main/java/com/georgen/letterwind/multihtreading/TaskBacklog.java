@@ -2,11 +2,11 @@ package com.georgen.letterwind.multihtreading;
 
 import java.util.List;
 
-public class ExecutorBacklog {
+public class TaskBacklog {
     private String executorId;
     private List<Runnable> tasks;
 
-    public ExecutorBacklog(String executorId, List<Runnable> tasks) {
+    public TaskBacklog(String executorId, List<Runnable> tasks) {
         this.executorId = executorId;
         this.tasks = tasks;
     }

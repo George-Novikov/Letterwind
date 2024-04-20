@@ -7,8 +7,22 @@ import java.util.List;
 
 public class LetterwindTopic {
     private String name;
-    private int capacity;
+    private Integer concurrencyCapacity;
     private List<@LetterwindConsumer Object> consumers = new ArrayList<>();
+
+    public LetterwindTopic() {}
+    public LetterwindTopic(String name) {
+        this.name = name;
+    }
+    public LetterwindTopic(String name, Integer concurrencyCapacity) {
+        this.name = name;
+        this.concurrencyCapacity = concurrencyCapacity;
+    }
+    public LetterwindTopic(String name, Integer concurrencyCapacity, @LetterwindConsumer Object consumer) {
+        this.name = name;
+        this.concurrencyCapacity = concurrencyCapacity;
+        this.consumers.add(consumer);
+    }
 
     public String getName() {
         return name;
@@ -18,12 +32,12 @@ public class LetterwindTopic {
         this.name = name;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public Integer getConcurrencyCapacity() {
+        return concurrencyCapacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setConcurrencyCapacity(Integer concurrencyCapacity) {
+        this.concurrencyCapacity = concurrencyCapacity;
     }
 
     public List<Object> getConsumers() {
