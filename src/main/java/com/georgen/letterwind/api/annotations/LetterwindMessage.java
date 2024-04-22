@@ -2,8 +2,8 @@ package com.georgen.letterwind.api.annotations;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.georgen.letterwind.api.serializers.MessageSerializer;
-import com.georgen.letterwind.api.serializers.SimpleSerializer;
+import com.georgen.letterwind.serialization.MessageSerializer;
+import com.georgen.letterwind.serialization.SimpleSerializer;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,4 +16,5 @@ import java.lang.annotation.Target;
 @JacksonAnnotationsInside
 public @interface LetterwindMessage {
     Class<? extends MessageSerializer> serializer() default SimpleSerializer.class;
+    LetterwindConsumer[] consumers() default {};
 }

@@ -1,40 +1,51 @@
 package com.georgen.letterwind;
 
 
-import com.georgen.letterwind.api.MessageBroker;
-import com.georgen.letterwind.api.serializers.MessageSerializer;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.georgen.letterwind.api.LetterwindTopic;
+import com.georgen.letterwind.model.SampleConsumer;
+import com.georgen.letterwind.model.exceptions.LetterwindException;
+import com.georgen.letterwind.serialization.MessageSerializer;
 import com.georgen.letterwind.model.SampleMessage;
 import com.georgen.letterwind.tools.extractors.MessageSerializerExtractor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Application {
     public static void main(String[] args){
         try {
+            final Set<Class> consumers = new HashSet<>(){{ add(SampleConsumer.class); }};
 
-            SampleMessage message = new SampleMessage();
-            message.setValue("How are you?");
-
-            Class serializerClass = MessageSerializerExtractor.extract(message);
-
-            MessageSerializer<SampleMessage> serializer = (MessageSerializer<SampleMessage>) serializerClass.getDeclaredConstructor().newInstance();
-
-            String serializedMessage = serializer.serialize(message);
-
-            log(serializedMessage);
-
-            SampleMessage deserializedMessage = serializer.deserialize(serializedMessage);
-
-            log("deserialized message value: " + deserializedMessage.getValue());
-
-            //MessageBroker.send(message);
+            LetterwindTopic topic = new LetterwindTopic("SampleTopic", consumers);
 
         } catch (Exception e){
             log(e.getMessage());
         }
+    }
+
+    private static void testSerialization() throws LetterwindException, JsonProcessingException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        SampleMessage message = new SampleMessage();
+        message.setValue("How are you?");
+
+        Class serializerClass = MessageSerializerExtractor.extract(message);
+
+        MessageSerializer<SampleMessage> serializer = (MessageSerializer<SampleMessage>) serializerClass.getDeclaredConstructor().newInstance();
+
+        String serializedMessage = serializer.serialize(message);
+
+        log(serializedMessage);
+
+        SampleMessage deserializedMessage = serializer.deserialize(serializedMessage);
+
+        log("deserialized message value: " + deserializedMessage.getValue());
+
+        //MessageBroker.send(message);
     }
 
     private static void testExecutors() throws ExecutionException, InterruptedException {

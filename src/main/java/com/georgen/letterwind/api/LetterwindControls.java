@@ -1,5 +1,8 @@
 package com.georgen.letterwind.api;
 
+import com.georgen.letterwind.tools.extractors.MessageTypeExtractor;
+
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,7 +16,7 @@ public class LetterwindControls {
     private boolean isPersistent = true;
 
     /** Represents the total number @LetterwindConsumer classes allowed to operate simultaneously */
-    private Integer concurrencyCapacity;
+    private Integer concurrencyLimit;
 
     /** Registered topics. Unregistered ones will not participate in messaging. */
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
@@ -23,24 +26,48 @@ public class LetterwindControls {
 
     private LetterwindControls(){}
 
-    public boolean registerTopic(LetterwindTopic topic){
-
+    public void registerTopic(LetterwindTopic topic){
+        topics.put(topic.getName(), topic);
+        addToMessageTypes(topic);
     }
 
-    private void registerTopicTypes(){
+    private void addToMessageTypes(LetterwindTopic topic){
+        Set<Class> messageTypes = new HashSet<>();
 
-    }
+        for (Object consumer : topic.getConsumers()){
+            Set<Class> consumerMessageTypes = MessageTypeExtractor.extract(consumer);
+            messageTypes.addAll(consumerMessageTypes);
+        }
 
-    public boolean registerType(){
-
+        for (Class messageType : messageTypes){
+            Set<String> topicNames = this.messageTypes.get(messageType);
+            if (topicNames == null) topicNames = new HashSet<>();
+            topicNames.add(topic.getName());
+            this.messageTypes.put(messageType, topicNames);
+        }
     }
 
     public LetterwindTopic getTopic(String topicName){
         return topics.get(topicName);
     }
 
-    public boolean deleteTopic(){
+    public boolean unregisterTopic(String topicName){
+        LetterwindTopic topic = topics.get(topicName);
+        if (topic != null){
+            topics.remove(topicName);
+            deleteFromMessageTypes(topic);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    private void deleteFromMessageTypes(LetterwindTopic topic){
+        Set<Class> messageTypes = new HashSet<>();
+
+        for (Object consumer : topic.getConsumers()){
+
+        }
     }
 
     private class InstanceHolder {

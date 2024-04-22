@@ -1,4 +1,4 @@
-package com.georgen.letterwind.api.serializers;
+package com.georgen.letterwind.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
