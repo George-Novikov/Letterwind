@@ -1,4 +1,4 @@
-package com.georgen.letterwind.messaging;
+package com.georgen.letterwind.messaging.senders;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Letterwind main configuration class
@@ -22,33 +23,13 @@ public class LetterwindControls {
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
 
     /** Message types mapped to the names of all registered topics */
-    private Map<Class, Set<String>> messageTypes = new ConcurrentHashMap();
+    private Map<Class, Set<String>> messageTypeMap = new ConcurrentHashMap();
 
     private LetterwindControls(){}
 
     public void registerTopic(LetterwindTopic topic){
         topics.put(topic.getName(), topic);
         addToMessageTypes(topic);
-    }
-
-    private void addToMessageTypes(LetterwindTopic topic){
-        Set<Class> messageTypes = new HashSet<>();
-
-        for (Object consumer : topic.getConsumers()){
-            Set<Class> consumerMessageTypes = MessageTypeExtractor.extract(consumer);
-            messageTypes.addAll(consumerMessageTypes);
-        }
-
-        for (Class messageType : messageTypes){
-            Set<String> topicNames = this.messageTypes.get(messageType);
-            if (topicNames == null) topicNames = new HashSet<>();
-            topicNames.add(topic.getName());
-            this.messageTypes.put(messageType, topicNames);
-        }
-    }
-
-    public LetterwindTopic getTopic(String topicName){
-        return topics.get(topicName);
     }
 
     public boolean unregisterTopic(String topicName){
@@ -62,11 +43,38 @@ public class LetterwindControls {
         }
     }
 
+    public LetterwindTopic getTopic(String topicName){
+        return topics.get(topicName);
+    }
+
+    public Set<LetterwindTopic> listTopicsWithMessageType(Class messageType){
+        Set<LetterwindTopic> responseTopics = new HashSet<>();
+        Set<String> topicNames = messageTypeMap.get(messageType);
+        if (topicNames == null) return null;
+        for (String topicName : topicNames){
+            LetterwindTopic topic = this.topics.get(topicName);
+            if (topic != null) responseTopics.add(topic);
+        }
+        return responseTopics;
+    }
+
+    private void addToMessageTypes(LetterwindTopic topic){
+        Set<Class> messageTypes = topic.getConsumerMessageTypes();
+
+        for (Class messageType : messageTypes){
+            Set<String> topicNames = this.messageTypeMap.get(messageType);
+            if (topicNames == null) topicNames = new HashSet<>();
+            topicNames.add(topic.getName());
+            this.messageTypeMap.put(messageType, topicNames);
+        }
+    }
+
     private void deleteFromMessageTypes(LetterwindTopic topic){
-        Set<Class> messageTypes = new HashSet<>();
+        Set<Class> messageTypes = topic.getConsumerMessageTypes();
 
-        for (Object consumer : topic.getConsumers()){
-
+        for (Class messageType : messageTypes){
+            Set<String> topicNames = this.messageTypeMap.get(messageType);
+            if (topicNames != null) topicNames.remove(topic.getName());
         }
     }
 
