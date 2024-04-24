@@ -2,8 +2,8 @@ package com.georgen.letterwind.api.annotations;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.georgen.letterwind.serialization.MessageSerializer;
-import com.georgen.letterwind.serialization.UniversalSerializer;
+import com.georgen.letterwind.messaging.serializers.MessageSerializer;
+import com.georgen.letterwind.messaging.serializers.UniversalSerializer;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

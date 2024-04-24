@@ -1,6 +1,7 @@
 package com.georgen.letterwind.tools;
 
 import com.georgen.letterwind.api.annotations.LetterwindConsumer;
+import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 
 public class AnnotationGuard {
@@ -12,6 +13,11 @@ public class AnnotationGuard {
                             consumerClass.getSimpleName()
                     )
             );
+        }
+    }
+    public static void validateMessage(Class messageClass) throws LetterwindException {
+        if (!messageClass.isAnnotationPresent(LetterwindMessage.class)){
+            throw new LetterwindException("The message class must be marked with the LetterwindMessage annotation.");
         }
     }
 }

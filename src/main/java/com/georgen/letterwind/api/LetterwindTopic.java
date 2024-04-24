@@ -7,8 +7,8 @@ import com.georgen.letterwind.tools.Validator;
 import com.georgen.letterwind.tools.extractors.MessageTypeExtractor;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class LetterwindTopic {
     private String name;
@@ -19,27 +19,15 @@ public class LetterwindTopic {
     public LetterwindTopic(String name) {
         this.name = name;
     }
-    public LetterwindTopic(String name,
-                           Set<Class> consumers){
+    public LetterwindTopic(String name, Class... consumers){
         this(name);
-        this.consumers = consumers;
+        this.consumers = new HashSet<>(List.of(consumers));
     }
     public LetterwindTopic(String name,
-                           Integer concurrencyLimit) {
-        this(name);
+                           Integer concurrencyLimit,
+                           Class... consumers) {
+        this(name, consumers);
         this.concurrencyLimit = concurrencyLimit;
-    }
-    public LetterwindTopic(String name,
-                           Integer concurrencyLimit,
-                           Set<Class> consumers){
-        this(name, concurrencyLimit);
-        this.consumers = consumers;
-    }
-    public LetterwindTopic(String name,
-                           Integer concurrencyLimit,
-                           @LetterwindConsumer Class consumer) {
-        this(name, concurrencyLimit);
-        this.consumers.add(consumer);
     }
 
     public String getName() {
@@ -58,13 +46,6 @@ public class LetterwindTopic {
         this.concurrencyLimit = concurrencyLimit;
     }
 
-    public Set<@LetterwindConsumer Class> getConsumers() {
-        return consumers;
-    }
-
-    public void setConsumers(Set<@LetterwindConsumer Class> consumers) {
-        this.consumers = consumers;
-    }
 
     public void addConsumer(@LetterwindConsumer Class consumerClass) throws LetterwindException {
         AnnotationGuard.validateConsumer(consumerClass);

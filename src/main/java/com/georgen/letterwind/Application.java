@@ -5,24 +5,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.serialization.MessageSerializer;
+import com.georgen.letterwind.messaging.serializers.MessageSerializer;
 import com.georgen.letterwind.model.SampleMessage;
 import com.georgen.letterwind.tools.extractors.MessageSerializerExtractor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Application {
+    private static final Class[] CONSUMERS = { SampleConsumer.class };
+
+
     public static void main(String[] args){
         try {
-            final Set<Class> consumers = new HashSet<>(){{ add(SampleConsumer.class); }};
 
-            LetterwindTopic topic = new LetterwindTopic("SampleTopic", consumers);
+            LetterwindTopic topic = new LetterwindTopic("SampleTopic", CONSUMERS);
 
         } catch (Exception e){
             log(e.getMessage());

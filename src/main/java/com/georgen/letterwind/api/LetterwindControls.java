@@ -1,12 +1,9 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.tools.extractors.MessageTypeExtractor;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * Letterwind main configuration class
@@ -16,7 +13,7 @@ public class LetterwindControls {
      * If set to false, Letterwind will require reconfiguration every time it starts */
     private boolean isPersistent = true;
 
-    /** Represents the total number @LetterwindConsumer classes allowed to operate simultaneously */
+    /** Represents the total number of @LetterwindConsumer classes allowed to operate simultaneously */
     private Integer concurrencyLimit;
 
     /** Registered topics. Unregistered ones will not participate in messaging. */
@@ -47,7 +44,7 @@ public class LetterwindControls {
         return topics.get(topicName);
     }
 
-    public Set<LetterwindTopic> listTopicsWithMessageType(Class messageType){
+    public Set<LetterwindTopic> getAllTopicsWithMessageType(Class messageType){
         Set<LetterwindTopic> responseTopics = new HashSet<>();
         Set<String> topicNames = messageTypeMap.get(messageType);
         if (topicNames == null) return null;
