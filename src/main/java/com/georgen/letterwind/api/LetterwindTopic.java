@@ -2,6 +2,7 @@ package com.georgen.letterwind.api;
 
 import com.georgen.letterwind.api.annotations.LetterwindConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
+import com.georgen.letterwind.model.network.RemoteConfig;
 import com.georgen.letterwind.tools.AnnotationGuard;
 import com.georgen.letterwind.tools.Validator;
 import com.georgen.letterwind.tools.extractors.MessageTypeExtractor;
@@ -9,10 +10,12 @@ import com.georgen.letterwind.tools.extractors.MessageTypeExtractor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LetterwindTopic {
     private String name;
     private Integer concurrencyLimit;
+    private RemoteConfig remoteConfig;
     private Set<@LetterwindConsumer Class> consumers = new HashSet<>();
 
     public LetterwindTopic() {}
@@ -46,6 +49,13 @@ public class LetterwindTopic {
         this.concurrencyLimit = concurrencyLimit;
     }
 
+    public RemoteConfig getRemoteConfig() {
+        return remoteConfig;
+    }
+
+    public void setRemoteConfig(RemoteConfig remoteConfig) {
+        this.remoteConfig = remoteConfig;
+    }
 
     public void addConsumer(@LetterwindConsumer Class consumerClass) throws LetterwindException {
         AnnotationGuard.validateConsumer(consumerClass);
@@ -58,11 +68,15 @@ public class LetterwindTopic {
 
     public Set<Class> getConsumerMessageTypes(){
         Set<Class> messageTypes = new HashSet<>();
-        for (Object consumer : consumers){
+        for (Class consumer : consumers){
             Set<Class> consumerMessageTypes = MessageTypeExtractor.extract(consumer);
             if (consumerMessageTypes != null) messageTypes.addAll(consumerMessageTypes);
         }
         return messageTypes;
+    }
+
+    public boolean hasRemoteConfig(){
+        return this.remoteConfig != null && this.remoteConfig.isValid();
     }
 
     public boolean isValid(){

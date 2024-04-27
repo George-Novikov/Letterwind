@@ -4,6 +4,7 @@ import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.messaging.senders.Sender;
 import com.georgen.letterwind.messaging.senders.SenderFactory;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
+import com.georgen.letterwind.model.messages.BrokerMessage;
 import com.georgen.letterwind.tools.AnnotationGuard;
 
 import java.util.Set;
@@ -62,7 +63,7 @@ public class MessageBroker {
     }
 
     private static <T> void validateMessage(@LetterwindMessage T message) throws LetterwindException {
-        if (message == null) throw new LetterwindException("A message sent to Letterwind cannot be null.");
+        if (message == null) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
         AnnotationGuard.validateMessage(message.getClass());
     }
 }

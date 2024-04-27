@@ -9,10 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class UniversalSerializer<@LetterwindMessage T> implements MessageSerializer<@LetterwindMessage T>{
+public class LocalUniversalSerializer<@LetterwindMessage T> implements MessageSerializer<@LetterwindMessage T>{
     private ObjectMapper objectMapper;
 
-    public UniversalSerializer(){
+    public LocalUniversalSerializer(){
         this.objectMapper = new ObjectMapper();
     }
 

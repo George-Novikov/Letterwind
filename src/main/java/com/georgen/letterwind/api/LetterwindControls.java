@@ -1,5 +1,7 @@
 package com.georgen.letterwind.api;
 
+import com.georgen.letterwind.model.network.RemoteConfig;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +18,8 @@ public class LetterwindControls {
     /** Represents the total number of @LetterwindConsumer classes allowed to operate simultaneously */
     private Integer concurrencyLimit;
 
+    private RemoteConfig remoteConfig;
+
     /** Registered topics. Unregistered ones will not participate in messaging. */
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
 
@@ -23,6 +27,30 @@ public class LetterwindControls {
     private Map<Class, Set<String>> messageTypeMap = new ConcurrentHashMap();
 
     private LetterwindControls(){}
+
+    public boolean isPersistent() {
+        return isPersistent;
+    }
+
+    public void setPersistent(boolean persistent) {
+        isPersistent = persistent;
+    }
+
+    public Integer getConcurrencyLimit() {
+        return concurrencyLimit;
+    }
+
+    public void setConcurrencyLimit(Integer concurrencyLimit) {
+        this.concurrencyLimit = concurrencyLimit;
+    }
+
+    public RemoteConfig getRemoteConfig() {
+        return remoteConfig;
+    }
+
+    public void setRemoteConfig(RemoteConfig remoteConfig) {
+        this.remoteConfig = remoteConfig;
+    }
 
     public void registerTopic(LetterwindTopic topic){
         topics.put(topic.getName(), topic);
@@ -73,6 +101,10 @@ public class LetterwindControls {
             Set<String> topicNames = this.messageTypeMap.get(messageType);
             if (topicNames != null) topicNames.remove(topic.getName());
         }
+    }
+
+    public boolean hasRemoteConfig(){
+        return this.remoteConfig != null && this.remoteConfig.isValid();
     }
 
     private class InstanceHolder {
