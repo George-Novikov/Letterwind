@@ -11,7 +11,7 @@ public enum SystemProperty {
 
     ID_COUNTER_NAME("id-counter"),
 
-    ENTITY_FILE_EXTENSION("json"),
+    QUEUE_FILE_EXTENSION("lwq"),
     BINARY_DATA_EXTENSION("bin");
 
     private String value;

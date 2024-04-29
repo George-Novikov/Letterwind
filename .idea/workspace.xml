@@ -5,35 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/ConveyorFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/MessageConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/highlevel/ClientConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/highlevel/LocalConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/highlevel/ServerConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/ConsumerInvokingConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/QueueingConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/RetrievingConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/SerializationConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/ValidationConveyor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/validators/EmptyValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/messages/BrokerMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/tools/extractors/MessageValidatorExtractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/local/LocalReceivingConveyor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/utility/QueueingConveyor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/network/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/network/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/tools/Serializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/tools/extractors/ConsumerExtractor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindControls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindControls.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/MessageBroker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/MessageBroker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/annotations/LetterwindConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/annotations/LetterwindConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/annotations/LetterwindMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/annotations/LetterwindMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/invokers/ConsumerInvoker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/queues/LocalQueue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/queues/MessageQueue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/queues/QueueFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/queues/RemoteQueue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/receivers/MessageReceiver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/serializers/UniversalSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/serializers/LocalUniversalSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/exceptions/LetterwindException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/exceptions/LetterwindException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/network/RemoteConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/network/RemoteConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/tools/extractors/MessageTypeExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/tools/extractors/MessageTypeExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/ThreadFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/ConveyorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/ConveyorFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/MessageConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/MessageConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/highlevel/ClientConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/remote/RemoteSendingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/highlevel/LocalConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/local/LocalSendingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/highlevel/ServerConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/remote/RemoteReceivingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/ConsumerInvokingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/utility/ConsumerInvokingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/QueueingConveyor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/RetrievingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/utility/RetrievingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/SerializationConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/utility/SerializationConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/lowlevel/ValidationConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/conveyor/utility/ValidationConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/serializers/LocalUniversalSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/messaging/serializers/LocalUniversalSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/SystemProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/SystemProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/settings/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/settings/Configuration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +78,7 @@
       <recent name="C:\Users\fatem\java-workspace\Letterwind\src\main\java\com\georgen\letterwind\settings" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.georgen.letterwind.io" />
       <recent name="com.georgen.letterwind.tools" />
       <recent name="com.georgen.letterwind.model.exceptions" />
     </key>
@@ -124,7 +120,11 @@
       <workItem from="1713936969957" duration="5912000" />
       <workItem from="1713977021036" duration="4999000" />
       <workItem from="1714149726031" duration="5302000" />
-      <workItem from="1714199847144" duration="21718000" />
+      <workItem from="1714199847144" duration="24240000" />
+      <workItem from="1714281979371" duration="1425000" />
+      <workItem from="1714291823177" duration="197000" />
+      <workItem from="1714308139118" duration="2746000" />
+      <workItem from="1714407174273" duration="5875000" />
     </task>
     <servers />
   </component>

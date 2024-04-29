@@ -14,6 +14,7 @@ public class LocalUniversalSerializer<@LetterwindMessage T> implements MessageSe
 
     public LocalUniversalSerializer(){
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.findAndRegisterModules();
     }
 
     @Override

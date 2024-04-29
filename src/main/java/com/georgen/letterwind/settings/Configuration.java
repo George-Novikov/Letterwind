@@ -12,7 +12,6 @@ import java.io.File;
 import static com.georgen.letterwind.model.constants.ConfigProperty.*;
 
 public class Configuration {
-
     private ConfigReader configReader;
 
     private static class ConfigurationInitializer {
@@ -32,7 +31,7 @@ public class Configuration {
         }
     }
 
-    public String getEntitiesPath() {
+    public String getExchangePath() {
         try {
             String entitiesPath = this.configReader.getProperty(EXCHANGE_PATH);
             boolean isValidPath = Validator.isValid(entitiesPath);
@@ -42,7 +41,7 @@ public class Configuration {
         }
     }
 
-    private File getControlFile() {
+    public File getControlFile() {
         try {
             return FileFactory.getInstance().getFile(configReader.getControlFilePath(), true);
         } catch (Exception e){

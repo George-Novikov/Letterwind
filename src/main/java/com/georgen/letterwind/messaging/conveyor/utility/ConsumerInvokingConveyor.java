@@ -1,4 +1,4 @@
-package com.georgen.letterwind.messaging.conveyor.lowlevel;
+package com.georgen.letterwind.messaging.conveyor.utility;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;

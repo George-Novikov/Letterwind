@@ -57,6 +57,14 @@ public class LetterwindTopic {
         this.remoteConfig = remoteConfig;
     }
 
+    public Set<Class> getConsumers() {
+        return consumers;
+    }
+
+    public void setConsumers(Set<Class> consumers) {
+        this.consumers = consumers;
+    }
+
     public void addConsumer(@LetterwindConsumer Class consumerClass) throws LetterwindException {
         AnnotationGuard.validateConsumer(consumerClass);
         this.consumers.add(consumerClass);

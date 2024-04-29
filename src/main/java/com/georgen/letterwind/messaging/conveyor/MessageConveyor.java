@@ -5,7 +5,7 @@ import com.georgen.letterwind.api.annotations.LetterwindMessage;
 
 import java.util.Set;
 
-public abstract class MessageConveyor<@LetterwindMessage T> {
+public abstract class MessageConveyor<T> {
     private MessageConveyor conveyor;
 
     public MessageConveyor() {}
@@ -21,5 +21,5 @@ public abstract class MessageConveyor<@LetterwindMessage T> {
         this.conveyor = conveyor;
     }
 
-    public abstract void process(@LetterwindMessage T message, LetterwindTopic topic) throws Exception;
+    public abstract void process(T message, LetterwindTopic topic) throws Exception;
 }

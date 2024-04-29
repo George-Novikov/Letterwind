@@ -1,7 +1,13 @@
 package com.georgen.letterwind.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.georgen.letterwind.io.FileIOManager;
+import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.network.RemoteConfig;
+import com.georgen.letterwind.settings.Configuration;
+import com.georgen.letterwind.tools.Serializer;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Letterwind main configuration class
  */
 public class LetterwindControls {
+    private File controlFile;
     /** Regulates whether these controls should be saved and then reloaded on startup
      * If set to false, Letterwind will require reconfiguration every time it starts */
     private boolean isPersistent = true;
@@ -52,16 +59,34 @@ public class LetterwindControls {
         this.remoteConfig = remoteConfig;
     }
 
-    public void registerTopic(LetterwindTopic topic){
-        topics.put(topic.getName(), topic);
-        addToMessageTypes(topic);
+    public Map<String, LetterwindTopic> getTopics() {
+        return topics;
     }
 
-    public boolean unregisterTopic(String topicName){
+    public void setTopics(Map<String, LetterwindTopic> topics) {
+        this.topics = topics;
+    }
+
+    public Map<Class, Set<String>> getMessageTypeMap() {
+        return messageTypeMap;
+    }
+
+    public void setMessageTypeMap(Map<Class, Set<String>> messageTypeMap) {
+        this.messageTypeMap = messageTypeMap;
+    }
+
+    public void registerTopic(LetterwindTopic topic) throws Exception {
+        topics.put(topic.getName(), topic);
+        addToMessageTypes(topic);
+        if (isPersistent) save();
+    }
+
+    public boolean unregisterTopic(String topicName) throws Exception {
         LetterwindTopic topic = topics.get(topicName);
         if (topic != null){
             topics.remove(topicName);
             deleteFromMessageTypes(topic);
+            if (isPersistent) save();
             return true;
         } else {
             return false;
@@ -83,6 +108,40 @@ public class LetterwindControls {
         return responseTopics;
     }
 
+    public void save() throws Exception {
+        if (this.controlFile == null) this.controlFile = Configuration.getInstance().getControlFile();
+        if (this.controlFile == null) throw new LetterwindException("The control file is null.");
+
+        synchronized (this){
+            String controlsJson = Serializer.toJson(this);
+            FileIOManager.write(this.controlFile, controlsJson);
+        }
+    }
+
+    public boolean load() throws Exception {
+        if (this.controlFile == null) this.controlFile = Configuration.getInstance().getControlFile();
+        if (this.controlFile == null) throw new LetterwindException("The control file is null.");
+
+        synchronized (this){
+            try {
+                String controlsJson = FileIOManager.read(this.controlFile);
+                LetterwindControls loadedControls = Serializer.deserialize(controlsJson, LetterwindControls.class);
+                this.isPersistent = loadedControls.isPersistent();
+                this.concurrencyLimit = loadedControls.getConcurrencyLimit();
+                this.remoteConfig = loadedControls.getRemoteConfig();
+                this.topics = loadedControls.getTopics();
+                this.messageTypeMap = loadedControls.getMessageTypeMap();
+                return true;
+            } catch (Exception e){
+                throw new LetterwindException("The contents of the control file might be corrupted.");
+            }
+        }
+    }
+
+    public boolean hasRemoteConfig(){
+        return this.remoteConfig != null && this.remoteConfig.isValid();
+    }
+
     private void addToMessageTypes(LetterwindTopic topic){
         Set<Class> messageTypes = topic.getConsumerMessageTypes();
 
@@ -101,10 +160,6 @@ public class LetterwindControls {
             Set<String> topicNames = this.messageTypeMap.get(messageType);
             if (topicNames != null) topicNames.remove(topic.getName());
         }
-    }
-
-    public boolean hasRemoteConfig(){
-        return this.remoteConfig != null && this.remoteConfig.isValid();
     }
 
     private class InstanceHolder {

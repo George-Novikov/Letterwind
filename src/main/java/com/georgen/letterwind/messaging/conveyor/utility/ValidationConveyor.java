@@ -1,4 +1,4 @@
-package com.georgen.letterwind.messaging.conveyor.lowlevel;
+package com.georgen.letterwind.messaging.conveyor.utility;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
@@ -7,8 +7,6 @@ import com.georgen.letterwind.messaging.validators.MessageValidator;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
 import com.georgen.letterwind.tools.extractors.MessageValidatorExtractor;
-
-import java.util.Set;
 
 public class ValidationConveyor<@LetterwindMessage T> extends MessageConveyor<@LetterwindMessage T> {
 
