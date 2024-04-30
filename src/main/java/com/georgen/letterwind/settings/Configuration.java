@@ -14,6 +14,10 @@ import static com.georgen.letterwind.model.constants.ConfigProperty.*;
 public class Configuration {
     private ConfigReader configReader;
 
+    private Configuration(){
+        this.configReader = new ConfigReader();
+    }
+
     private static class ConfigurationInitializer {
         private static final Configuration INSTANCE = new Configuration();
     }

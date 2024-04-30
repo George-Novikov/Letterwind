@@ -21,6 +21,8 @@ public class LocalSendingConveyor<@LetterwindMessage T> extends MessageConveyor<
         validation.setConveyor(serialization);
         serialization.setConveyor(queueing);
 
-        this.getConveyor().process(message, topic);
+        if (hasConveyor()){
+            this.getConveyor().process(message, topic);
+        }
     }
 }

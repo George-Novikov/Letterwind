@@ -15,7 +15,9 @@ public @interface LetterwindConsumer {
      * */
     String topicName() default "";
     /**
-     * Regulates the number of consumer instances. If set to less than 1, the consumer will stop working.
+     * Regulates the number of consumer instances.
+     * Each @ConsumerMethod in the class is considered as the separate consumer.
+     * If set to less than 1, the consumer will stop working.
      * */
     int concurrentInstances() default 1;
     /**

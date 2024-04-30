@@ -17,10 +17,12 @@ public class ValidationConveyor<@LetterwindMessage T> extends MessageConveyor<@L
         if (!(message instanceof String)){
             MessageValidator<@LetterwindMessage T> validator = extractValidator(message);
             if (validator == null) throw new LetterwindException("The validator class specified within the message config is faulty.");
-            if (validator.isValid(message)) throw new LetterwindException(BrokerMessage.INVALID_MESSAGE);
+            if (!validator.isValid(message)) throw new LetterwindException(BrokerMessage.INVALID_MESSAGE);
         }
 
-        this.getConveyor().process(message, topic);
+        if (hasConveyor()){
+            this.getConveyor().process(message, topic);
+        }
     }
 
     private MessageValidator<@LetterwindMessage T> extractValidator(@LetterwindMessage T message){

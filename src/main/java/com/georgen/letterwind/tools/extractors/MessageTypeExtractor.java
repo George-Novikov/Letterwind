@@ -5,6 +5,7 @@ import com.georgen.letterwind.api.annotations.ConsumingMethod;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,17 +25,31 @@ public class MessageTypeExtractor {
     }
 
     private static Set<Class> extractFromAnnotatedMethods(Set<Method> annotatedMethods){
-        return annotatedMethods
-                .stream()
-                .map(method -> method.getReturnType())
-                .collect(Collectors.toSet());
+        Set<Class> types = new HashSet<>();
+
+        for (Method method : annotatedMethods){
+            Class[] methodTypes =  method.getParameterTypes();
+            Set<Class> methodTypesSet = Arrays.stream(methodTypes).collect(Collectors.toSet());
+            types.addAll(methodTypesSet);
+        }
+
+        return types;
     }
 
     private static Set<Class> extractFromPublicMethods(Method[] methods){
-        return Arrays
+        Set<Method> publicMethods = Arrays
                 .stream(methods)
                 .filter(method -> Modifier.isPublic(method.getModifiers()))
-                .map(method -> method.getReturnType())
                 .collect(Collectors.toSet());
+
+        Set<Class> types = new HashSet<>();
+
+        for (Method method : publicMethods){
+            Class[] methodTypes =  method.getParameterTypes();
+            Set<Class> methodTypesSet = Arrays.stream(methodTypes).collect(Collectors.toSet());
+            types.addAll(methodTypesSet);
+        }
+
+        return types;
     }
 }

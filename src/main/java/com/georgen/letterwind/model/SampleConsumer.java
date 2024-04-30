@@ -6,7 +6,7 @@ import com.georgen.letterwind.api.annotations.LetterwindConsumer;
 @LetterwindConsumer(concurrentInstances = 3)
 public class SampleConsumer {
     @ConsumingMethod
-    public void receive(){
-
+    public void receive(SampleMessage message){
+        System.out.println("Message received: " + message.getValue());
     }
 }

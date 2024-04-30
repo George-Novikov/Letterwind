@@ -21,5 +21,9 @@ public abstract class MessageConveyor<T> {
         this.conveyor = conveyor;
     }
 
+    public boolean hasConveyor(){
+        return this.conveyor != null;
+    }
+
     public abstract void process(T message, LetterwindTopic topic) throws Exception;
 }

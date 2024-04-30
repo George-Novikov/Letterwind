@@ -27,6 +27,10 @@ public class QueueingConveyor extends MessageConveyor<String> {
             Set<Method> methods = ConsumerExtractor.extractConsumingMethods(consumer);
             writeToQueueFiles(message, consumerPath, methods);
         }
+
+        if (hasConveyor()){
+            this.getConveyor().process(message, topic);
+        }
     }
 
     private void writeToQueueFiles(String message, String consumerPath, Set<Method> methods) throws Exception {

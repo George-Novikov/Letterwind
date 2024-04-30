@@ -23,7 +23,9 @@ public class SerializationConveyor<@LetterwindMessage T> extends MessageConveyor
             serializedMessage = serializer.serialize(message);
         }
 
-        this.getConveyor().process(serializedMessage, topic);
+        if (hasConveyor()){
+            this.getConveyor().process(serializedMessage, topic);
+        }
     }
 
     private MessageSerializer<@LetterwindMessage T> extractSerializer(@LetterwindMessage T message){

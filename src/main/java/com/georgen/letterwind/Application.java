@@ -2,7 +2,9 @@ package com.georgen.letterwind;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
+import com.georgen.letterwind.api.MessageBroker;
 import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.messaging.serializers.MessageSerializer;
@@ -23,6 +25,13 @@ public class Application {
         try {
 
             LetterwindTopic topic = new LetterwindTopic("SampleTopic", CONSUMERS);
+
+            LetterwindControls.getInstance().registerTopic(topic);
+
+            SampleMessage message = new SampleMessage("How are you?");
+
+            MessageBroker.send(message);
+
 
         } catch (Exception e){
             log(e.getMessage());
