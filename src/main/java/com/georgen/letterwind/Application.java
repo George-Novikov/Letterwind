@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.api.MessageBroker;
+import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.messaging.serializers.MessageSerializer;
@@ -28,14 +29,23 @@ public class Application {
 
             LetterwindControls.getInstance().registerTopic(topic);
 
-            SampleMessage message = new SampleMessage("How are you?");
+            @LetterwindMessage String message = "How are you?";
 
             MessageBroker.send(message);
-
 
         } catch (Exception e){
             log(e.getMessage());
         }
+    }
+
+    private static void testClassSend() throws Exception {
+        LetterwindTopic topic = new LetterwindTopic("SampleTopic", CONSUMERS);
+
+        LetterwindControls.getInstance().registerTopic(topic);
+
+        SampleMessage message = new SampleMessage("How are you?");
+
+        MessageBroker.send(message);
     }
 
     private static void testSerialization() throws LetterwindException, JsonProcessingException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {

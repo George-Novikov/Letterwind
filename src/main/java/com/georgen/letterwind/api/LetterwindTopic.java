@@ -16,7 +16,7 @@ public class LetterwindTopic {
     private String name;
     private Integer concurrencyLimit;
     private RemoteConfig remoteConfig;
-    private Set<@LetterwindConsumer Class> consumers = new HashSet<>();
+    private Set<Class> consumers = new HashSet<>();
 
     public LetterwindTopic() {}
     public LetterwindTopic(String name) {
@@ -65,12 +65,12 @@ public class LetterwindTopic {
         this.consumers = consumers;
     }
 
-    public void addConsumer(@LetterwindConsumer Class consumerClass) throws LetterwindException {
+    public void addConsumer(Class consumerClass) throws LetterwindException {
         AnnotationGuard.validateConsumer(consumerClass);
         this.consumers.add(consumerClass);
     }
 
-    public boolean removeConsumer(@LetterwindConsumer Class consumer){
+    public boolean removeConsumer(Class consumer){
         return this.consumers.remove(consumer);
     }
 

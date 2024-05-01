@@ -8,12 +8,12 @@ import com.georgen.letterwind.messaging.conveyor.utility.RetrievingConveyor;
 
 public class LocalReceivingConveyor<T> extends MessageConveyor<T> {
 
-    private MessageConveyor<@LetterwindMessage T> retrieval = new RetrievingConveyor();
-    private MessageConveyor<@LetterwindMessage T> consuming = new ConsumerInvokingConveyor();
+    private MessageConveyor retrieval = new RetrievingConveyor();
+    private MessageConveyor consuming = new ConsumerInvokingConveyor();
 
     @Override
     public void process(T message, LetterwindTopic topic) throws Exception {
-        /** Retrieve -> Give a thread to each of the consumer methods */
+        /** Retrieve -> Give a thread to each of the consumer methods -> Inform MessageFlow */
 
         this.setConveyor(retrieval);
         retrieval.setConveyor(consuming);

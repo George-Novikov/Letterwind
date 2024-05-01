@@ -13,10 +13,11 @@ public class SerializationConveyor<@LetterwindMessage T> extends MessageConveyor
     @Override
     public void process(@LetterwindMessage T message, LetterwindTopic topic) throws Exception {
         if (message == null) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
+        boolean isString = message instanceof String;
 
         @LetterwindMessage String serializedMessage = "";
 
-        if (!(message instanceof String)){
+        if (!isString){
             MessageSerializer<@LetterwindMessage T> serializer = extractSerializer(message);
             if (serializer == null) throw new LetterwindException("The serializer class specified within the message config is faulty.");
 
@@ -24,7 +25,7 @@ public class SerializationConveyor<@LetterwindMessage T> extends MessageConveyor
         }
 
         if (hasConveyor()){
-            this.getConveyor().process(serializedMessage, topic);
+            this.getConveyor().process(isString ? message : serializedMessage, topic);
         }
     }
 
