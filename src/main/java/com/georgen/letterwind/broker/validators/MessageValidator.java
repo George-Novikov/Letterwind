@@ -1,4 +1,4 @@
-package com.georgen.letterwind.messaging.validators;
+package com.georgen.letterwind.broker.validators;
 
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
 

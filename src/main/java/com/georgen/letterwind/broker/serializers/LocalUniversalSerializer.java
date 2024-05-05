@@ -1,4 +1,4 @@
-package com.georgen.letterwind.messaging.serializers;
+package com.georgen.letterwind.broker.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

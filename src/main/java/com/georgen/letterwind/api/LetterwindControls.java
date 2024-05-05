@@ -1,6 +1,5 @@
 package com.georgen.letterwind.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.georgen.letterwind.io.FileIOManager;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.network.RemoteConfig;
@@ -23,7 +22,7 @@ public class LetterwindControls {
     private boolean isPersistent = true;
 
     /** Represents the total number of @LetterwindConsumer classes allowed to operate simultaneously */
-    private Integer concurrencyLimit;
+    private int consumersLimit;
 
     private RemoteConfig remoteConfig;
 
@@ -43,12 +42,12 @@ public class LetterwindControls {
         isPersistent = persistent;
     }
 
-    public Integer getConcurrencyLimit() {
-        return concurrencyLimit;
+    public int getConsumersLimit() {
+        return consumersLimit;
     }
 
-    public void setConcurrencyLimit(Integer concurrencyLimit) {
-        this.concurrencyLimit = concurrencyLimit;
+    public void setConsumersLimit(int consumersLimit) {
+        this.consumersLimit = consumersLimit;
     }
 
     public RemoteConfig getRemoteConfig() {
@@ -127,7 +126,7 @@ public class LetterwindControls {
                 String controlsJson = FileIOManager.read(this.controlFile);
                 LetterwindControls loadedControls = Serializer.deserialize(controlsJson, LetterwindControls.class);
                 this.isPersistent = loadedControls.isPersistent();
-                this.concurrencyLimit = loadedControls.getConcurrencyLimit();
+                this.consumersLimit = loadedControls.getConsumersLimit();
                 this.remoteConfig = loadedControls.getRemoteConfig();
                 this.topics = loadedControls.getTopics();
                 this.messageTypeMap = loadedControls.getMessageTypeMap();

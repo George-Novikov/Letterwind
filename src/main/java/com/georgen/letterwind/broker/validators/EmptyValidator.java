@@ -1,4 +1,4 @@
-package com.georgen.letterwind.messaging.validators;
+package com.georgen.letterwind.broker.validators;
 
 public class EmptyValidator<T> implements MessageValidator<T> {
     @Override

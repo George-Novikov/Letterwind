@@ -1,9 +1,7 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.api.annotations.LetterwindMessage;
-import com.georgen.letterwind.messaging.conveyor.ConveyorFactory;
-import com.georgen.letterwind.messaging.conveyor.MessageConveyor;
-import com.georgen.letterwind.messaging.conveyor.MessageFlow;
+import com.georgen.letterwind.broker.MessageFlow;
+import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
 import com.georgen.letterwind.tools.AnnotationGuard;
@@ -11,7 +9,6 @@ import com.georgen.letterwind.tools.AnnotationGuard;
 import java.util.Set;
 
 public class MessageBroker {
-    private static final ConveyorFactory CONVEYOR_FACTORY = new ConveyorFactory();
 
     /**
      * Send a message to every registered topic with the specified (T) message type (i.e. fan-out distribution)
@@ -22,17 +19,14 @@ public class MessageBroker {
         Class messageType = message.getClass();
 
         LetterwindControls controls = LetterwindControls.getInstance();
+        MessageFlow messageFlow = MessageFlow.getInstance();
 
         Set<LetterwindTopic> topics = controls.getAllTopicsWithMessageType(messageType);
         if (topics == null) throw new LetterwindException("No registered topics with the specified message type were found.");
 
-//        for(LetterwindTopic topic : topics){
-//            MessageConveyor<T> conveyor = CONVEYOR_FACTORY.createConveyor(message, topic);
-//            conveyor.process(message, topic);
-//        }
-
         for (LetterwindTopic topic : topics){
-            MessageFlow.getInstance().startSend(message, topic);
+            Envelope<T> envelope = new Envelope<>(message, topic);
+            messageFlow.startSend(envelope);
         }
 
         return true;
@@ -52,8 +46,8 @@ public class MessageBroker {
         if (topic == null) throw new LetterwindException(String.format("Topic named %s was not found among registered topics.", topicName));
         if (!topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
 
-        MessageConveyor<T> conveyor = CONVEYOR_FACTORY.createConveyor(message, topic);
-        conveyor.process(message, topic);
+        Envelope<T> envelope = new Envelope<>(message, topic);
+        MessageFlow.getInstance().startSend(envelope);
 
         return true;
     }
@@ -66,8 +60,8 @@ public class MessageBroker {
         validateMessage(message);
         if (topic == null || !topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
 
-        MessageConveyor<T> conveyor = CONVEYOR_FACTORY.createConveyor(message, topic);
-        conveyor.process(message, topic);
+        Envelope<T> envelope = new Envelope<>(message, topic);
+        MessageFlow.getInstance().startSend(envelope);
 
         return true;
     }

@@ -45,6 +45,36 @@ public class Configuration {
         }
     }
 
+    public int getSendingThreadsLimit(){
+        try {
+            String sendingThreadsString = this.configReader.getProperty(SENDING_THREADS);
+            boolean isValidParam = Validator.isValid(sendingThreadsString);
+            return isValidParam ? Integer.valueOf(sendingThreadsString) : SENDING_THREADS.getDefaultIntValue();
+        } catch (Exception e){
+            return SENDING_THREADS.getDefaultIntValue();
+        }
+    }
+
+    public int getReceivingThreadsLimit(){
+        try {
+            String receivingThreadsString = this.configReader.getProperty(RECEIVING_THREADS);
+            boolean isValidParam = Validator.isValid(receivingThreadsString);
+            return isValidParam ? Integer.valueOf(receivingThreadsString) : RECEIVING_THREADS.getDefaultIntValue();
+        } catch (Exception e){
+            return RECEIVING_THREADS.getDefaultIntValue();
+        }
+    }
+
+    public int getConsumingThreadsLimit(){
+        try {
+            String consumingThreadsString = this.configReader.getProperty(CONSUMING_THREADS);
+            boolean isValidParam = Validator.isValid(consumingThreadsString);
+            return isValidParam ? Integer.valueOf(consumingThreadsString) : CONSUMING_THREADS.getDefaultIntValue();
+        } catch (Exception e){
+            return CONSUMING_THREADS.getDefaultIntValue();
+        }
+    }
+
     public File getControlFile() {
         try {
             return FileFactory.getInstance().getFile(configReader.getControlFilePath(), true);

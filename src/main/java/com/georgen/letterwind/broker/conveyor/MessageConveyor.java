@@ -1,9 +1,6 @@
-package com.georgen.letterwind.messaging.conveyor;
+package com.georgen.letterwind.broker.conveyor;
 
-import com.georgen.letterwind.api.LetterwindTopic;
-import com.georgen.letterwind.api.annotations.LetterwindMessage;
-
-import java.util.Set;
+import com.georgen.letterwind.model.broker.Envelope;
 
 public abstract class MessageConveyor<T> {
     private MessageConveyor conveyor;
@@ -25,5 +22,5 @@ public abstract class MessageConveyor<T> {
         return this.conveyor != null;
     }
 
-    public abstract void process(T message, LetterwindTopic topic) throws Exception;
+    public abstract void process(Envelope<T> envelope) throws Exception;
 }

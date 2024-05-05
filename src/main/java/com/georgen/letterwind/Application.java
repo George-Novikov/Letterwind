@@ -8,7 +8,7 @@ import com.georgen.letterwind.api.MessageBroker;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.messaging.serializers.MessageSerializer;
+import com.georgen.letterwind.broker.serializers.MessageSerializer;
 import com.georgen.letterwind.model.SampleMessage;
 import com.georgen.letterwind.tools.extractors.MessageSerializerExtractor;
 

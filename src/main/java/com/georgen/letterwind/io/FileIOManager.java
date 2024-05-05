@@ -16,7 +16,7 @@ public class FileIOManager {
     public static void append(File file, String content) throws Exception {
         synchronized (file){
             try (CloseableWriter writer = new CloseableWriter(file, true)){
-                writer.append(content);
+                writer.append(String.format("%s%s", System.lineSeparator(), content));
             }
         }
     }

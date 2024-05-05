@@ -2,10 +2,10 @@ package com.georgen.letterwind.api.annotations;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.georgen.letterwind.messaging.serializers.MessageSerializer;
-import com.georgen.letterwind.messaging.serializers.LocalUniversalSerializer;
-import com.georgen.letterwind.messaging.validators.EmptyValidator;
-import com.georgen.letterwind.messaging.validators.MessageValidator;
+import com.georgen.letterwind.broker.serializers.MessageSerializer;
+import com.georgen.letterwind.broker.serializers.LocalUniversalSerializer;
+import com.georgen.letterwind.broker.validators.EmptyValidator;
+import com.georgen.letterwind.broker.validators.MessageValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -19,5 +19,4 @@ import java.lang.annotation.Target;
 public @interface LetterwindMessage {
     Class<? extends MessageSerializer> serializer() default LocalUniversalSerializer.class;
     Class<? extends MessageValidator> validator() default EmptyValidator.class;
-    LetterwindConsumer[] consumers() default {};
 }

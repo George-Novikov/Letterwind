@@ -3,15 +3,15 @@ package com.georgen.letterwind.model.network;
 import com.georgen.letterwind.tools.Validator;
 
 public class RemoteConfig {
-    private String url;
+    private String ip;
     private int port;
 
-    public String getUrl() {
-        return url;
+    public String getIp() {
+        return ip;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public int getPort() {
@@ -23,6 +23,6 @@ public class RemoteConfig {
     }
 
     public boolean isValid(){
-        return Validator.isValid(this.url) && this.port != 0;
+        return Validator.isValid(this.ip) && this.port != 0;
     }
 }

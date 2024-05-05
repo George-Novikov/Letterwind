@@ -1,9 +1,10 @@
-package com.georgen.letterwind.messaging.conveyor.utility;
+package com.georgen.letterwind.broker.conveyor.utility;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.io.FileIOManager;
 import com.georgen.letterwind.io.FileOperation;
-import com.georgen.letterwind.messaging.conveyor.MessageConveyor;
+import com.georgen.letterwind.broker.conveyor.MessageConveyor;
+import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
 import com.georgen.letterwind.settings.Configuration;
@@ -14,9 +15,12 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Set;
 
-public class QueueingConveyor extends MessageConveyor<String> {
+public class QueueingConveyor<T> extends MessageConveyor<T> {
     @Override
-    public void process(String message, LetterwindTopic topic) throws Exception {
+    public void process(Envelope<T> envelope) throws Exception {
+        String message = envelope.getSerializedMessage();
+        LetterwindTopic topic = envelope.getTopic();
+
         if (message == null) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
 
         Configuration configuration = Configuration.getInstance();
@@ -29,7 +33,7 @@ public class QueueingConveyor extends MessageConveyor<String> {
         }
 
         if (hasConveyor()){
-            this.getConveyor().process(message, topic);
+            this.getConveyor().process(envelope);
         }
     }
 

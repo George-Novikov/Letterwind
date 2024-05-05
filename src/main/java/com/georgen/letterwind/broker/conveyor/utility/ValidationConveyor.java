@@ -1,9 +1,9 @@
-package com.georgen.letterwind.messaging.conveyor.utility;
+package com.georgen.letterwind.broker.conveyor.utility;
 
 import com.georgen.letterwind.api.LetterwindTopic;
-import com.georgen.letterwind.api.annotations.LetterwindMessage;
-import com.georgen.letterwind.messaging.conveyor.MessageConveyor;
-import com.georgen.letterwind.messaging.validators.MessageValidator;
+import com.georgen.letterwind.broker.conveyor.MessageConveyor;
+import com.georgen.letterwind.broker.validators.MessageValidator;
+import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
 import com.georgen.letterwind.tools.extractors.MessageValidatorExtractor;
@@ -11,8 +11,10 @@ import com.georgen.letterwind.tools.extractors.MessageValidatorExtractor;
 public class ValidationConveyor<T> extends MessageConveyor<T> {
 
     @Override
-    public void process(T message, LetterwindTopic topic) throws Exception {
-        if (message == null) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
+    public void process(Envelope<T> envelope) throws Exception {
+        if (!envelope.hasMessage()) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
+
+        T message = envelope.getMessage();
         boolean isString = message instanceof String;
 
         if (!isString){
@@ -22,7 +24,7 @@ public class ValidationConveyor<T> extends MessageConveyor<T> {
         }
 
         if (hasConveyor()){
-            this.getConveyor().process(message, topic);
+            this.getConveyor().process(envelope);
         }
     }
 
