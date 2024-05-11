@@ -1,12 +1,8 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.io.FileIOManager;
-import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.model.network.RemoteConfig;
-import com.georgen.letterwind.settings.Configuration;
-import com.georgen.letterwind.tools.Serializer;
+import com.georgen.letterwind.model.transport.RemoteServerConfig;
+import com.georgen.letterwind.util.Validator;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -16,15 +12,21 @@ import java.util.concurrent.ConcurrentHashMap;
  * Letterwind main configuration class
  */
 public class LetterwindControls {
-    private File controlFile;
-    /** Regulates whether these controls should be saved and then reloaded on startup
-     * If set to false, Letterwind will require reconfiguration every time it starts */
-    private boolean isPersistent = true;
 
-    /** Represents the total number of @LetterwindConsumer classes allowed to operate simultaneously */
+    /** Determines how many threads can simultaneously perform the sending process. */
+    private int sendersLimit;
+
+    /** Determines how many threads can simultaneously execute the sereceivingnding process. */
+    private int receiversLimit;
+
+    /** Determines the total number of @LetterwindConsumer classes allowed to operate simultaneously. */
     private int consumersLimit;
 
-    private RemoteConfig remoteConfig;
+    /**
+     * Global remote server config — when set, all messages will be sent remotely.
+     * Only individual config within each LetterwindTopic can override this.
+     * */
+    private RemoteServerConfig remoteConfig;
 
     /** Registered topics. Unregistered ones will not participate in messaging. */
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
@@ -34,12 +36,20 @@ public class LetterwindControls {
 
     private LetterwindControls(){}
 
-    public boolean isPersistent() {
-        return isPersistent;
+    public int getSendersLimit() {
+        return sendersLimit;
     }
 
-    public void setPersistent(boolean persistent) {
-        isPersistent = persistent;
+    public void setSendersLimit(int sendersLimit) {
+        this.sendersLimit = sendersLimit;
+    }
+
+    public int getReceiversLimit() {
+        return receiversLimit;
+    }
+
+    public void setReceiversLimit(int receiversLimit) {
+        this.receiversLimit = receiversLimit;
     }
 
     public int getConsumersLimit() {
@@ -50,11 +60,11 @@ public class LetterwindControls {
         this.consumersLimit = consumersLimit;
     }
 
-    public RemoteConfig getRemoteConfig() {
+    public RemoteServerConfig getRemoteConfig() {
         return remoteConfig;
     }
 
-    public void setRemoteConfig(RemoteConfig remoteConfig) {
+    public void setRemoteConfig(RemoteServerConfig remoteConfig) {
         this.remoteConfig = remoteConfig;
     }
 
@@ -77,7 +87,6 @@ public class LetterwindControls {
     public void registerTopic(LetterwindTopic topic) throws Exception {
         topics.put(topic.getName(), topic);
         addToMessageTypes(topic);
-        if (isPersistent) save();
     }
 
     public boolean unregisterTopic(String topicName) throws Exception {
@@ -85,7 +94,6 @@ public class LetterwindControls {
         if (topic != null){
             topics.remove(topicName);
             deleteFromMessageTypes(topic);
-            if (isPersistent) save();
             return true;
         } else {
             return false;
@@ -107,34 +115,13 @@ public class LetterwindControls {
         return responseTopics;
     }
 
-    public void save() throws Exception {
-        if (this.controlFile == null) this.controlFile = Configuration.getInstance().getControlFile();
-        if (this.controlFile == null) throw new LetterwindException("The control file is null.");
-
-        synchronized (this){
-            String controlsJson = Serializer.toJson(this);
-            FileIOManager.write(this.controlFile, controlsJson);
-        }
-    }
-
-    public boolean load() throws Exception {
-        if (this.controlFile == null) this.controlFile = Configuration.getInstance().getControlFile();
-        if (this.controlFile == null) throw new LetterwindException("The control file is null.");
-
-        synchronized (this){
-            try {
-                String controlsJson = FileIOManager.read(this.controlFile);
-                LetterwindControls loadedControls = Serializer.deserialize(controlsJson, LetterwindControls.class);
-                this.isPersistent = loadedControls.isPersistent();
-                this.consumersLimit = loadedControls.getConsumersLimit();
-                this.remoteConfig = loadedControls.getRemoteConfig();
-                this.topics = loadedControls.getTopics();
-                this.messageTypeMap = loadedControls.getMessageTypeMap();
-                return true;
-            } catch (Exception e){
-                throw new LetterwindException("The contents of the control file might be corrupted.");
-            }
-        }
+    public Class getMessageTypeBySimpleName(String messageTypeSimpleName){
+        if (!Validator.isValid(messageTypeSimpleName)) return null;
+        return this.messageTypeMap.keySet()
+                .stream()
+                .filter(javaClass -> messageTypeSimpleName.equals(javaClass.getSimpleName()))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean hasRemoteConfig(){
@@ -161,7 +148,7 @@ public class LetterwindControls {
         }
     }
 
-    private class InstanceHolder {
+    private static class InstanceHolder {
         private static final LetterwindControls INSTANCE = new LetterwindControls();
     }
 

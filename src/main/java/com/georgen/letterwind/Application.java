@@ -10,7 +10,7 @@ import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.broker.serializers.MessageSerializer;
 import com.georgen.letterwind.model.SampleMessage;
-import com.georgen.letterwind.tools.extractors.MessageSerializerExtractor;
+import com.georgen.letterwind.util.extractors.MessageSerializerExtractor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class Application {
             return "Callable task result.";
         };
 
-        List<Callable<String>> callableTasks = new ArrayList<>(){{
+        List<Callable<String>> callableTasks = new ArrayList<Callable<String>>(){{
             add(callable); add(callable); add(callable);
         }};
 

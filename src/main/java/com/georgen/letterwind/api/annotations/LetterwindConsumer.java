@@ -1,7 +1,5 @@
 package com.georgen.letterwind.api.annotations;
 
-import com.georgen.letterwind.model.network.RemoteConfig;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

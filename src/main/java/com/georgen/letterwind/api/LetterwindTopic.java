@@ -1,21 +1,19 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.api.annotations.LetterwindConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.model.network.RemoteConfig;
-import com.georgen.letterwind.tools.AnnotationGuard;
-import com.georgen.letterwind.tools.Validator;
-import com.georgen.letterwind.tools.extractors.MessageTypeExtractor;
+import com.georgen.letterwind.model.transport.RemoteServerConfig;
+import com.georgen.letterwind.util.AnnotationGuard;
+import com.georgen.letterwind.util.Validator;
+import com.georgen.letterwind.util.extractors.MessageTypeExtractor;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class LetterwindTopic {
     private String name;
     private Integer concurrencyLimit;
-    private RemoteConfig remoteConfig;
+    private RemoteServerConfig remoteConfig;
     private Set<Class> consumers = new HashSet<>();
 
     public LetterwindTopic() {}
@@ -49,11 +47,11 @@ public class LetterwindTopic {
         this.concurrencyLimit = concurrencyLimit;
     }
 
-    public RemoteConfig getRemoteConfig() {
+    public RemoteServerConfig getRemoteConfig() {
         return remoteConfig;
     }
 
-    public void setRemoteConfig(RemoteConfig remoteConfig) {
+    public void setRemoteConfig(RemoteServerConfig remoteConfig) {
         this.remoteConfig = remoteConfig;
     }
 

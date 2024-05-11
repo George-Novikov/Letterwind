@@ -1,8 +1,7 @@
 package com.georgen.letterwind.broker.conveyor.local;
 
-import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
-import com.georgen.letterwind.broker.conveyor.utility.*;
+import com.georgen.letterwind.broker.conveyor.lowlevel.*;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.constants.ConveyorOperation;
 
@@ -15,7 +14,7 @@ public class LocalSendingConveyor<T> extends MessageConveyor<T> {
     private MessageConveyor<T> validation = new ValidationConveyor<>();
     private MessageConveyor<T> serialization = new SerializationConveyor();
     private MessageConveyor<String> queueing = new QueueingConveyor();
-    private MessageConveyor informing = new InformingConveyor(ConveyorOperation.SEND);
+    private MessageConveyor informing = new InformingConveyor(ConveyorOperation.LOCAL_SEND);
 
 
     @Override

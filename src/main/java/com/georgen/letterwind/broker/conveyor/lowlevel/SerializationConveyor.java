@@ -1,13 +1,12 @@
-package com.georgen.letterwind.broker.conveyor.utility;
+package com.georgen.letterwind.broker.conveyor.lowlevel;
 
-import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.serializers.MessageSerializer;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.tools.extractors.MessageSerializerExtractor;
+import com.georgen.letterwind.util.extractors.MessageSerializerExtractor;
 
 public class SerializationConveyor<T> extends MessageConveyor<T> {
 

@@ -1,12 +1,11 @@
-package com.georgen.letterwind.broker.conveyor.utility;
+package com.georgen.letterwind.broker.conveyor.lowlevel;
 
-import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.validators.MessageValidator;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.tools.extractors.MessageValidatorExtractor;
+import com.georgen.letterwind.util.extractors.MessageValidatorExtractor;
 
 public class ValidationConveyor<T> extends MessageConveyor<T> {
 

@@ -2,7 +2,7 @@ package com.georgen.letterwind.io;
 
 
 import com.georgen.letterwind.model.constants.SystemProperty;
-import com.georgen.letterwind.tools.SystemHelper;
+import com.georgen.letterwind.util.SystemHelper;
 
 import java.io.File;
 import java.io.IOException;

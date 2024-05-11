@@ -1,4 +1,4 @@
-package com.georgen.letterwind.broker.conveyor.utility;
+package com.georgen.letterwind.broker.conveyor.lowlevel;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;

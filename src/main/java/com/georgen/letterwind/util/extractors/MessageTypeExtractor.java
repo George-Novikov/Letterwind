@@ -1,4 +1,4 @@
-package com.georgen.letterwind.tools.extractors;
+package com.georgen.letterwind.util.extractors;
 
 import com.georgen.letterwind.api.annotations.LetterwindConsumer;
 

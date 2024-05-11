@@ -1,9 +1,8 @@
-package com.georgen.letterwind.tools;
+package com.georgen.letterwind.util;
 
-import com.georgen.letterwind.api.annotations.LetterwindConsumer;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.tools.extractors.ConsumerExtractor;
+import com.georgen.letterwind.util.extractors.ConsumerExtractor;
 
 public class AnnotationGuard {
     public static void validateConsumer(Class consumerClass) throws LetterwindException {

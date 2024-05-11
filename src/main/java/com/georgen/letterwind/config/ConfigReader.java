@@ -1,4 +1,4 @@
-package com.georgen.letterwind.settings;
+package com.georgen.letterwind.config;
 
 
 
@@ -9,7 +9,7 @@ import com.georgen.letterwind.model.constants.SystemProperty;
 import com.georgen.letterwind.model.settings.LetterwindProperties;
 import com.georgen.letterwind.model.settings.regular.RegularProperties;
 import com.georgen.letterwind.model.settings.yaml.YamlProperties;
-import com.georgen.letterwind.tools.PathBuilder;
+import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;

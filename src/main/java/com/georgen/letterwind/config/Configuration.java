@@ -1,11 +1,11 @@
-package com.georgen.letterwind.settings;
+package com.georgen.letterwind.config;
 
 
 import com.georgen.letterwind.io.FileFactory;
 import com.georgen.letterwind.model.exceptions.InitializationException;
 import com.georgen.letterwind.model.messages.SystemMessage;
-import com.georgen.letterwind.tools.PathBuilder;
-import com.georgen.letterwind.tools.Validator;
+import com.georgen.letterwind.util.PathBuilder;
+import com.georgen.letterwind.util.Validator;
 
 import java.io.File;
 

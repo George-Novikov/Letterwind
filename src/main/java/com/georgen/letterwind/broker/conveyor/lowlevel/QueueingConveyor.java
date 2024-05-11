@@ -1,4 +1,4 @@
-package com.georgen.letterwind.broker.conveyor.utility;
+package com.georgen.letterwind.broker.conveyor.lowlevel;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.io.FileIOManager;
@@ -7,9 +7,9 @@ import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.settings.Configuration;
-import com.georgen.letterwind.tools.PathBuilder;
-import com.georgen.letterwind.tools.extractors.ConsumerExtractor;
+import com.georgen.letterwind.config.Configuration;
+import com.georgen.letterwind.util.PathBuilder;
+import com.georgen.letterwind.util.extractors.ConsumerExtractor;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -28,7 +28,7 @@ public class QueueingConveyor<T> extends MessageConveyor<T> {
 
         for (Class consumer : topic.getConsumers()){
             String consumerPath = PathBuilder.concatenate(topicPath, consumer.getName());
-            Set<Method> methods = ConsumerExtractor.extractConsumingMethods(consumer);
+            Set<Method> methods = ConsumerExtractor.extractConsumingMethods(consumer, envelope.getMessageType());
             writeToQueueFiles(message, consumerPath, methods);
         }
 

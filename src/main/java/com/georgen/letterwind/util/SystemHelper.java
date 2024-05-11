@@ -1,4 +1,4 @@
-package com.georgen.letterwind.tools;
+package com.georgen.letterwind.util;
 
 import java.io.File;
 import java.io.IOException;

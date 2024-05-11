@@ -1,8 +1,8 @@
-package com.georgen.letterwind.model.network;
+package com.georgen.letterwind.model.transport;
 
-import com.georgen.letterwind.tools.Validator;
+import com.georgen.letterwind.util.Validator;
 
-public class RemoteConfig {
+public class RemoteServerConfig {
     private String ip;
     private int port;
 

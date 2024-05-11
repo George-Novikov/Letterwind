@@ -4,7 +4,7 @@ import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.tools.AnnotationGuard;
+import com.georgen.letterwind.util.AnnotationGuard;
 
 import java.util.Set;
 

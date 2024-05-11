@@ -1,7 +1,8 @@
 package com.georgen.letterwind.multihtreading;
 
 import com.georgen.letterwind.api.LetterwindControls;
-import com.georgen.letterwind.settings.Configuration;
+import com.georgen.letterwind.config.Configuration;
+import com.georgen.letterwind.model.constants.ConfigProperty;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,10 +38,17 @@ public class ThreadPool {
         LetterwindControls controls = LetterwindControls.getInstance();
         Configuration config = Configuration.getInstance();
 
-        int sendersThreads = config.getSendingThreadsLimit();
-        int receiversLimit = config.getReceivingThreadsLimit();
+        int sendersThreads = controls.getSendersLimit();
+        int receiversLimit = controls.getReceiversLimit();
         int consumersLimit = controls.getConsumersLimit();
+
+        if (sendersThreads < 1) sendersThreads = config.getSendingThreadsLimit();
+        if (receiversLimit < 1) receiversLimit = config.getReceivingThreadsLimit();
         if (consumersLimit < 1) consumersLimit = config.getConsumingThreadsLimit();
+
+        if (sendersThreads < 1) sendersThreads = ConfigProperty.SENDING_THREADS.getDefaultIntValue();
+        if (receiversLimit < 1) receiversLimit = ConfigProperty.RECEIVING_THREADS.getDefaultIntValue();
+        if (consumersLimit < 1) consumersLimit = ConfigProperty.CONSUMING_THREADS.getDefaultIntValue();
 
         this.senderExecutor = Executors.newFixedThreadPool(sendersThreads);
         this.receiverExecutor = Executors.newFixedThreadPool(receiversLimit);

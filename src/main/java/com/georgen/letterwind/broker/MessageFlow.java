@@ -14,15 +14,18 @@ public class MessageFlow {
 
     private MessageFlow(){}
 
-    public void inform(String topicName, ConveyorOperation operation){
+    public <T> void inform(Envelope<T> envelope, ConveyorOperation operation){
         switch (operation){
-            case SEND -> System.out.println(String.format("%s: %s", topicName, operation.name()));
+            case LOCAL_SEND: {
+                System.out.println(String.format("%s: %s", envelope.getTopicName(), operation.name()));
+                break;
+            }
         }
     }
 
     public <T> void startSend(Envelope<T> envelope) {
         MessageConveyor<T> conveyor = CONVEYOR_FACTORY.createSendingConveyor(envelope);
-        Runnable runnable = toRunnable(conveyor, envelope);
+        Runnable runnable = getRunnable(conveyor, envelope);
         Future senderFuture = ThreadPool.getInstance().startSenderThread(runnable);
     }
 
@@ -30,7 +33,7 @@ public class MessageFlow {
 
     }
 
-    private <T> Runnable toRunnable(MessageConveyor<T> conveyor, Envelope<T> envelope){
+    private <T> Runnable getRunnable(MessageConveyor<T> conveyor, Envelope<T> envelope){
         return () -> {
             try {
                 conveyor.process(envelope);

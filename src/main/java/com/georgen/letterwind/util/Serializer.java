@@ -1,4 +1,4 @@
-package com.georgen.letterwind.tools;
+package com.georgen.letterwind.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
