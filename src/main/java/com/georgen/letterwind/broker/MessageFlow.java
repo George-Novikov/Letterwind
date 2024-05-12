@@ -3,28 +3,33 @@ package com.georgen.letterwind.broker;
 import com.georgen.letterwind.broker.conveyor.ConveyorFactory;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.ConveyorOperation;
+import com.georgen.letterwind.model.constants.FlowEvent;
 import com.georgen.letterwind.multihtreading.ThreadPool;
 
 import java.util.concurrent.*;
 
 public class MessageFlow {
-    private static final ConveyorFactory CONVEYOR_FACTORY = new ConveyorFactory();
     private static final ErrorStorage ERROR_STORAGE = new ErrorStorage();
 
     private MessageFlow(){}
 
-    public <T> void inform(Envelope<T> envelope, ConveyorOperation operation){
+    /**
+     * All message broker operations are routed via this method.
+     * Basically this is a decoupled extension of the MessageConveyor (chain of responsibility pattern implementation).
+     * This allows to configure number of threads available for the sending and receiving parts of the MessageConveyor.
+     * Also, it is handy for processing both local and remote calls.
+     */
+    public static <T> void inform(Envelope<T> envelope, FlowEvent operation){
         switch (operation){
-            case LOCAL_SEND: {
+            case DISPATCH: {
                 System.out.println(String.format("%s: %s", envelope.getTopicName(), operation.name()));
                 break;
             }
         }
     }
 
-    public <T> void startSend(Envelope<T> envelope) {
-        MessageConveyor<T> conveyor = CONVEYOR_FACTORY.createSendingConveyor(envelope);
+    public static <T> void startSend(Envelope<T> envelope) {
+        MessageConveyor<T> conveyor = ConveyorFactory.createSendingConveyor(envelope);
         Runnable runnable = getRunnable(conveyor, envelope);
         Future senderFuture = ThreadPool.getInstance().startSenderThread(runnable);
     }
@@ -33,7 +38,7 @@ public class MessageFlow {
 
     }
 
-    private <T> Runnable getRunnable(MessageConveyor<T> conveyor, Envelope<T> envelope){
+    private static <T> Runnable getRunnable(MessageConveyor<T> conveyor, Envelope<T> envelope){
         return () -> {
             try {
                 conveyor.process(envelope);

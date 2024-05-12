@@ -1,15 +1,17 @@
 package com.georgen.letterwind.model.transport;
 
+import com.georgen.letterwind.model.broker.Envelope;
+
 public class TransportEnvelope {
     private String topicName;
-    private String messageType;
+    private String messageTypeName;
     private String serializedMessage;
 
     public TransportEnvelope() {}
 
-    public TransportEnvelope(String topicName, String messageType, String serializedMessage) {
+    public TransportEnvelope(String topicName, String messageTypeName, String serializedMessage) {
         this.topicName = topicName;
-        this.messageType = messageType;
+        this.messageTypeName = messageTypeName;
         this.serializedMessage = serializedMessage;
     }
 
@@ -21,12 +23,12 @@ public class TransportEnvelope {
         this.topicName = topicName;
     }
 
-    public String getMessageType() {
-        return messageType;
+    public String getMessageTypeName() {
+        return messageTypeName;
     }
 
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
+    public void setMessageTypeName(String messageTypeName) {
+        this.messageTypeName = messageTypeName;
     }
 
     public String getSerializedMessage() {
@@ -35,5 +37,17 @@ public class TransportEnvelope {
 
     public void setSerializedMessage(String serializedMessage) {
         this.serializedMessage = serializedMessage;
+    }
+
+    public boolean isValid(){
+        return this.topicName != null && this.messageTypeName != null && this.serializedMessage != null;
+    }
+
+    public Envelope toRegularEnvelope(){
+        Envelope envelope = new Envelope();
+        envelope.setTopicName(this.topicName);
+        envelope.setMessageTypeName(this.messageTypeName);
+        envelope.setSerializedMessage(this.serializedMessage);
+        return envelope;
     }
 }

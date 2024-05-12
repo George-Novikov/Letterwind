@@ -19,8 +19,8 @@ public class TransportEnvelopeEncoder extends MessageToByteEncoder<TransportEnve
         output.writeInt(envelope.getTopicName().length());
         output.writeCharSequence(envelope.getTopicName(), UTF_8);
 
-        output.writeInt(envelope.getMessageType().length());
-        output.writeCharSequence(envelope.getMessageType(), UTF_8);
+        output.writeInt(envelope.getMessageTypeName().length());
+        output.writeCharSequence(envelope.getMessageTypeName(), UTF_8);
 
         output.writeInt(envelope.getSerializedMessage().length());
         output.writeCharSequence(envelope.getSerializedMessage(), UTF_8);

@@ -24,7 +24,7 @@ public class TransportEnvelopeDecoder extends ReplayingDecoder<TransportEnvelope
 
         int messageTypeLength = input.readInt();
         CharSequence messageTypeChars = input.readCharSequence(messageTypeLength, UTF_8);
-        if (messageTypeChars != null) envelope.setMessageType(messageTypeChars.toString());
+        if (messageTypeChars != null) envelope.setMessageTypeName(messageTypeChars.toString());
 
         int serializedMessageLength = input.readInt();
         CharSequence serializedMessageChars = input.readCharSequence(serializedMessageLength, UTF_8);

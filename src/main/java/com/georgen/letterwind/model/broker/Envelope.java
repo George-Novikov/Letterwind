@@ -1,40 +1,39 @@
 package com.georgen.letterwind.model.broker;
 
 import com.georgen.letterwind.api.LetterwindTopic;
+import com.georgen.letterwind.model.constants.Locality;
+import com.georgen.letterwind.model.transport.TransportEnvelope;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+
+import static com.georgen.letterwind.model.constants.Locality.*;
 
 public class Envelope<T> {
-    private String id;
-    private LocalDateTime creationDate;
+    private LocalDateTime creationTime;
     private T message;
     private String serializedMessage;
-    private Class messageType;
+    private String messageTypeName;
     private LetterwindTopic topic;
+    private String topicName;
+    private Locality locality;
 
+    public Envelope(){}
     public Envelope(T message, LetterwindTopic topic){
-        this.id = UUID.randomUUID().toString();
-        this.creationDate = LocalDateTime.now();
+        this.creationTime = LocalDateTime.now();
         this.message = message;
-        this.messageType = message.getClass();
+        this.messageTypeName = message.getClass().getSimpleName();
         this.topic = topic;
+        this.topicName = topic.getName();
+        this.locality = topic.hasRemoteConfig() ? REMOTE : LOCAL;
     }
 
-    public String getId() {
-        return id;
+    public LocalDateTime getCreationTime() {
+        return creationTime;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
 
     public T getMessage() {
@@ -53,12 +52,12 @@ public class Envelope<T> {
         this.serializedMessage = serializedMessage;
     }
 
-    public Class getMessageType() {
-        return messageType;
+    public String getMessageTypeName() {
+        return messageTypeName;
     }
 
-    public void setMessageType(Class messageType) {
-        this.messageType = messageType;
+    public void setMessageTypeName(String messageTypeName) {
+        this.messageTypeName = messageTypeName;
     }
 
     public LetterwindTopic getTopic() {
@@ -69,16 +68,44 @@ public class Envelope<T> {
         this.topic = topic;
     }
 
-    public String getTopicName(){
-        if (this.topic == null) return null;
-        return this.topic.getName();
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
+    }
+
+    public boolean isLocal(){
+        return LOCAL.equals(this.locality);
+    }
+
+    public boolean isRemote(){
+        return REMOTE.equals(this.locality);
+    }
+
+    public Class getMessageType() {
+        if (this.message == null) return null;
+        return message.getClass();
     }
 
     public boolean hasMessage(){
         return this.message != null;
     }
 
+    public boolean isValid(){
+        return hasMessage() && this.topic != null && this.topic.isValid() && this.locality != null ;
+    }
+
     public boolean isSerialized(){
         return this.serializedMessage != null && !this.serializedMessage.isEmpty();
+    }
+
+    public TransportEnvelope toTransportEnvelope(){
+        TransportEnvelope envelope = new TransportEnvelope();
+        envelope.setTopicName(this.topicName);
+        envelope.setMessageTypeName(this.messageTypeName);
+        envelope.setSerializedMessage(this.serializedMessage);
+        return envelope;
     }
 }

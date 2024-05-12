@@ -19,14 +19,13 @@ public class MessageBroker {
         Class messageType = message.getClass();
 
         LetterwindControls controls = LetterwindControls.getInstance();
-        MessageFlow messageFlow = MessageFlow.getInstance();
 
         Set<LetterwindTopic> topics = controls.getAllTopicsWithMessageType(messageType);
         if (topics == null) throw new LetterwindException("No registered topics with the specified message type were found.");
 
         for (LetterwindTopic topic : topics){
             Envelope<T> envelope = new Envelope<>(message, topic);
-            messageFlow.startSend(envelope);
+            MessageFlow.startSend(envelope);
         }
 
         return true;
@@ -47,7 +46,7 @@ public class MessageBroker {
         if (!topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
 
         Envelope<T> envelope = new Envelope<>(message, topic);
-        MessageFlow.getInstance().startSend(envelope);
+        MessageFlow.startSend(envelope);
 
         return true;
     }
@@ -61,7 +60,7 @@ public class MessageBroker {
         if (topic == null || !topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
 
         Envelope<T> envelope = new Envelope<>(message, topic);
-        MessageFlow.getInstance().startSend(envelope);
+        MessageFlow.startSend(envelope);
 
         return true;
     }

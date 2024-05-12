@@ -6,6 +6,7 @@ import com.georgen.letterwind.util.AnnotationGuard;
 import com.georgen.letterwind.util.Validator;
 import com.georgen.letterwind.util.extractors.MessageTypeExtractor;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class LetterwindTopic {
     }
     public LetterwindTopic(String name, Class... consumers){
         this(name);
-        this.consumers = new HashSet<>(List.of(consumers));
+        this.consumers = new HashSet<>(Arrays.asList(consumers));
     }
     public LetterwindTopic(String name,
                            Integer concurrencyLimit,
