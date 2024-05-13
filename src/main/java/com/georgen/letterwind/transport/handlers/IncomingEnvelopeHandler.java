@@ -12,6 +12,6 @@ public class IncomingEnvelopeHandler extends ChannelInboundHandlerAdapter {
         TransportEnvelope envelope = (TransportEnvelope) msg;
         if (envelope == null || !envelope.isValid()) return;
 
-        MessageFlow.inform(envelope.toRegularEnvelope(), FlowEvent.RECEPTION);
+        MessageFlow.push(envelope.toRegularEnvelope(), FlowEvent.RECEPTION);
     }
 }

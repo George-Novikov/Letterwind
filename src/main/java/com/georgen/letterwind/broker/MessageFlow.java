@@ -15,13 +15,17 @@ public class MessageFlow {
 
     /**
      * All message broker operations are routed via this method.
-     * Basically this is a decoupled extension of the MessageConveyor (chain of responsibility pattern implementation).
+     * Basically this is a decoupled extension of the MessageConveyor (chain of responsibility implementation).
      * This allows to configure number of threads available for the sending and receiving parts of the MessageConveyor.
      * Also, it is handy for processing both local and remote calls.
      */
-    public static <T> void inform(Envelope<T> envelope, FlowEvent operation){
+    public static <T> void push(Envelope<T> envelope, FlowEvent operation){
         switch (operation){
             case DISPATCH: {
+                System.out.println(String.format("%s: %s", envelope.getTopicName(), operation.name()));
+                break;
+            }
+            case RECEPTION: {
                 System.out.println(String.format("%s: %s", envelope.getTopicName(), operation.name()));
                 break;
             }
@@ -35,7 +39,9 @@ public class MessageFlow {
     }
 
     public <T> void startReceive(Envelope<T> envelope){
-
+        MessageConveyor<T> conveyor = ConveyorFactory.createReceivingConveyor(envelope);
+        Runnable runnable = getRunnable(conveyor, envelope);
+        Future senderFuture = ThreadPool.getInstance().startReceiverThread(runnable);
     }
 
     private static <T> Runnable getRunnable(MessageConveyor<T> conveyor, Envelope<T> envelope){

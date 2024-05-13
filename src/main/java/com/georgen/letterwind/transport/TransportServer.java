@@ -1,9 +1,11 @@
 package com.georgen.letterwind.transport;
 
+import com.georgen.letterwind.transport.encoding.TransportEnvelopeDecoder;
 import com.georgen.letterwind.transport.handlers.IncomingEnvelopeHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class TransportServer {
@@ -46,11 +48,12 @@ public class TransportServer {
         workerGroup.shutdownGracefully();
     }
 
-    private ChannelInitializer getChildHandler(){
-        return new ChannelInitializer() {
+    private ChannelInitializer<SocketChannel> getChildHandler(){
+        return new ChannelInitializer<SocketChannel>() {
             @Override
-            protected void initChannel(Channel channel) throws Exception {
+            protected void initChannel(SocketChannel channel) throws Exception {
                 channel.pipeline().addLast(
+                        new TransportEnvelopeDecoder(),
                         new IncomingEnvelopeHandler()
                 );
             }

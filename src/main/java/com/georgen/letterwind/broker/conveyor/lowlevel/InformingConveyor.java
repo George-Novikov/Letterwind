@@ -1,6 +1,5 @@
 package com.georgen.letterwind.broker.conveyor.lowlevel;
 
-import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.model.broker.Envelope;
@@ -16,7 +15,7 @@ public class InformingConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
 
-        MessageFlow.inform(envelope, operation);
+        MessageFlow.push(envelope, operation);
 
         if (hasConveyor()){
             this.getConveyor().process(envelope);

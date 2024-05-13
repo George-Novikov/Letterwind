@@ -37,6 +37,8 @@ public class SendingConveyor<T> extends MessageConveyor<T> {
     }
 
     public void setRemoteConveyor(Envelope<T> envelope){
+        MessageConveyor<T> validation = new ValidationConveyor<>();
+        MessageConveyor<T> serialization = new SerializationConveyor();
 
     }
 }
