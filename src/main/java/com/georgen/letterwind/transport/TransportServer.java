@@ -22,6 +22,7 @@ public class TransportServer {
         this.bootstrap = new ServerBootstrap();
         this.masterGroup = threadsLimit != 0 ? new NioEventLoopGroup(threadsLimit) : new NioEventLoopGroup();
         this.workerGroup = threadsLimit != 0 ? new NioEventLoopGroup(threadsLimit) : new NioEventLoopGroup();
+        run();
     }
 
     public void run(){

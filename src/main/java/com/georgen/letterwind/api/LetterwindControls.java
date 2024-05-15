@@ -1,6 +1,7 @@
 package com.georgen.letterwind.api;
 
 import com.georgen.letterwind.model.transport.RemoteServerConfig;
+import com.georgen.letterwind.model.transport.ServerConfig;
 import com.georgen.letterwind.util.Validator;
 
 import java.util.HashSet;
@@ -23,10 +24,18 @@ public class LetterwindControls {
     private int consumersLimit;
 
     /**
-     * Global remote server config — when set, all messages will be sent remotely.
+     * Global settings for listening messages from other Letterwind instances.
+     * */
+    private boolean isServerActive;
+    private int serverPort;
+
+    /**
+     * Global remote access config — when the host and port set, all messages will be sent to the remote Letterwind instance.
      * Only individual config within each LetterwindTopic can override this.
      * */
-    private RemoteServerConfig remoteConfig;
+    private String remoteHost;
+    private int remotePort;
+
 
     /** Registered topics. Unregistered ones will not participate in messaging. */
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
@@ -60,12 +69,36 @@ public class LetterwindControls {
         this.consumersLimit = consumersLimit;
     }
 
-    public RemoteServerConfig getRemoteConfig() {
-        return remoteConfig;
+    public boolean isServerActive() {
+        return isServerActive;
     }
 
-    public void setRemoteConfig(RemoteServerConfig remoteConfig) {
-        this.remoteConfig = remoteConfig;
+    public void setServerActive(boolean serverActive) {
+        isServerActive = serverActive;
+    }
+
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    public String getRemoteHost() {
+        return remoteHost;
+    }
+
+    public void setRemoteHost(String remoteHost) {
+        this.remoteHost = remoteHost;
+    }
+
+    public int getRemotePort() {
+        return remotePort;
+    }
+
+    public void setRemotePort(int remotePort) {
+        this.remotePort = remotePort;
     }
 
     public Map<String, LetterwindTopic> getTopics() {
@@ -124,8 +157,8 @@ public class LetterwindControls {
                 .orElse(null);
     }
 
-    public boolean hasRemoteConfig(){
-        return this.remoteConfig != null && this.remoteConfig.isValid();
+    public boolean hasRemoteListener(){
+        return Validator.isValid(this.remoteHost) && this.remotePort != 0;
     }
 
     private void addToMessageTypes(LetterwindTopic topic){

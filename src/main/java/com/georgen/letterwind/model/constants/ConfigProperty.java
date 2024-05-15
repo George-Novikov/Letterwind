@@ -7,6 +7,8 @@ public enum ConfigProperty {
     SENDING_THREADS("letterwind.concurrency.sending-threads", 10),
     RECEIVING_THREADS("letterwind.concurrency.receiving-threads", 10),
     CONSUMING_THREADS("letterwind.concurrency.consuming-threads", 50),
+    SERVER_PORT("letterwind.server.port", 17566),
+
     ;
 
     private String name;
