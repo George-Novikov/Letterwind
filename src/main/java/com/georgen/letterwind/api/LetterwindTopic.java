@@ -1,20 +1,19 @@
 package com.georgen.letterwind.api;
 
 import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.model.transport.RemoteServerConfig;
 import com.georgen.letterwind.util.AnnotationGuard;
 import com.georgen.letterwind.util.Validator;
 import com.georgen.letterwind.util.extractors.MessageTypeExtractor;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class LetterwindTopic {
     private String name;
     private Integer concurrencyLimit;
-    private RemoteServerConfig remoteConfig;
+    private String remoteHost;
+    private int remotePort;
     private Set<Class> consumers = new HashSet<>();
 
     public LetterwindTopic() {}
@@ -48,12 +47,20 @@ public class LetterwindTopic {
         this.concurrencyLimit = concurrencyLimit;
     }
 
-    public RemoteServerConfig getRemoteConfig() {
-        return remoteConfig;
+    public String getRemoteHost() {
+        return remoteHost;
     }
 
-    public void setRemoteConfig(RemoteServerConfig remoteConfig) {
-        this.remoteConfig = remoteConfig;
+    public void setRemoteHost(String remoteHost) {
+        this.remoteHost = remoteHost;
+    }
+
+    public int getRemotePort() {
+        return remotePort;
+    }
+
+    public void setRemotePort(int remotePort) {
+        this.remotePort = remotePort;
     }
 
     public Set<Class> getConsumers() {
@@ -82,8 +89,8 @@ public class LetterwindTopic {
         return messageTypes;
     }
 
-    public boolean hasRemoteConfig(){
-        return this.remoteConfig != null && this.remoteConfig.isValid();
+    public boolean hasRemoteListener(){
+        return Validator.isValid(this.remoteHost) && this.remotePort != 0;
     }
 
     public boolean isValid(){

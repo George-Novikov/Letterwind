@@ -1,7 +1,6 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.model.transport.RemoteServerConfig;
-import com.georgen.letterwind.model.transport.ServerConfig;
+import com.georgen.letterwind.transport.TransportLayer;
 import com.georgen.letterwind.util.Validator;
 
 import java.util.HashSet;

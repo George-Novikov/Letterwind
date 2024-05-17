@@ -3,7 +3,6 @@ package com.georgen.letterwind.model.broker;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.model.constants.Locality;
 import com.georgen.letterwind.model.transport.TransportEnvelope;
-import com.sun.org.apache.regexp.internal.RE;
 
 import java.time.LocalDateTime;
 
@@ -25,7 +24,7 @@ public class Envelope<T> {
         this.messageTypeName = message.getClass().getSimpleName();
         this.topic = topic;
         this.topicName = topic.getName();
-        this.locality = topic.hasRemoteConfig() ? REMOTE : LOCAL;
+        this.locality = topic.hasRemoteListener() ? REMOTE : LOCAL;
     }
 
     public LocalDateTime getCreationTime() {

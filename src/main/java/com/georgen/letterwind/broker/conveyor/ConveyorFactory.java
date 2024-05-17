@@ -11,11 +11,11 @@ public class ConveyorFactory {
 
     public static MessageConveyor createSendingConveyor(Envelope envelope){
         LetterwindTopic topic = envelope.getTopic();
-        return topic.hasRemoteConfig() ? new RemoteSendingConveyor<>() : new LocalSendingConveyor<>();
+        return topic.hasRemoteListener() ? new RemoteSendingConveyor<>() : new LocalSendingConveyor<>();
     }
 
     public static MessageConveyor createReceivingConveyor(Envelope envelope){
         LetterwindTopic topic = envelope.getTopic();
-        return topic.hasRemoteConfig() ? new RemoteReceivingConveyor() : new LocalReceivingConveyor();
+        return topic.hasRemoteListener() ? new RemoteReceivingConveyor() : new LocalReceivingConveyor();
     }
 }

@@ -1,5 +1,6 @@
 package com.georgen.letterwind.transport;
 
+import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.model.transport.TransportEnvelope;
 import com.georgen.letterwind.transport.encoding.TransportEnvelopeEncoder;
 import io.netty.bootstrap.Bootstrap;
@@ -11,6 +12,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class TransportClient implements AutoCloseable {
     private String host;
     private int port;
+    private String topicName;
     private Bootstrap bootstrap;
     private EventLoopGroup workerGroup;
 
@@ -25,6 +27,11 @@ public class TransportClient implements AutoCloseable {
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .handler(getChannelInitializer());
+    }
+
+    public TransportClient(LetterwindTopic topic){
+        this(topic.getRemoteHost(), topic.getRemotePort());
+        this.topicName = topic.getName();
     }
 
     public void send(TransportEnvelope envelope) throws InterruptedException {
@@ -54,4 +61,8 @@ public class TransportClient implements AutoCloseable {
         };
     }
 
+    public boolean hasTopic(String topicName){
+        if (topicName == null || this.topicName == null) return false;
+        return topicName.equals(this.topicName);
+    }
 }
