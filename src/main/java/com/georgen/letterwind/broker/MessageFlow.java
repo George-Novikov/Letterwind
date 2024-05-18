@@ -19,29 +19,12 @@ public class MessageFlow {
      * This allows to configure number of threads available for the sending and receiving parts of the MessageConveyor.
      * Also, it is handy for processing both local and remote calls.
      */
-    public static <T> void push(Envelope<T> envelope, FlowEvent operation){
-        switch (operation){
-            case DISPATCH: {
-                System.out.println(String.format("%s: %s", envelope.getTopicName(), operation.name()));
-                break;
-            }
-            case RECEPTION: {
-                System.out.println(String.format("%s: %s", envelope.getTopicName(), operation.name()));
-                break;
-            }
-        }
-    }
+    public static <T> Future push(Envelope<T> envelope, FlowEvent event){
+        System.out.println(String.format("%s: %s", envelope.getTopicName(), event.name()));
 
-    public static <T> void startSend(Envelope<T> envelope) {
-        MessageConveyor<T> conveyor = ConveyorFactory.createSendingConveyor(envelope);
+        MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(envelope, event);
         Runnable runnable = getRunnable(conveyor, envelope);
-        Future senderFuture = ThreadPool.getInstance().startSenderThread(runnable);
-    }
-
-    public <T> void startReceive(Envelope<T> envelope){
-        MessageConveyor<T> conveyor = ConveyorFactory.createReceivingConveyor(envelope);
-        Runnable runnable = getRunnable(conveyor, envelope);
-        Future senderFuture = ThreadPool.getInstance().startReceiverThread(runnable);
+        return ThreadPool.getInstance().startThreadForEvent(runnable, event);
     }
 
     private static <T> Runnable getRunnable(MessageConveyor<T> conveyor, Envelope<T> envelope){

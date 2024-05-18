@@ -3,6 +3,7 @@ package com.georgen.letterwind.multihtreading;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.config.Configuration;
 import com.georgen.letterwind.model.constants.ConfigProperty;
+import com.georgen.letterwind.model.constants.FlowEvent;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,23 +18,39 @@ public class ThreadPool {
     private ThreadPool(){}
 
     public boolean isInit() {
-        return isInit;
+        return isInit
+                && consumerExecutor != null;
+    }
+
+    public Future startThreadForEvent(Runnable runnable, FlowEvent event){
+        switch (event){
+            case DISPATCH: {
+                return startSenderThread(runnable);
+            }
+            case RECEPTION: {
+                return startReceiverThread(runnable);
+            }
+            case CONSUMPTION: {
+                return startConsumerThread(runnable);
+            }
+            default: {
+                return null;
+            }
+        }
     }
 
     public Future startSenderThread(Runnable runnable){
         return this.senderExecutor.submit(runnable);
     }
 
-    public Future startReceiverThread(Runnable runnable){
-        return this.receiverExecutor.submit(runnable);
-    }
+    public Future startReceiverThread(Runnable runnable){ return this.receiverExecutor.submit(runnable); }
 
     public Future startConsumerThread(Runnable runnable){
         return this.consumerExecutor.submit(runnable);
     }
 
     private void init(){
-        if (isInit) return;
+        if (isInit()) return;
 
         LetterwindControls controls = LetterwindControls.getInstance();
         Configuration config = Configuration.getInstance();

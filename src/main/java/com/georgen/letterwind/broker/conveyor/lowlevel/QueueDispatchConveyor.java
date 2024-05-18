@@ -15,7 +15,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Set;
 
-public class QueueingConveyor<T> extends MessageConveyor<T> {
+public class QueueDispatchConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
         String message = envelope.getSerializedMessage();

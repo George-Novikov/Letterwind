@@ -4,7 +4,7 @@ package com.georgen.letterwind;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
-import com.georgen.letterwind.api.MessageBroker;
+import com.georgen.letterwind.broker.MessageBroker;
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
@@ -26,6 +26,8 @@ public class Application {
         try {
 
             LetterwindTopic topic = new LetterwindTopic("SampleTopic", CONSUMERS);
+            topic.setRemoteHost("localhost");
+            topic.setRemotePort(8080);
 
             LetterwindControls.getInstance().registerTopic(topic);
 
