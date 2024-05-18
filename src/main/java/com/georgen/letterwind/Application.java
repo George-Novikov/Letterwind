@@ -21,19 +21,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Application {
     private static final Class[] CONSUMERS = { SampleConsumer.class };
 
-
     public static void main(String[] args){
         try {
 
-            LetterwindTopic topic = new LetterwindTopic("SampleTopic", CONSUMERS);
-            topic.setRemoteHost("localhost");
-            topic.setRemotePort(8080);
+            LetterwindTopic topic = LetterwindTopic.build()
+                    .setName("SampleTopic")
+                    .setConsumers(CONSUMERS);
+//                    .setRemoteHost("localhost")
+//                    .setRemotePort(8080);
 
             LetterwindControls.getInstance().registerTopic(topic);
 
-            @LetterwindMessage String message = "How are you?";
-
+            SampleMessage message = new SampleMessage();
+            message.setValue("How are you?");
             MessageBroker.send(message);
+
+
+
 
         } catch (Exception e){
             log(e.getMessage());

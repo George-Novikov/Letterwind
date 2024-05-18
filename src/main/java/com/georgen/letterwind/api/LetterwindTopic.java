@@ -7,6 +7,7 @@ import com.georgen.letterwind.util.extractors.MessageTypeExtractor;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class LetterwindTopic {
@@ -35,45 +36,58 @@ public class LetterwindTopic {
         return name;
     }
 
-    public void setName(String name) {
+    public LetterwindTopic setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Integer getConcurrencyLimit() {
         return concurrencyLimit;
     }
 
-    public void setConcurrencyLimit(Integer concurrencyLimit) {
+    public LetterwindTopic setConcurrencyLimit(Integer concurrencyLimit) {
         this.concurrencyLimit = concurrencyLimit;
+        return this;
     }
 
     public String getRemoteHost() {
         return remoteHost;
     }
 
-    public void setRemoteHost(String remoteHost) {
+    public LetterwindTopic setRemoteHost(String remoteHost) {
         this.remoteHost = remoteHost;
+        return this;
     }
 
     public int getRemotePort() {
         return remotePort;
     }
 
-    public void setRemotePort(int remotePort) {
+    public LetterwindTopic setRemotePort(int remotePort) {
         this.remotePort = remotePort;
+        return this;
     }
 
     public Set<Class> getConsumers() {
         return consumers;
     }
 
-    public void setConsumers(Set<Class> consumers) {
-        this.consumers = consumers;
+    public LetterwindTopic setConsumers(Class... consumers) {
+        if (this.consumers == null) this.consumers = new HashSet<>();
+        List<Class> consumersList = Arrays.asList(consumers);
+        this.consumers.addAll(consumersList);
+        return this;
     }
 
-    public void addConsumer(Class consumerClass) throws LetterwindException {
+    public LetterwindTopic setConsumers(Set<Class> consumers) {
+        this.consumers = consumers;
+        return this;
+    }
+
+    public LetterwindTopic addConsumer(Class consumerClass) throws LetterwindException {
         AnnotationGuard.validateConsumer(consumerClass);
         this.consumers.add(consumerClass);
+        return this;
     }
 
     public boolean removeConsumer(Class consumer){
@@ -100,4 +114,6 @@ public class LetterwindTopic {
     public boolean hasConcurrencyLimit(){
         return this.concurrencyLimit != null && this.concurrencyLimit > 0;
     }
+
+    public static LetterwindTopic build(){ return new LetterwindTopic(); }
 }

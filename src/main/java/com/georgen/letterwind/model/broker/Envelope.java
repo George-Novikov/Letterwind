@@ -75,6 +75,14 @@ public class Envelope<T> {
         this.topicName = topicName;
     }
 
+    public Locality getLocality() {
+        return locality;
+    }
+
+    public void setLocality(Locality locality) {
+        this.locality = locality;
+    }
+
     public boolean isLocal(){
         return LOCAL.equals(this.locality);
     }

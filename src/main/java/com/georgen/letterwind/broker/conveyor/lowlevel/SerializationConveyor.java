@@ -23,6 +23,8 @@ public class SerializationConveyor<T> extends MessageConveyor<T> {
 
             String serializedMessage = serializer.serialize(message);
             envelope.setSerializedMessage(serializedMessage);
+        } else {
+            envelope.setSerializedMessage((String) message);
         }
 
         if (hasConveyor()){

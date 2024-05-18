@@ -2,6 +2,7 @@ package com.georgen.letterwind.broker.conveyor;
 
 import com.georgen.letterwind.model.broker.Envelope;
 
+/** Chain of responsibility */
 public abstract class MessageConveyor<T> {
     private MessageConveyor conveyor;
 

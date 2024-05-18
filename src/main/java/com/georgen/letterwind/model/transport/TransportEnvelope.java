@@ -1,6 +1,9 @@
 package com.georgen.letterwind.model.transport;
 
 import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.constants.Locality;
+
+import java.time.LocalDateTime;
 
 public class TransportEnvelope {
     private String topicName;
@@ -43,11 +46,13 @@ public class TransportEnvelope {
         return this.topicName != null && this.messageTypeName != null && this.serializedMessage != null;
     }
 
-    public Envelope toRegularEnvelope(){
+    public Envelope toRegularEnvelope(Locality locality){
         Envelope envelope = new Envelope();
+        envelope.setCreationTime(LocalDateTime.now());
         envelope.setTopicName(this.topicName);
         envelope.setMessageTypeName(this.messageTypeName);
         envelope.setSerializedMessage(this.serializedMessage);
+        envelope.setLocality(locality);
         return envelope;
     }
 }

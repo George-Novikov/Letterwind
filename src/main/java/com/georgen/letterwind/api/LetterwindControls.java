@@ -1,6 +1,5 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.transport.TransportLayer;
 import com.georgen.letterwind.util.Validator;
 
 import java.util.HashSet;
@@ -40,7 +39,10 @@ public class LetterwindControls {
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
 
     /** Message types mapped to the names of all registered topics */
-    private Map<Class, Set<String>> messageTypeMap = new ConcurrentHashMap();
+    private Map<Class, Set<String>> messageTypeTopicsMap = new ConcurrentHashMap();
+
+    /** To quickly find a message type by its simple class name. */
+    private Map<String, Class> messageTypes = new ConcurrentHashMap<>();
 
     private LetterwindControls(){}
 
@@ -48,77 +50,86 @@ public class LetterwindControls {
         return sendersLimit;
     }
 
-    public void setSendersLimit(int sendersLimit) {
+    public LetterwindControls setSendersLimit(int sendersLimit) {
         this.sendersLimit = sendersLimit;
+        return this;
     }
 
     public int getReceiversLimit() {
         return receiversLimit;
     }
 
-    public void setReceiversLimit(int receiversLimit) {
+    public LetterwindControls setReceiversLimit(int receiversLimit) {
         this.receiversLimit = receiversLimit;
+        return this;
     }
 
     public int getConsumersLimit() {
         return consumersLimit;
     }
 
-    public void setConsumersLimit(int consumersLimit) {
+    public LetterwindControls setConsumersLimit(int consumersLimit) {
         this.consumersLimit = consumersLimit;
+        return this;
     }
 
     public boolean isServerActive() {
         return isServerActive;
     }
 
-    public void setServerActive(boolean serverActive) {
+    public LetterwindControls setServerActive(boolean serverActive) {
         isServerActive = serverActive;
+        return this;
     }
 
     public int getServerPort() {
         return serverPort;
     }
 
-    public void setServerPort(int serverPort) {
+    public LetterwindControls setServerPort(int serverPort) {
         this.serverPort = serverPort;
+        return this;
     }
 
     public String getRemoteHost() {
         return remoteHost;
     }
 
-    public void setRemoteHost(String remoteHost) {
+    public LetterwindControls setRemoteHost(String remoteHost) {
         this.remoteHost = remoteHost;
+        return this;
     }
 
     public int getRemotePort() {
         return remotePort;
     }
 
-    public void setRemotePort(int remotePort) {
+    public LetterwindControls setRemotePort(int remotePort) {
         this.remotePort = remotePort;
+        return this;
     }
 
     public Map<String, LetterwindTopic> getTopics() {
         return topics;
     }
 
-    public void setTopics(Map<String, LetterwindTopic> topics) {
+    public LetterwindControls setTopics(Map<String, LetterwindTopic> topics) {
         this.topics = topics;
+        return this;
     }
 
-    public Map<Class, Set<String>> getMessageTypeMap() {
-        return messageTypeMap;
+    public Map<Class, Set<String>> getMessageTypeTopicsMap() {
+        return messageTypeTopicsMap;
     }
 
-    public void setMessageTypeMap(Map<Class, Set<String>> messageTypeMap) {
-        this.messageTypeMap = messageTypeMap;
+    public void setMessageTypeTopicsMap(Map<Class, Set<String>> messageTypeTopicsMap) {
+        this.messageTypeTopicsMap = messageTypeTopicsMap;
     }
 
-    public void registerTopic(LetterwindTopic topic) throws Exception {
+    public LetterwindControls registerTopic(LetterwindTopic topic) throws Exception {
         topics.put(topic.getName(), topic);
         addToMessageTypes(topic);
+        return this;
     }
 
     public boolean unregisterTopic(String topicName) throws Exception {
@@ -138,7 +149,7 @@ public class LetterwindControls {
 
     public Set<LetterwindTopic> getAllTopicsWithMessageType(Class messageType){
         Set<LetterwindTopic> responseTopics = new HashSet<>();
-        Set<String> topicNames = messageTypeMap.get(messageType);
+        Set<String> topicNames = messageTypeTopicsMap.get(messageType);
         if (topicNames == null) return null;
         for (String topicName : topicNames){
             LetterwindTopic topic = this.topics.get(topicName);
@@ -149,11 +160,7 @@ public class LetterwindControls {
 
     public Class getMessageTypeBySimpleName(String messageTypeSimpleName){
         if (!Validator.isValid(messageTypeSimpleName)) return null;
-        return this.messageTypeMap.keySet()
-                .stream()
-                .filter(javaClass -> messageTypeSimpleName.equals(javaClass.getSimpleName()))
-                .findFirst()
-                .orElse(null);
+        return this.messageTypes.get(messageTypeSimpleName);
     }
 
     public boolean hasRemoteListener(){
@@ -164,10 +171,11 @@ public class LetterwindControls {
         Set<Class> messageTypes = topic.getConsumerMessageTypes();
 
         for (Class messageType : messageTypes){
-            Set<String> topicNames = this.messageTypeMap.get(messageType);
+            Set<String> topicNames = this.messageTypeTopicsMap.get(messageType);
             if (topicNames == null) topicNames = new HashSet<>();
             topicNames.add(topic.getName());
-            this.messageTypeMap.put(messageType, topicNames);
+            this.messageTypeTopicsMap.put(messageType, topicNames);
+            this.messageTypes.put(messageType.getSimpleName(), messageType);
         }
     }
 
@@ -175,8 +183,9 @@ public class LetterwindControls {
         Set<Class> messageTypes = topic.getConsumerMessageTypes();
 
         for (Class messageType : messageTypes){
-            Set<String> topicNames = this.messageTypeMap.get(messageType);
+            Set<String> topicNames = this.messageTypeTopicsMap.get(messageType);
             if (topicNames != null) topicNames.remove(topic.getName());
+            // For safety reasons nothing is removed from messageTypes map since @LetterwindMessage can be reused between consumers
         }
     }
 
