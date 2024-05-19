@@ -25,7 +25,7 @@ public class FileFactory {
 
         File file = new File(path);
         if (isCreated && !file.exists()) file = createFile(file);
-        if (file.exists()) fileCache.put(path, file);
+        fileCache.put(path, file);
 
         return file;
     }

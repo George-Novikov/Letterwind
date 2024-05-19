@@ -30,14 +30,16 @@ public class Application {
 //                    .setRemoteHost("localhost")
 //                    .setRemotePort(8080);
 
-            LetterwindControls.getInstance().registerTopic(topic);
+            LetterwindControls.getInstance()
+                    .registerTopic(topic)
+                    .setSendersLimit(20)
+                    .setReceiversLimit(20);
 
-            SampleMessage message = new SampleMessage();
-            message.setValue("How are you?");
-            MessageBroker.send(message);
-
-
-
+            for (int i = 0; i < 50; i++){
+                SampleMessage message = new SampleMessage();
+                message.setValue("How are you?");
+                MessageBroker.send(message);
+            }
 
         } catch (Exception e){
             log(e.getMessage());

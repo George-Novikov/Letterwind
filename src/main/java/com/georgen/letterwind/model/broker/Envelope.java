@@ -5,10 +5,12 @@ import com.georgen.letterwind.model.constants.Locality;
 import com.georgen.letterwind.model.transport.TransportEnvelope;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static com.georgen.letterwind.model.constants.Locality.*;
 
 public class Envelope<T> {
+    private String id;
     private LocalDateTime creationTime;
     private T message;
     private String serializedMessage;
@@ -19,6 +21,7 @@ public class Envelope<T> {
 
     public Envelope(){}
     public Envelope(T message, LetterwindTopic topic){
+        this.id = UUID.randomUUID().toString();
         this.creationTime = LocalDateTime.now();
         this.message = message;
         this.messageTypeName = message.getClass().getSimpleName();
@@ -26,6 +29,10 @@ public class Envelope<T> {
         this.topicName = topic.getName();
         this.locality = topic.hasRemoteListener() ? REMOTE : LOCAL;
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public LocalDateTime getCreationTime() {
         return creationTime;

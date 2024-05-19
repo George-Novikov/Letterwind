@@ -12,7 +12,7 @@ public class DispatchConveyor<T> extends MessageConveyor<T> {
 
         MessageConveyor<T> validation = new ValidationConveyor<>();
         MessageConveyor<T> serialization = new SerializationConveyor();
-        MessageConveyor<T> dispatch = envelope.isRemote() ? new RemoteDispatchConveyor<>() : new QueueDispatchConveyor();
+        MessageConveyor<T> dispatch = envelope.isRemote() ? new RemoteDispatchConveyor<>() : new QueueWritingConveyor();
         MessageConveyor<T> informing = new InformingConveyor(FlowEvent.RECEPTION);
 
         this.setConveyor(validation);

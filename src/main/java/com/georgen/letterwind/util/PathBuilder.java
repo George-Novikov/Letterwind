@@ -1,11 +1,18 @@
 package com.georgen.letterwind.util;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class PathBuilder {
 
     public static String concatenate(String parentPath, String childPath){
         return String.format("%s%s%s", parentPath, File.separator, childPath);
+    }
+
+    public static String concatenate(String... paths){
+        if (paths == null || paths.length < 1) return File.separator;
+        return Arrays.stream(paths).collect(Collectors.joining(File.separator));
     }
 
     public static String formatSeparators(String string){

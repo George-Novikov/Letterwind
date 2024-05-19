@@ -8,7 +8,7 @@ import com.georgen.letterwind.model.constants.FlowEvent;
 public class ReceptionConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
-        if (envelope == null || !envelope.isValid()) return;
+        if (envelope == null) return;
 
         if (envelope.isRemote()){
             setRemoteReceptionConveyor();
@@ -34,7 +34,7 @@ public class ReceptionConveyor<T> extends MessageConveyor<T> {
     }
 
     private void setRemoteReceptionConveyor(){
-        MessageConveyor<T> queueing = new QueueDispatchConveyor<>(); // This might be confusing but message persistence is important
+        MessageConveyor<T> queueing = new QueueWritingConveyor<>(); // This might be confusing but message persistence is important
         MessageConveyor<T> retrieving = new QueueRetrievingConveyor<>();
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
         MessageConveyor<T> consuming = new ConsumerInvokingConveyor<>();

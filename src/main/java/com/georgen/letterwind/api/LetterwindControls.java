@@ -1,7 +1,9 @@
 package com.georgen.letterwind.api;
 
+import com.georgen.letterwind.broker.counters.MessageCounter;
 import com.georgen.letterwind.util.Validator;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -167,7 +169,7 @@ public class LetterwindControls {
         return Validator.isValid(this.remoteHost) && this.remotePort != 0;
     }
 
-    private void addToMessageTypes(LetterwindTopic topic){
+    private void addToMessageTypes(LetterwindTopic topic) throws IOException {
         Set<Class> messageTypes = topic.getConsumerMessageTypes();
 
         for (Class messageType : messageTypes){
@@ -176,6 +178,7 @@ public class LetterwindControls {
             topicNames.add(topic.getName());
             this.messageTypeTopicsMap.put(messageType, topicNames);
             this.messageTypes.put(messageType.getSimpleName(), messageType);
+            MessageCounter.initForAllTopics(messageType, topicNames);
         }
     }
 
