@@ -1,6 +1,6 @@
 package com.georgen.letterwind.api;
 
-import com.georgen.letterwind.broker.counters.MessageCounter;
+import com.georgen.letterwind.broker.ordering.MessageOrderManager;
 import com.georgen.letterwind.util.Validator;
 
 import java.io.IOException;
@@ -178,7 +178,7 @@ public class LetterwindControls {
             topicNames.add(topic.getName());
             this.messageTypeTopicsMap.put(messageType, topicNames);
             this.messageTypes.put(messageType.getSimpleName(), messageType);
-            MessageCounter.initForAllTopics(messageType, topicNames);
+            MessageOrderManager.initForAllTopics(messageType, topicNames);
         }
     }
 

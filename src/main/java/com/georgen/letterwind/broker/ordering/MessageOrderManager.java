@@ -1,8 +1,7 @@
-package com.georgen.letterwind.broker.counters;
+package com.georgen.letterwind.broker.ordering;
 
 import com.georgen.letterwind.config.Configuration;
 import com.georgen.letterwind.io.FileFactory;
-import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;
@@ -16,8 +15,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.StreamSupport;
 
-public class MessageCounter {
-    private MessageCounter(){}
+public class MessageOrderManager {
+    private MessageOrderManager(){}
 
     public static void initForAllTopics(Class messageType, Set<String> topicNames) throws IOException {
         for (String topicName : topicNames){
@@ -33,7 +32,7 @@ public class MessageCounter {
         }
     }
 
-    public static long countForPath(String messageTypePath) throws IOException, LetterwindException {
+    public static long assign(String messageTypePath) throws IOException {
         AtomicLong counter = MessageCounterHolder.COUNTERS.get(messageTypePath);
         if (counter != null) return counter.incrementAndGet();
         counter = initCounter(messageTypePath);
@@ -59,11 +58,11 @@ public class MessageCounter {
     }
 
     private static class MessageCounterHolder {
-        private static final MessageCounter INSTANCE = new MessageCounter();
+        private static final MessageOrderManager INSTANCE = new MessageOrderManager();
         private static final ConcurrentMap<String, AtomicLong> COUNTERS = new ConcurrentHashMap<>();
     }
 
-    public static MessageCounter getInstance(){
+    public static MessageOrderManager getInstance(){
         return MessageCounterHolder.INSTANCE;
     }
 }

@@ -1,7 +1,7 @@
 package com.georgen.letterwind.broker.conveyor.lowlevel;
 
 import com.georgen.letterwind.api.LetterwindTopic;
-import com.georgen.letterwind.broker.counters.MessageCounter;
+import com.georgen.letterwind.broker.ordering.MessageOrderManager;
 import com.georgen.letterwind.io.FileIOManager;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
@@ -30,8 +30,8 @@ public class QueueWritingConveyor<T> extends MessageConveyor<T> {
                 envelope.getMessageTypeName()
         );
 
-        long count = MessageCounter.countForPath(messageTypePath);
-        String messageFileName = String.format("%s-%s", count, messageID);
+        long order = MessageOrderManager.assign(messageTypePath);
+        String messageFileName = String.format("%s-%s", order, messageID);
         String messagePath = PathBuilder.concatenate(messageTypePath, messageFileName);
 
         try (FileOperation fileOperation = new FileOperation(messagePath, true)){
