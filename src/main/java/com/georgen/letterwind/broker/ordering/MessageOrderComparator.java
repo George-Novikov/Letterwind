@@ -1,5 +1,6 @@
 package com.georgen.letterwind.broker.ordering;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.Comparator;
 
@@ -14,7 +15,9 @@ public class MessageOrderComparator implements Comparator<Path> {
 
     private long extractOrderNumber(Path path){
         String stringPath = path.toString();
-        String[] parts = stringPath.split("-");
+        int separatorIndex = stringPath.lastIndexOf(File.separator);
+        String fileName = stringPath.substring(++separatorIndex);
+        String[] parts = fileName.split("-");
         if (parts.length < 2) return 0;
         return Long.valueOf(parts[0]);
     }

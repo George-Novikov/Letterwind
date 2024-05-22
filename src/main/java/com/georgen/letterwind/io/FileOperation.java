@@ -1,5 +1,6 @@
 package com.georgen.letterwind.io;
 
+import com.georgen.letterwind.broker.ordering.MessageOrderComparator;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 
 import java.io.File;
@@ -10,6 +11,7 @@ import java.nio.file.Path;
 import java.util.stream.StreamSupport;
 
 public class FileOperation implements AutoCloseable {
+    private static final MessageOrderComparator MESSAGE_ORDER_COMPARATOR = new MessageOrderComparator();
     private FileFactory fileFactoryInstance;
     private File file;
 
@@ -24,6 +26,22 @@ public class FileOperation implements AutoCloseable {
 
     public File getFile(){
         return this.file;
+    }
+
+    public File getFirstFromDirectory() throws Exception {
+        if (!this.file.isDirectory()) throw new LetterwindException("The requested path is not a directory.");
+
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(this.file.toPath())){
+            Path firstMessagePath = StreamSupport
+                    .stream(directoryStream.spliterator(), false)
+                    .sorted(MESSAGE_ORDER_COMPARATOR)
+                    .findFirst()
+                    .orElse(null);
+
+            if (firstMessagePath == null) return null;
+
+            return firstMessagePath.toFile();
+        }
     }
 
     public boolean delete() {
