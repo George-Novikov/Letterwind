@@ -122,4 +122,18 @@ public class Envelope<T> {
         envelope.setSerializedMessage(this.serializedMessage);
         return envelope;
     }
+
+    @Override
+    public String toString() {
+        return "Envelope{" +
+                "id='" + id + '\'' +
+                ", creationTime=" + creationTime +
+                ", message=" + message +
+                ", serializedMessage='" + serializedMessage + '\'' +
+                ", messageTypeName='" + messageTypeName + '\'' +
+                ", topic=" + topic +
+                ", topicName='" + topicName + '\'' +
+                ", locality=" + locality +
+                '}';
+    }
 }

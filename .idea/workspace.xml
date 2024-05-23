@@ -7,9 +7,10 @@
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/MessageOrderComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/MessageOrderComparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/extractors/MessageSerializerExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/extractors/MessageSerializerExtractor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +140,9 @@
       <workItem from="1716265384016" duration="276000" />
       <workItem from="1716310867816" duration="1835000" />
       <workItem from="1716351742535" duration="97000" />
-      <workItem from="1716396213948" duration="4594000" />
+      <workItem from="1716396213948" duration="5165000" />
+      <workItem from="1716437479180" duration="29000" />
+      <workItem from="1716483878283" duration="4611000" />
     </task>
     <servers />
   </component>
@@ -161,9 +164,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

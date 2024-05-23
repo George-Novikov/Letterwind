@@ -21,21 +21,21 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
 
         restoreEnvelopeTopic(envelope);
         String messagePath = getMessagePath(envelope);
+
+        /**
+         * The following solution might seem counterintuitive, but here's the gist:
+         * - The received message was sent asynchronously in a multithreaded environment.
+         * - Before entering the reception conveyor it was assigned an order number and stored in a queue file.
+         * - So if an asynchronously received message was processed immediately, it could negate the sequencing process.
+         * - Thus, a received message serves as an event to trigger the retrieving process of the next message in its order.
+         * */
         String firstMessage = getFirstMessage(messagePath);
         if (firstMessage == null) return;
-
         envelope.setSerializedMessage(firstMessage);
-        System.out.println("Message retrieved from the : " + envelope.getSerializedMessage());
 
         if (hasConveyor()){
             this.getConveyor().process(envelope);
         }
-    }
-
-    private Class<T> getMessageType(String messageTypeName, LetterwindControls controls) throws LetterwindException {
-        Class<T> messageType = controls.getMessageTypeBySimpleName(messageTypeName);
-        if (messageType == null) throw new LetterwindException(String.format("There is no registered consumer with the %s message type.", messageTypeName));
-        return messageType;
     }
 
     private void restoreEnvelopeTopic(Envelope<T> envelope) throws LetterwindException {
