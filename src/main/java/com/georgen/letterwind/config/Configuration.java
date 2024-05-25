@@ -37,11 +37,21 @@ public class Configuration {
 
     public String getExchangePath() {
         try {
-            String entitiesPath = this.configReader.getProperty(EXCHANGE_PATH);
-            boolean isValidPath = Validator.isValid(entitiesPath);
-            return getPathRelativeToRoot(isValidPath ? entitiesPath : EXCHANGE_PATH.getDefaultValue());
+            String exchangePath = this.configReader.getProperty(EXCHANGE_PATH);
+            boolean isValidPath = Validator.isValid(exchangePath);
+            return getPathRelativeToRoot(isValidPath ? exchangePath : EXCHANGE_PATH.getDefaultValue());
         } catch (Exception e){
             return EXCHANGE_PATH.getDefaultValue();
+        }
+    }
+
+    public String getBufferPath() {
+        try {
+            String bufferPath = this.configReader.getProperty(BUFFER_PATH);
+            boolean isValidPath = Validator.isValid(bufferPath);
+            return getPathRelativeToRoot(isValidPath ? bufferPath : BUFFER_PATH.getDefaultValue());
+        } catch (Exception e){
+            return BUFFER_PATH.getDefaultValue();
         }
     }
 

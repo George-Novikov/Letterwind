@@ -3,12 +3,12 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
-import com.georgen.letterwind.config.Configuration;
 import com.georgen.letterwind.io.FileIOManager;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.PathBuilder;
+import com.georgen.letterwind.util.Validator;
 
 import java.io.File;
 
@@ -20,18 +20,8 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
         System.out.println("Message received: " + envelope.getSerializedMessage());
 
         restoreEnvelopeTopic(envelope);
-        String messagePath = getMessagePath(envelope);
-
-        /**
-         * The following solution might seem counterintuitive, but here's the gist:
-         * - The received message was sent asynchronously in a multithreaded environment.
-         * - Before entering the reception conveyor it was assigned an order number and stored in a queue file.
-         * - So if an asynchronously received message was processed immediately, it could negate the sequencing process.
-         * - Thus, a received message serves as an event to trigger the retrieving process of the next message in its order.
-         * */
-        String firstMessage = getFirstMessage(messagePath);
-        if (firstMessage == null) return;
-        envelope.setSerializedMessage(firstMessage);
+        retrieveMessage(envelope);
+        if (!envelope.hasSerializedMessage()) return;
 
         if (hasConveyor()){
             this.getConveyor().process(envelope);
@@ -45,18 +35,28 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
         envelope.setTopic(topic);
     }
 
-    private String getMessagePath(Envelope<T> envelope){
-        String exchangePath = Configuration.getInstance().getExchangePath();
-        String topicName = envelope.getTopicName();
-        String messageTypeName = envelope.getMessageTypeName();
-        return PathBuilder.concatenate(exchangePath, topicName, messageTypeName);
-    }
+    /**
+     * <p> The following solution might seem counterintuitive, but here's the gist: </p>
+     * <p> - The received message was sent asynchronously in a multithreaded environment. </p>
+     * <p> - Before entering the reception conveyor it was assigned an order number and stored in a queue file. </p>
+     * <p> - So if an asynchronously received message was processed immediately, it could negate the sequencing process. </p>
+     * <p> - Thus, a received message serves as an event to trigger the retrieving process of the next message in its order. </p>
+     * */
+    private void retrieveMessage(Envelope<T> envelope) throws Exception {
+        String messageExchangePath = PathBuilder.getExchangePath(envelope);
 
-    private String getFirstMessage(String messagePath) throws Exception {
-        try (FileOperation operation = new FileOperation(messagePath)){
+        try (FileOperation operation = new FileOperation(messageExchangePath)){
             File firstMessageFile = operation.getFirstFromDirectory();
-            System.out.println(firstMessageFile.getName());
-            return firstMessageFile == null ? null : FileIOManager.read(firstMessageFile);
+            if (firstMessageFile == null) return;
+
+            operation.cache(firstMessageFile);
+            String messageFileContents = FileIOManager.read(firstMessageFile);
+            if (!Validator.isValid(messageFileContents)) return;
+
+            envelope.setSerializedMessage(messageFileContents);
+            envelope.setBufferedFileName(firstMessageFile.getName());
+
+            operation.delete(firstMessageFile);
         }
     }
 }

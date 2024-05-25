@@ -19,6 +19,8 @@ public class ThreadPool {
 
     public boolean isInit() {
         return isInit
+                && senderExecutor != null
+                && receiverExecutor != null
                 && consumerExecutor != null;
     }
 

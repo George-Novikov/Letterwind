@@ -1,9 +1,9 @@
-package com.georgen.letterwind.model.settings.yaml;
+package com.georgen.letterwind.model.config.yaml;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.georgen.letterwind.model.constants.ConfigProperty;
-import com.georgen.letterwind.model.settings.LetterwindProperties;
+import com.georgen.letterwind.model.config.LetterwindProperties;
 
 public class YamlProperties extends LetterwindProperties {
     private LetterwindNode letterwind;

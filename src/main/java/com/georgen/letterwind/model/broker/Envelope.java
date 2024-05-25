@@ -3,6 +3,7 @@ package com.georgen.letterwind.model.broker;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.model.constants.Locality;
 import com.georgen.letterwind.model.transport.TransportEnvelope;
+import com.georgen.letterwind.util.Validator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,7 +18,9 @@ public class Envelope<T> {
     private String messageTypeName;
     private LetterwindTopic topic;
     private String topicName;
+    private String bufferedFileName;
     private Locality locality;
+    private Exception exception;
 
     public Envelope(){}
     public Envelope(T message, LetterwindTopic topic){
@@ -82,12 +85,28 @@ public class Envelope<T> {
         this.topicName = topicName;
     }
 
+    public String getBufferedFileName() {
+        return bufferedFileName;
+    }
+
+    public void setBufferedFileName(String bufferedFileName) {
+        this.bufferedFileName = bufferedFileName;
+    }
+
     public Locality getLocality() {
         return locality;
     }
 
     public void setLocality(Locality locality) {
         this.locality = locality;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
     }
 
     public boolean isLocal(){
@@ -98,13 +117,11 @@ public class Envelope<T> {
         return REMOTE.equals(this.locality);
     }
 
-    public Class getMessageType() {
-        if (this.message == null) return null;
-        return message.getClass();
-    }
-
     public boolean hasMessage(){
         return this.message != null;
+    }
+    public boolean hasSerializedMessage(){
+        return Validator.isValid(this.serializedMessage);
     }
 
     public boolean isValid(){

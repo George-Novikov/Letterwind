@@ -1,9 +1,9 @@
-package com.georgen.letterwind.model.settings.regular;
+package com.georgen.letterwind.model.config.regular;
 
 
 
 import com.georgen.letterwind.model.constants.ConfigProperty;
-import com.georgen.letterwind.model.settings.LetterwindProperties;
+import com.georgen.letterwind.model.config.LetterwindProperties;
 
 import java.io.IOException;
 import java.io.InputStream;

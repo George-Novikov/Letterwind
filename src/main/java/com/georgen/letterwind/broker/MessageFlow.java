@@ -10,14 +10,12 @@ import java.time.LocalDateTime;
 import java.util.concurrent.*;
 
 public class MessageFlow {
-    private static final ErrorStorage ERROR_STORAGE = new ErrorStorage();
-
     private MessageFlow(){}
 
     /**
      * All message broker operations are routed via this method.
      * Basically this is a decoupled extension of the MessageConveyor (chain of responsibility implementation).
-     * This method breaks the conveying process in two (or more) parts — dispatch and reception.
+     * This method breaks the process in two phases — dispatch and reception.
      * This approach allows you to configure the number of threads available for each part.
      * Also, it is handy for processing both local and remote calls.
      */
@@ -35,7 +33,8 @@ public class MessageFlow {
             try {
                 conveyor.process(envelope);
             } catch (Exception e) {
-                ERROR_STORAGE.register(envelope, e);
+                envelope.setException(e);
+                push(envelope, FlowEvent.ERROR);
             }
         };
     }

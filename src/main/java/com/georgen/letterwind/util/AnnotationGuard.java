@@ -16,7 +16,7 @@ public class AnnotationGuard {
         }
     }
 
-    public static void validateMessage(Class messageClass) throws LetterwindException {
+    public static void validateMessageClass(Class messageClass) throws LetterwindException {
         if (!messageClass.isAnnotationPresent(LetterwindMessage.class)){
             throw new LetterwindException("The message class must be marked with the LetterwindMessage annotation.");
         }

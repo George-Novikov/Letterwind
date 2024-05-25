@@ -7,12 +7,7 @@ public enum SystemProperty {
 
     LETTERWIND_PROPERTIES_NAME("letterwind.properties"),
     LETTERWIND_YAML_NAME("letterwind.yaml"),
-    LETTERWIND_YML_NAME("letterwind.yml"),
-
-    ID_COUNTER_NAME("id-counter"),
-
-    QUEUE_FILE_EXTENSION("lwq"),
-    BINARY_DATA_EXTENSION("bin");
+    LETTERWIND_YML_NAME("letterwind.yml");
 
     private String value;
 

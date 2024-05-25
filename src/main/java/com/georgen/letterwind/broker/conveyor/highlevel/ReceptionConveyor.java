@@ -24,26 +24,31 @@ public class ReceptionConveyor<T> extends MessageConveyor<T> {
     private void setLocalReceptionConveyor(){
         MessageConveyor<T> retrieving = new QueueRetrievingConveyor<>();
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
-        MessageConveyor<T> consuming = new ConsumerInvokingConveyor<>();
+        MessageConveyor<T> consumerInvocation = new ConsumerInvokingConveyor<>();
+        MessageConveyor<T> cleanUp = new CleanUpConveyor<>();
         MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.CONSUMPTION);
 
         this.setConveyor(retrieving);
         retrieving.setConveyor(deserialization);
-        deserialization.setConveyor(consuming);
-        consuming.setConveyor(informing);
+        deserialization.setConveyor(consumerInvocation);
+        consumerInvocation.setConveyor(cleanUp);
+        cleanUp.setConveyor(informing);
     }
 
     private void setRemoteReceptionConveyor(){
-        MessageConveyor<T> queueing = new QueueWritingConveyor<>(); // This might be confusing but message persistence is important
+        /** This might be confusing but for remote reception message persistence is important */
+        MessageConveyor<T> queueing = new QueueWritingConveyor<>();
         MessageConveyor<T> retrieving = new QueueRetrievingConveyor<>();
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
-        MessageConveyor<T> consuming = new ConsumerInvokingConveyor<>();
+        MessageConveyor<T> consumerInvocation = new ConsumerInvokingConveyor<>();
+        MessageConveyor<T> cleanUp = new CleanUpConveyor<>();
         MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.CONSUMPTION);
 
         this.setConveyor(queueing);
         queueing.setConveyor(retrieving);
         retrieving.setConveyor(deserialization);
-        deserialization.setConveyor(consuming);
-        consuming.setConveyor(informing);
+        deserialization.setConveyor(consumerInvocation);
+        consumerInvocation.setConveyor(cleanUp);
+        cleanUp.setConveyor(informing);
     }
 }

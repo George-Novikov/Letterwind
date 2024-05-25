@@ -35,15 +35,15 @@ public class Application {
                     .setSendersLimit(20)
                     .setReceiversLimit(20);
 
-//            for (int i = 0; i < 50; i++){
-//                SampleMessage message = new SampleMessage();
-//                message.setValue("How are you?");
-//                MessageBroker.send(message);
-//            }
+            for (int i = 0; i < 5; i++){
+                SampleMessage message = new SampleMessage();
+                message.setValue("How are you?");
+                MessageBroker.send(message);
+            }
 
-            SampleMessage message = new SampleMessage();
-            message.setValue("How are you?");
-            MessageBroker.send(message);
+//            SampleMessage message = new SampleMessage();
+//            message.setValue("How are you?");
+//            MessageBroker.send(message);
 
         } catch (Exception e){
             log(e.getMessage());

@@ -1,4 +1,4 @@
-package com.georgen.letterwind.model.settings;
+package com.georgen.letterwind.model.config;
 
 
 import com.georgen.letterwind.model.constants.ConfigProperty;

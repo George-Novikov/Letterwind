@@ -4,6 +4,7 @@ public enum ConfigProperty {
     CONTROL_FILE_NAME("letterwind.naming.control-file", "letterwind-controls.json"),
     ROOT_PATH("letterwind.naming.root-directory", "letterwind"),
     EXCHANGE_PATH("letterwind.naming.exchange-directory", "exchange"),
+    BUFFER_PATH("letterwind.naming.buffer-directory", "buffer"),
     SENDING_THREADS("letterwind.concurrency.sending-threads", 10),
     RECEIVING_THREADS("letterwind.concurrency.receiving-threads", 10),
     CONSUMING_THREADS("letterwind.concurrency.consuming-threads", 50),

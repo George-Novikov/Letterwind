@@ -44,8 +44,14 @@ public class FileOperation implements AutoCloseable {
         }
     }
 
+    public void cache(File file){ fileFactoryInstance.cache(file); }
+
     public boolean delete() {
         return fileFactoryInstance.delete(this.file);
+    }
+
+    public boolean delete(File file) {
+        return fileFactoryInstance.delete(file);
     }
 
     public void mkdirsOrBypass(){
@@ -60,7 +66,7 @@ public class FileOperation implements AutoCloseable {
         }
     }
 
-    public boolean isExistingFile() throws IOException {
+    public boolean isExistingFile() {
         return this.file.exists();
     }
 

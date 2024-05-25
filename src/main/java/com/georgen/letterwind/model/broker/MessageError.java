@@ -10,7 +10,7 @@ public class MessageError {
 
     public MessageError(Envelope envelope, Exception exception){
         this.topicName = envelope.getTopic().getName();
-        this.messageType = envelope.getMessageType().getName();
+        this.messageType = envelope.getMessageTypeName();
         this.errorMessage = exception.getMessage();
         this.time = LocalDateTime.now();
     }

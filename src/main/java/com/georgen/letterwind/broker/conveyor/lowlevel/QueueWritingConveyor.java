@@ -8,48 +8,50 @@ import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.config.Configuration;
 import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;
 
+/**
+ * <p> The serialized message is persisted in two queues: </p>
+ * <p> - the exchange queue, which is later used for direct deserialization </p>
+ * <p> - the buffer queue that is cleaned-up after a successful consumer invocation </p>
+ * */
 public class QueueWritingConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
-
+        if (envelope == null) return;
+        if (!envelope.hasSerializedMessage()) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
 
         String message = envelope.getSerializedMessage();
         LetterwindTopic topic = envelope.getTopic();
 
-        if (message == null) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
+        String messageExchangePath = PathBuilder.getExchangePath(topic, envelope);
+        String messageBufferPath = PathBuilder.getBufferPath(topic, envelope);
 
-        String messageID = envelope.getId();
-        String messageTypePath = PathBuilder.concatenate(
-                Configuration.getInstance().getExchangePath(),
-                topic.getName(),
-                envelope.getMessageTypeName()
-        );
+        long order = MessageOrderManager.assign(messageExchangePath);
+        String messageFileName = String.format("%s-%s", order, envelope.getId());
 
-        long order = MessageOrderManager.assign(messageTypePath);
-        String messageFileName = String.format("%s-%s", order, messageID);
-        String messagePath = PathBuilder.concatenate(messageTypePath, messageFileName);
+        String fullExchangePath = getFullPath(messageExchangePath, messageFileName);
+        String fullBufferPath = getFullPath(messageBufferPath, messageFileName);
 
-        try (FileOperation fileOperation = new FileOperation(messagePath, true)){
-            File file = fileOperation.getFile();
-            FileIOManager.write(file, message);
-        }
+        persist(fullExchangePath, message);
+        persist(fullBufferPath, message);
 
         if (hasConveyor()){
             this.getConveyor().process(envelope);
         }
     }
 
-    private void throwException(String messageID, String messageTypePath) throws LetterwindException {
-        throw new LetterwindException(
-                String.format(
-                        "Failed to write the message with id %s to the queue with the path: %s",
-                        messageID, messageTypePath
-                )
-        );
+    private String getFullPath(String parentPath, String messageFileName){
+        return PathBuilder.concatenate(parentPath, messageFileName);
     }
+
+    private void persist(String messagePath, String message) throws Exception {
+        try (FileOperation fileOperation = new FileOperation(messagePath, true)){
+            File file = fileOperation.getFile();
+            FileIOManager.write(file, message);
+        }
+    }
+
 }

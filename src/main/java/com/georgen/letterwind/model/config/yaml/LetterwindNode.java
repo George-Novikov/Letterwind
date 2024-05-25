@@ -1,4 +1,4 @@
-package com.georgen.letterwind.model.settings.yaml;
+package com.georgen.letterwind.model.config.yaml;
 
 public class LetterwindNode {
     private NamingNode naming;

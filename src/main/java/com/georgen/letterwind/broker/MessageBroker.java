@@ -69,6 +69,6 @@ public class MessageBroker {
 
     private static <T> void validateMessage(T message) throws LetterwindException {
         if (message == null) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
-        if (!(message instanceof String)) AnnotationGuard.validateMessage(message.getClass());
+        if (!(message instanceof String)) AnnotationGuard.validateMessageClass(message.getClass());
     }
 }

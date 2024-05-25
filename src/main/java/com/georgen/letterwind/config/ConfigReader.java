@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.georgen.letterwind.model.constants.ConfigProperty;
 import com.georgen.letterwind.model.constants.SystemProperty;
-import com.georgen.letterwind.model.settings.LetterwindProperties;
-import com.georgen.letterwind.model.settings.regular.RegularProperties;
-import com.georgen.letterwind.model.settings.yaml.YamlProperties;
+import com.georgen.letterwind.model.config.LetterwindProperties;
+import com.georgen.letterwind.model.config.regular.RegularProperties;
+import com.georgen.letterwind.model.config.yaml.YamlProperties;
 import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;

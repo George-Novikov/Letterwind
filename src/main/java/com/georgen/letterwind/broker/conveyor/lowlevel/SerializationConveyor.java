@@ -19,7 +19,10 @@ public class SerializationConveyor<T> extends MessageConveyor<T> {
 
         if (!isString){
             MessageSerializer<@LetterwindMessage T> serializer = extractSerializer(message);
-            if (serializer == null) throw new LetterwindException("The serializer class specified within the message config is faulty.");
+
+            if (serializer == null){
+                throwFaultySerializerException(envelope.getMessageTypeName());
+            }
 
             String serializedMessage = serializer.serialize(message);
             envelope.setSerializedMessage(serializedMessage);
@@ -39,5 +42,14 @@ public class SerializationConveyor<T> extends MessageConveyor<T> {
         } catch (Exception e){
             return null;
         }
+    }
+
+    private void throwFaultySerializerException(String messageTypeName) throws LetterwindException {
+        throw new LetterwindException(
+                String.format(
+                        "The serializer class specified for the %s class is faulty.",
+                        messageTypeName
+                )
+        );
     }
 }

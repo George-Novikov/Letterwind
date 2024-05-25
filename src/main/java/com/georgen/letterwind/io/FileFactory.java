@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 /**
  * This class has a cache that ensures that all requested files with the same path
@@ -32,7 +33,6 @@ public class FileFactory {
 
     public boolean delete(File file){
         String path = file.getPath();
-        if (path.endsWith(SystemProperty.ID_COUNTER_NAME.getValue())) return false;
 
         AtomicBoolean isDeletedAtomically = new AtomicBoolean();
 
@@ -44,6 +44,11 @@ public class FileFactory {
         if (isDeleted) fileCache.remove(path);
 
         return isDeleted;
+    }
+
+    public void cache(File file){
+        fileCache.put(file.getPath(), file);
+        System.out.println("File cache has files: " + fileCache.keySet().stream().collect(Collectors.joining(", ")));
     }
 
     public File releaseFromCache(File file){
