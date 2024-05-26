@@ -21,6 +21,10 @@ public class ConsumerInvokingConveyor<T> extends MessageConveyor<T> {
         for (Class consumerType : consumerTypes){
             invoke(consumerType, message);
         }
+
+        if (hasConveyor()){
+            this.getConveyor().process(envelope);
+        }
     }
 
     private void invoke(Class consumerType, T message) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {

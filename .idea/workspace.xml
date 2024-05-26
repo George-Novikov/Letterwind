@@ -5,42 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/IsolatedPaths.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/Letterwind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/Letterwind.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageBroker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageBroker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageFlow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/DispatchConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/DispatchConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/ReceptionConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/ReceptionConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/ConveyorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/ConveyorFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/CleanUpConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/CleanUpConveyor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ErrorHandlingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ErrorHandlingConveyor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueWritingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueWritingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/SerializationConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/SerializationConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/ConfigReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/ConfigReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/MessageOrderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/MessageOrderManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/Configuration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/Envelope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/Envelope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/MessageError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/MessageError.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/ConfigProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/ConfigProperty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/SystemProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/SystemProperty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/settings/LetterwindProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/LetterwindProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/settings/regular/RegularProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/regular/RegularProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/settings/yaml/LetterwindNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/LetterwindNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/settings/yaml/NamingNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/NamingNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/settings/yaml/YamlProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/YamlProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ExecutorFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ThreadPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ThreadPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/executors/LongLivedExecutor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/executors/ShortLivedExecutor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/executors/UnclosedExecutor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/AnnotationGuard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/AnnotationGuard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/PathBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/PathBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/Validator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/extractors/MessageSerializerExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/util/extractors/MessageSerializerExtractor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/letterwind.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/letterwind.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +156,8 @@
       <workItem from="1716524443100" duration="50000" />
       <workItem from="1716524705358" duration="211000" />
       <workItem from="1716569319428" duration="3247000" />
-      <workItem from="1716617380420" duration="26016000" />
+      <workItem from="1716617380420" duration="30346000" />
+      <workItem from="1716699529627" duration="9357000" />
     </task>
     <servers />
   </component>

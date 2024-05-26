@@ -21,9 +21,8 @@ public class MessageFlow {
      */
     public static <T> Future push(Envelope<T> envelope, FlowEvent event){
         System.out.println(String.format("%s %s: %s", LocalDateTime.now(), envelope.getTopicName(), event.name()));
-        System.out.println("Serialized message: " + envelope.getSerializedMessage());
-
-        MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(envelope, event);
+        if (FlowEvent.ERROR.equals(event)) System.out.println(envelope.getException());
+        MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(event);
         Runnable runnable = getRunnable(conveyor, envelope);
         return ThreadPool.getInstance().startThreadForEvent(runnable, event);
     }

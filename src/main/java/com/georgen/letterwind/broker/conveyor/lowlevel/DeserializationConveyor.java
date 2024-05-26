@@ -12,6 +12,7 @@ public class DeserializationConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
         if (envelope == null) return;
+        if (!envelope.hasSerializedMessage()) throw new LetterwindException("Failed to retrieve the message from the queue.");
 
         Class<T> messageType = getMessageType(envelope.getMessageTypeName());
         if (messageType == null) return;

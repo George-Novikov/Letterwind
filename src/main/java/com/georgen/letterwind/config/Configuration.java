@@ -85,6 +85,16 @@ public class Configuration {
         }
     }
 
+    public int getFaultyMessageReadAttempts(){
+        try {
+            String faultyMessageReadAttempts = this.configReader.getProperty(FAULTY_MESSAGE_READ_ATTEMPTS);
+            boolean isValidParam = Validator.isValid(faultyMessageReadAttempts);
+            return isValidParam ? Integer.valueOf(faultyMessageReadAttempts) : FAULTY_MESSAGE_READ_ATTEMPTS.getDefaultIntValue();
+        } catch (Exception e){
+            return FAULTY_MESSAGE_READ_ATTEMPTS.getDefaultIntValue();
+        }
+    }
+
     public File getControlFile() {
         try {
             return FileFactory.getInstance().getFile(configReader.getControlFilePath(), true);

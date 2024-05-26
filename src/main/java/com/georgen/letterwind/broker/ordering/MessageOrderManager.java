@@ -58,11 +58,6 @@ public class MessageOrderManager {
     }
 
     private static class MessageCounterHolder {
-        private static final MessageOrderManager INSTANCE = new MessageOrderManager();
         private static final ConcurrentMap<String, AtomicLong> COUNTERS = new ConcurrentHashMap<>();
-    }
-
-    public static MessageOrderManager getInstance(){
-        return MessageCounterHolder.INSTANCE;
     }
 }

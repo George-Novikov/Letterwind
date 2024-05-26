@@ -8,6 +8,6 @@ public class ErrorHandlingConveyor<T> extends MessageConveyor<T> {
     private static final ErrorStorage ERROR_STORAGE = new ErrorStorage();
     @Override
     public void process(Envelope<T> envelope) throws Exception {
-
+        System.out.println(envelope.getException().getMessage());
     }
 }

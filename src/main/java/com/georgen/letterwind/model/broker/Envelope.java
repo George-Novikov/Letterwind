@@ -123,6 +123,7 @@ public class Envelope<T> {
     public boolean hasSerializedMessage(){
         return Validator.isValid(this.serializedMessage);
     }
+    public boolean hasBufferedResiduals(){ return Validator.isValid(this.bufferedFileName); }
 
     public boolean isValid(){
         return hasMessage() && this.topic != null && this.topic.isValid() && this.locality != null ;
@@ -150,7 +151,9 @@ public class Envelope<T> {
                 ", messageTypeName='" + messageTypeName + '\'' +
                 ", topic=" + topic +
                 ", topicName='" + topicName + '\'' +
+                ", bufferedFileName='" + bufferedFileName + '\'' +
                 ", locality=" + locality +
+                ", exception=" + exception +
                 '}';
     }
 }

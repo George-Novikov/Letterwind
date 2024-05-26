@@ -3,21 +3,18 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
-import com.georgen.letterwind.io.FileIOManager;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.PathBuilder;
-import com.georgen.letterwind.util.Validator;
 
 import java.io.File;
+import java.nio.file.Path;
 
 public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
         if (envelope == null) return;
-
-        System.out.println("Message received: " + envelope.getSerializedMessage());
 
         restoreEnvelopeTopic(envelope);
         retrieveMessage(envelope);
@@ -49,14 +46,12 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
             File firstMessageFile = operation.getFirstFromDirectory();
             if (firstMessageFile == null) return;
 
-            operation.cache(firstMessageFile);
-            String messageFileContents = FileIOManager.read(firstMessageFile);
-            if (!Validator.isValid(messageFileContents)) return;
-
-            envelope.setSerializedMessage(messageFileContents);
-            envelope.setBufferedFileName(firstMessageFile.getName());
-
+            String serializedMessage = operation.read(firstMessageFile);
+            String bufferedFileName = firstMessageFile.getName();
             operation.delete(firstMessageFile);
+
+            envelope.setSerializedMessage(serializedMessage);
+            envelope.setBufferedFileName(bufferedFileName);
         }
     }
 }

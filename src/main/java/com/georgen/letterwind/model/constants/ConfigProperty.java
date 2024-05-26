@@ -9,7 +9,7 @@ public enum ConfigProperty {
     RECEIVING_THREADS("letterwind.concurrency.receiving-threads", 10),
     CONSUMING_THREADS("letterwind.concurrency.consuming-threads", 50),
     SERVER_PORT("letterwind.server.port", 17566),
-
+    FAULTY_MESSAGE_READ_ATTEMPTS("letterwind.io.faulty-message-read-attempts", 1000)
     ;
 
     private String name;

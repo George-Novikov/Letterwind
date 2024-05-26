@@ -6,6 +6,7 @@ import com.georgen.letterwind.util.SystemHelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,6 +20,11 @@ public class FileFactory {
     private ConcurrentMap<String, File> fileCache;
 
     private FileFactory(){ this.fileCache = new ConcurrentHashMap<>(); }
+
+    public File getFile(Path path, boolean isCreated) throws IOException {
+        System.out.println("Getting file: " + path.toString());
+        return getFile(path.toString(), isCreated);
+    }
 
     public File getFile(String path, boolean isCreated) throws IOException {
         File operatedFile = fileCache.get(path);
@@ -48,7 +54,21 @@ public class FileFactory {
 
     public void cache(File file){
         fileCache.put(file.getPath(), file);
-        System.out.println("File cache has files: " + fileCache.keySet().stream().collect(Collectors.joining(", ")));
+        System.out.println("The file was cached: " + file.getPath());
+    }
+
+    public void cache(Path path){
+        fileCache.put(path.toString(), path.toFile());
+        System.out.println("The file was cached: " + path);
+    }
+
+    public boolean isCached(File file){
+        return this.fileCache.containsKey(file.getPath());
+    }
+
+    public boolean isCached(Path path){
+        System.out.println("Checking is the path cached: " + path.toString());
+        return this.fileCache.containsKey(path.toString());
     }
 
     public File releaseFromCache(File file){
