@@ -17,11 +17,10 @@ public class MessageFlow {
      * Basically this is a decoupled extension of the MessageConveyor (chain of responsibility implementation).
      * This method breaks the process in two phases — dispatch and reception.
      * This approach allows you to configure the number of threads available for each part.
-     * Also, it is handy for processing both local and remote calls.
+     * Also, it is handy for processing both local and remote calls, errors, and success events.
      */
     public static <T> Future push(Envelope<T> envelope, FlowEvent event){
         System.out.println(String.format("%s %s: %s", LocalDateTime.now(), envelope.getTopicName(), event.name()));
-        if (FlowEvent.ERROR.equals(event)) System.out.println(envelope.getException());
         MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(event);
         Runnable runnable = getRunnable(conveyor, envelope);
         return ThreadPool.getInstance().startThreadForEvent(runnable, event);

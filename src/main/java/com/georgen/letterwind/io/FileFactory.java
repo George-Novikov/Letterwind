@@ -22,7 +22,6 @@ public class FileFactory {
     private FileFactory(){ this.fileCache = new ConcurrentHashMap<>(); }
 
     public File getFile(Path path, boolean isCreated) throws IOException {
-        System.out.println("Getting file: " + path.toString());
         return getFile(path.toString(), isCreated);
     }
 

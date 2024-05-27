@@ -26,7 +26,7 @@ public class ReceptionConveyor<T> extends MessageConveyor<T> {
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
         MessageConveyor<T> consumerInvocation = new ConsumerInvokingConveyor<>();
         MessageConveyor<T> cleanUp = new CleanUpConveyor<>();
-        MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.CONSUMPTION);
+        MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.SUCCESS);
 
         this.setConveyor(retrieving);
         retrieving.setConveyor(deserialization);
@@ -42,7 +42,7 @@ public class ReceptionConveyor<T> extends MessageConveyor<T> {
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
         MessageConveyor<T> consumerInvocation = new ConsumerInvokingConveyor<>();
         MessageConveyor<T> cleanUp = new CleanUpConveyor<>();
-        MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.CONSUMPTION);
+        MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.SUCCESS);
 
         this.setConveyor(queueing);
         queueing.setConveyor(retrieving);

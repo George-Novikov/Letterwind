@@ -3,6 +3,7 @@ package com.georgen.letterwind.broker.conveyor;
 import com.georgen.letterwind.broker.conveyor.lowlevel.ErrorHandlingConveyor;
 import com.georgen.letterwind.broker.conveyor.highlevel.ReceptionConveyor;
 import com.georgen.letterwind.broker.conveyor.highlevel.DispatchConveyor;
+import com.georgen.letterwind.broker.conveyor.lowlevel.SuccessHandlingConveyor;
 import com.georgen.letterwind.model.constants.FlowEvent;
 
 public class ConveyorFactory {
@@ -14,6 +15,9 @@ public class ConveyorFactory {
             }
             case RECEPTION: {
                 return new ReceptionConveyor<T>();
+            }
+            case SUCCESS: {
+                return new SuccessHandlingConveyor<>();
             }
             case ERROR: {
                 return new ErrorHandlingConveyor<>();

@@ -5,22 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/IsolatedPaths.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/SuccessHandlingConveyor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/handlers/ErrorHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/handlers/ErrorLoggingHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/handlers/SuccessHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ErrorStorage.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageFlow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/ConveyorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/ConveyorFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/ReceptionConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/ReceptionConveyor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/CleanUpConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/CleanUpConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/DeserializationConveyor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ErrorHandlingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ErrorHandlingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/MessageOrderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/ordering/MessageOrderManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/Configuration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/Envelope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/Envelope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/ConfigProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/ConfigProperty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/letterwind.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/letterwind.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/FlowEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/FlowEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/BacklogManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/TaskBacklog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ThreadPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ThreadPool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -157,7 +157,8 @@
       <workItem from="1716524705358" duration="211000" />
       <workItem from="1716569319428" duration="3247000" />
       <workItem from="1716617380420" duration="30346000" />
-      <workItem from="1716699529627" duration="9357000" />
+      <workItem from="1716699529627" duration="13073000" />
+      <workItem from="1716828017627" duration="5490000" />
     </task>
     <servers />
   </component>

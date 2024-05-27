@@ -17,13 +17,6 @@ public class ThreadPool {
 
     private ThreadPool(){}
 
-    public boolean isInit() {
-        return isInit
-                && senderExecutor != null
-                && receiverExecutor != null
-                && consumerExecutor != null;
-    }
-
     public Future startThreadForEvent(Runnable runnable, FlowEvent event){
         switch (event){
             case DISPATCH: {
@@ -32,11 +25,11 @@ public class ThreadPool {
             case RECEPTION: {
                 return startReceiverThread(runnable);
             }
-            case CONSUMPTION: {
+            case SUCCESS: {
                 return startConsumerThread(runnable);
             }
             default: {
-                return null;
+                return startConsumerThread(runnable);
             }
         }
     }
@@ -49,6 +42,13 @@ public class ThreadPool {
 
     public Future startConsumerThread(Runnable runnable){
         return this.consumerExecutor.submit(runnable);
+    }
+
+    public boolean isInit() {
+        return isInit
+                && senderExecutor != null
+                && receiverExecutor != null
+                && consumerExecutor != null;
     }
 
     private void init(){
