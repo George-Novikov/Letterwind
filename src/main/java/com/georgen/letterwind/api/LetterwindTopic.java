@@ -1,5 +1,7 @@
 package com.georgen.letterwind.api;
 
+import com.georgen.letterwind.broker.handlers.ErrorHandler;
+import com.georgen.letterwind.broker.handlers.SuccessHandler;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.AnnotationGuard;
 import com.georgen.letterwind.util.Validator;
@@ -16,6 +18,20 @@ public class LetterwindTopic {
     private String remoteHost;
     private int remotePort;
     private Set<Class> consumers = new HashSet<>();
+
+    /**
+     * A set of topic error handlers.
+     * Each handler can be ordered via the inherited setOrder() method.
+     * They have medium priority and come after the @LetterwindMessage error handlers but before the ones from the LetterwindControls.
+     * */
+    private Set<Class<ErrorHandler>> errorHandlers = new HashSet<>();
+
+    /**
+     * A set of topic error handlers.
+     * Each handler can be ordered via the inherited setOrder() method.
+     * They have medium priority and come after the @LetterwindMessage error handlers but before the ones from the LetterwindControls.
+     * */
+    private Set<Class<SuccessHandler>> successHandlers = new HashSet<>();
 
     public LetterwindTopic() {}
     public LetterwindTopic(String name) {
@@ -92,6 +108,22 @@ public class LetterwindTopic {
 
     public boolean removeConsumer(Class consumer){
         return this.consumers.remove(consumer);
+    }
+
+    public Set<Class<ErrorHandler>> getErrorHandlers() {
+        return errorHandlers;
+    }
+
+    public void setErrorHandlers(Set<Class<ErrorHandler>> errorHandlers) {
+        this.errorHandlers = errorHandlers;
+    }
+
+    public Set<Class<SuccessHandler>> getSuccessHandlers() {
+        return successHandlers;
+    }
+
+    public void setSuccessHandlers(Set<Class<SuccessHandler>> successHandlers) {
+        this.successHandlers = successHandlers;
     }
 
     public Set<Class> getConsumerMessageTypes(){

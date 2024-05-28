@@ -1,10 +1,13 @@
 package com.georgen.letterwind.api;
 
+import com.georgen.letterwind.broker.handlers.ErrorHandler;
+import com.georgen.letterwind.broker.handlers.SuccessHandler;
 import com.georgen.letterwind.broker.ordering.MessageOrderManager;
 import com.georgen.letterwind.util.Validator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,6 +48,20 @@ public class LetterwindControls {
 
     /** To quickly find a message type by its simple class name. */
     private Map<String, Class> messageTypes = new ConcurrentHashMap<>();
+
+    /**
+     * A set of global error handlers.
+     * Each handler can be ordered via the inherited setOrder() method.
+     * Regardless of their order, they have the lowest priority and come after the @LetterwindMessage and LetterwindTopic error handlers.
+     * */
+    private Set<Class<ErrorHandler>> errorHandlers = new HashSet<>();
+
+    /**
+     * A set of global success handlers.
+     * Each handler can be ordered via the inherited setOrder() method.
+     * Regardless of their order, they have the lowest priority and come after the @LetterwindMessage and LetterwindTopic success handlers.
+     * */
+    private Set<Class<SuccessHandler>> successHandlers = new HashSet<>();
 
     private LetterwindControls(){}
 

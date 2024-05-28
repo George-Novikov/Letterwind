@@ -1,6 +1,5 @@
 package com.georgen.letterwind.broker.handlers;
 
-import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 
-public abstract class SuccessHandler<T> extends MessageConveyor<T> {
+public abstract class SuccessHandler<T> extends EventHandler<T> {
 }
