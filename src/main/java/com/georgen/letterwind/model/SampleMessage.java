@@ -2,7 +2,7 @@ package com.georgen.letterwind.model;
 
 import com.georgen.letterwind.api.annotations.LetterwindMessage;
 
-@LetterwindMessage
+@LetterwindMessage(errorHandler = SampleErrorHandler.class)
 public class SampleMessage {
     private String value;
 

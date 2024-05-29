@@ -20,18 +20,16 @@ public class LetterwindTopic {
     private Set<Class> consumers = new HashSet<>();
 
     /**
-     * A set of topic error handlers.
-     * Each handler can be ordered via the inherited setOrder() method.
-     * They have medium priority and come after the @LetterwindMessage error handlers but before the ones from the LetterwindControls.
+     * A topic-specific error handler.
+     * It has medium priority and comes after the @LetterwindMessage error handler but before the one from the LetterwindControls.
      * */
-    private Set<Class<ErrorHandler>> errorHandlers = new HashSet<>();
+    private ErrorHandler errorHandler;
 
     /**
-     * A set of topic error handlers.
-     * Each handler can be ordered via the inherited setOrder() method.
-     * They have medium priority and come after the @LetterwindMessage error handlers but before the ones from the LetterwindControls.
+     * A topic-specific success handler.
+     * It has medium priority and comes after the @LetterwindMessage success handler but before the one from the LetterwindControls.
      * */
-    private Set<Class<SuccessHandler>> successHandlers = new HashSet<>();
+    private SuccessHandler successHandler;
 
     public LetterwindTopic() {}
     public LetterwindTopic(String name) {
@@ -110,21 +108,27 @@ public class LetterwindTopic {
         return this.consumers.remove(consumer);
     }
 
-    public Set<Class<ErrorHandler>> getErrorHandlers() {
-        return errorHandlers;
+    public ErrorHandler getErrorHandler() {
+        return errorHandler;
     }
 
-    public void setErrorHandlers(Set<Class<ErrorHandler>> errorHandlers) {
-        this.errorHandlers = errorHandlers;
+    public LetterwindTopic setErrorHandler(ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+        return this;
     }
 
-    public Set<Class<SuccessHandler>> getSuccessHandlers() {
-        return successHandlers;
+    public SuccessHandler getSuccessHandler() {
+        return successHandler;
     }
 
-    public void setSuccessHandlers(Set<Class<SuccessHandler>> successHandlers) {
-        this.successHandlers = successHandlers;
+    public LetterwindTopic setSuccessHandler(SuccessHandler successHandler) {
+        this.successHandler = successHandler;
+        return this;
     }
+
+    public boolean hasErrorHandler(){ return this.errorHandler != null; }
+
+    public boolean hasSuccessHandler(){ return this.successHandler != null; }
 
     public Set<Class> getConsumerMessageTypes(){
         Set<Class> messageTypes = new HashSet<>();

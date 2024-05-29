@@ -69,9 +69,7 @@ public class Envelope<T> {
         this.messageTypeName = messageTypeName;
     }
 
-    public LetterwindTopic getTopic() {
-        return topic;
-    }
+    public LetterwindTopic getTopic() { return topic; }
 
     public void setTopic(LetterwindTopic topic) {
         this.topic = topic;
@@ -123,6 +121,7 @@ public class Envelope<T> {
     public boolean hasSerializedMessage(){
         return Validator.isValid(this.serializedMessage);
     }
+    public boolean hasTopic(){ return this.topic != null; }
     public boolean hasBufferedResiduals(){ return Validator.isValid(this.bufferedFileName); }
 
     public boolean isValid(){

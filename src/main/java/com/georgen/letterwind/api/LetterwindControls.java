@@ -50,18 +50,16 @@ public class LetterwindControls {
     private Map<String, Class> messageTypes = new ConcurrentHashMap<>();
 
     /**
-     * A set of global error handlers.
-     * Each handler can be ordered via the inherited setOrder() method.
-     * Regardless of their order, they have the lowest priority and come after the @LetterwindMessage and LetterwindTopic error handlers.
+     * A global error handler.
+     * It has the lowest priority and will only be called if the @LetterwindMessage and LetterwindTopic error handlers are not present.
      * */
-    private Set<Class<ErrorHandler>> errorHandlers = new HashSet<>();
+    private ErrorHandler errorHandler;
 
     /**
-     * A set of global success handlers.
-     * Each handler can be ordered via the inherited setOrder() method.
-     * Regardless of their order, they have the lowest priority and come after the @LetterwindMessage and LetterwindTopic success handlers.
+     * A global success handler.
+     * It has the lowest priority and will only be called if the @LetterwindMessage and LetterwindTopic success handlers are not present.
      * */
-    private Set<Class<SuccessHandler>> successHandlers = new HashSet<>();
+    private SuccessHandler successHandler;
 
     private LetterwindControls(){}
 
@@ -134,6 +132,24 @@ public class LetterwindControls {
 
     public LetterwindControls setTopics(Map<String, LetterwindTopic> topics) {
         this.topics = topics;
+        return this;
+    }
+
+    public ErrorHandler getErrorHandler() {
+        return errorHandler;
+    }
+
+    public LetterwindControls setErrorHandler(ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+        return this;
+    }
+
+    public SuccessHandler getSuccessHandler() {
+        return successHandler;
+    }
+
+    public LetterwindControls setSuccessHandler(SuccessHandler successHandler) {
+        this.successHandler = successHandler;
         return this;
     }
 
