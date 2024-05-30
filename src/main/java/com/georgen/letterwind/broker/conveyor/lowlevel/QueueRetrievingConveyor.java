@@ -2,9 +2,12 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
+import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
+import com.georgen.letterwind.io.FailedReads;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.constants.FlowEvent;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.PathBuilder;
 
@@ -39,7 +42,7 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
      * <p> - So if an asynchronously received message was processed immediately, it could negate the sequencing process. </p>
      * <p> - Thus, a received message serves as an event to trigger the retrieving process of the next message in its order. </p>
      * */
-    private void retrieveMessage(Envelope<T> envelope) throws Exception {
+    private void retrieveMessage(Envelope<T> envelope) {
         String messageExchangePath = PathBuilder.getExchangePath(envelope);
 
         try (FileOperation operation = new FileOperation(messageExchangePath)){
@@ -52,6 +55,8 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
 
             envelope.setSerializedMessage(serializedMessage);
             envelope.setBufferedFileName(bufferedFileName);
+        } catch (Exception e){
+            MessageFlow.push(envelope, FlowEvent.RECEPTION);
         }
     }
 }

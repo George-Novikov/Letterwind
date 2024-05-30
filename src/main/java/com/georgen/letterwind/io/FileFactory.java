@@ -66,7 +66,6 @@ public class FileFactory {
     }
 
     public boolean isCached(Path path){
-        System.out.println("Checking is the path cached: " + path.toString());
         return this.fileCache.containsKey(path.toString());
     }
 

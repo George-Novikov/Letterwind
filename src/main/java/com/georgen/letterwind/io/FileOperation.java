@@ -51,11 +51,10 @@ public class FileOperation implements AutoCloseable {
 
                 if (firstPath == null) return null;
                 IsolatedPaths.getInstance().isolate(firstPath);
-
                 return fileFactoryInstance.getFile(firstPath, false);
             } catch (Exception e){
                 /** This prevents an infinite recursive call */
-                if (this.readAttemptsCounter.incrementAndGet() >= readAttemptsLimit) return null;
+                if (isTooManyAttempts()) return null;
                 if (firstPath != null) IsolatedPaths.getInstance().isolate(firstPath);
                 return getFirstFromDirectory();
             }
@@ -63,9 +62,15 @@ public class FileOperation implements AutoCloseable {
     }
 
     private boolean isAvailablePath(Path path){
-        return !IsolatedPaths.getInstance().isIsolated(path)
-                && !fileFactoryInstance.isCached(path)
-                && path.toFile().exists();
+        synchronized (path){
+            return !IsolatedPaths.getInstance().isIsolated(path)
+                    && !fileFactoryInstance.isCached(path)
+                    && path.toFile().exists();
+        }
+    }
+
+    private boolean isTooManyAttempts(){
+        return this.readAttemptsCounter.incrementAndGet() >= readAttemptsLimit;
     }
 
     public void cache(File file){ fileFactoryInstance.cache(file); }
@@ -85,8 +90,9 @@ public class FileOperation implements AutoCloseable {
     }
 
     public boolean delete(File file) {
+        boolean isDeleted = fileFactoryInstance.delete(file);
         IsolatedPaths.getInstance().release(file.toPath());
-        return fileFactoryInstance.delete(file);
+        return isDeleted;
     }
 
     public void mkdirsOrBypass(){

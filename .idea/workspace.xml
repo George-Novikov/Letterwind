@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleErrorHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleSuccessHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FailedReads.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindControls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindControls.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ErrorHandlingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ErrorHandlingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/SuccessHandlingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/SuccessHandlingConveyor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/handlers/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/handlers/EventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/Envelope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/Envelope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/QueueRetrievingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/io/FileOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/SampleErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/letterwind.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/letterwind.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +156,8 @@
       <workItem from="1716862870355" duration="645000" />
       <workItem from="1716916964846" duration="4081000" />
       <workItem from="1716956265464" duration="10000" />
-      <workItem from="1717003369432" duration="2864000" />
+      <workItem from="1717003369432" duration="4677000" />
+      <workItem from="1717084329062" duration="5196000" />
     </task>
     <servers />
   </component>

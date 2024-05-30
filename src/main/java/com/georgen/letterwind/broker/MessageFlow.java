@@ -20,7 +20,6 @@ public class MessageFlow {
      * Also, it is handy for processing both local and remote calls, errors, and success events.
      */
     public static <T> Future push(Envelope<T> envelope, FlowEvent event){
-        System.out.println(String.format("%s %s: %s", LocalDateTime.now(), envelope.getTopicName(), event.name()));
         MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(event);
         Runnable runnable = getRunnable(conveyor, envelope);
         return ThreadPool.getInstance().startThreadForEvent(runnable, event);
