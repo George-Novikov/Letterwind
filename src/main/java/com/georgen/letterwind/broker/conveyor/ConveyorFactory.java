@@ -1,5 +1,6 @@
 package com.georgen.letterwind.broker.conveyor;
 
+import com.georgen.letterwind.broker.conveyor.highlevel.ReprocessingConveyor;
 import com.georgen.letterwind.broker.conveyor.lowlevel.ErrorHandlingConveyor;
 import com.georgen.letterwind.broker.conveyor.highlevel.ReceptionConveyor;
 import com.georgen.letterwind.broker.conveyor.highlevel.DispatchConveyor;
@@ -15,6 +16,9 @@ public class ConveyorFactory {
             }
             case RECEPTION: {
                 return new ReceptionConveyor<T>();
+            }
+            case REPROCESSING: {
+                return new ReprocessingConveyor<>();
             }
             case SUCCESS: {
                 return new SuccessHandlingConveyor<>();

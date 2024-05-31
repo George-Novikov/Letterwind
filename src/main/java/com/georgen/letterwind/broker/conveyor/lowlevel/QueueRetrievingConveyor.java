@@ -4,7 +4,6 @@ import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
-import com.georgen.letterwind.io.FailedReads;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.constants.FlowEvent;
@@ -12,15 +11,17 @@ import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.time.LocalDateTime;
 
 public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
         if (envelope == null) return;
 
-        restoreEnvelopeTopic(envelope);
+        if (!envelope.hasTopic()) restoreEnvelopeTopic(envelope);
+
         retrieveMessage(envelope);
+
         if (!envelope.hasSerializedMessage()) return;
 
         if (hasConveyor()){
@@ -56,7 +57,8 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
             envelope.setSerializedMessage(serializedMessage);
             envelope.setBufferedFileName(bufferedFileName);
         } catch (Exception e){
-            MessageFlow.push(envelope, FlowEvent.RECEPTION);
+            System.out.println("Reprocessing. " + LocalDateTime.now());
+            MessageFlow.push(envelope, FlowEvent.REPROCESSING);
         }
     }
 }

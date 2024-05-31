@@ -25,6 +25,9 @@ public class ThreadPool {
             case RECEPTION: {
                 return startReceiverThread(runnable);
             }
+            case REPROCESSING: {
+                return startConsumerThread(runnable);
+            }
             case SUCCESS: {
                 return startConsumerThread(runnable);
             }

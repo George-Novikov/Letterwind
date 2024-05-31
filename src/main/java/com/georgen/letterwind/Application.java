@@ -35,7 +35,7 @@ public class Application {
                     .setSendersLimit(20)
                     .setReceiversLimit(20);
 
-            for (int i = 0; i < 100; i++){
+            for (int i = 0; i < 1000; i++){
                 SampleMessage message = new SampleMessage();
                 message.setValue("How are you?");
                 MessageBroker.send(message);

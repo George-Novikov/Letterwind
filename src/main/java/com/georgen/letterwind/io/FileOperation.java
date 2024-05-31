@@ -107,6 +107,14 @@ public class FileOperation implements AutoCloseable {
         }
     }
 
+    public boolean hasDirectoryContents() throws LetterwindException, IOException {
+        if (!this.file.isDirectory()) throw new LetterwindException("The requested path is not a directory.");
+
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(this.file.toPath())){
+            return StreamSupport.stream(directoryStream.spliterator(), false).count() > 0;
+        }
+    }
+
     public boolean isExistingFile() {
         return this.file.exists();
     }
