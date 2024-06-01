@@ -6,23 +6,21 @@ import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;
-import java.time.LocalDateTime;
 
 public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
     @Override
     public void process(Envelope<T> envelope) throws Exception {
         if (envelope == null) return;
-
         if (!envelope.hasTopic()) restoreEnvelopeTopic(envelope);
 
-        retrieveMessage(envelope);
+        boolean isSuccessful = retrieveMessage(envelope);
 
-        if (!envelope.hasSerializedMessage()) return;
+        if (!isSuccessful | !envelope.hasSerializedMessage()) return;
 
         if (hasConveyor()){
             this.getConveyor().process(envelope);
@@ -43,12 +41,13 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
      * <p> - So if an asynchronously received message was processed immediately, it could negate the sequencing process. </p>
      * <p> - Thus, a received message serves as an event to trigger the retrieving process of the next message in its order. </p>
      * */
-    private void retrieveMessage(Envelope<T> envelope) {
+    private boolean retrieveMessage(Envelope<T> envelope) {
+        envelope.setSerializedMessage(null);
         String messageExchangePath = PathBuilder.getExchangePath(envelope);
 
         try (FileOperation operation = new FileOperation(messageExchangePath)){
             File firstMessageFile = operation.getFirstFromDirectory();
-            if (firstMessageFile == null) return;
+            if (firstMessageFile == null) return false;
 
             String serializedMessage = operation.read(firstMessageFile);
             String bufferedFileName = firstMessageFile.getName();
@@ -56,9 +55,11 @@ public class QueueRetrievingConveyor<T> extends MessageConveyor<T> {
 
             envelope.setSerializedMessage(serializedMessage);
             envelope.setBufferedFileName(bufferedFileName);
+
+            return true;
         } catch (Exception e){
-            System.out.println("Reprocessing. " + LocalDateTime.now());
-            MessageFlow.push(envelope, FlowEvent.REPROCESSING);
+            MessageFlow.push(envelope, MessageFlowEvent.REPROCESSING);
+            return false;
         }
     }
 }

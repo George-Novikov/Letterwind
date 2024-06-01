@@ -17,14 +17,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LetterwindControls {
 
-    /** Determines how many threads can simultaneously perform the sending process. */
+    /** Determines how many threads can simultaneously perform the dispatch process. */
     private int sendersLimit;
 
-    /** Determines how many threads can simultaneously execute the sereceivingnding process. */
+    /** Determines how many threads can simultaneously execute the reception process. */
     private int receiversLimit;
 
-    /** Determines the total number of @LetterwindConsumer classes allowed to operate simultaneously. */
+    /** Determines the total number of @LetterwindConsumer methods (topic listeners) allowed to operate simultaneously. */
     private int consumersLimit;
+
+    /** Determines how many threads can simultaneously handle errors or success events. */
+    private int eventHandlersLimit;
+
+    /** This flag will scale the total number of threads to the limits of the system processor. */
+    private boolean isAdaptiveThreadPool = true;
 
     /**
      * Global settings for listening messages from other Letterwind instances.
@@ -88,6 +94,23 @@ public class LetterwindControls {
     public LetterwindControls setConsumersLimit(int consumersLimit) {
         this.consumersLimit = consumersLimit;
         return this;
+    }
+
+    public int getEventHandlersLimit() {
+        return eventHandlersLimit;
+    }
+
+    public LetterwindControls setEventHandlersLimit(int eventHandlersLimit) {
+        this.eventHandlersLimit = eventHandlersLimit;
+        return this;
+    }
+
+    public boolean isAdaptiveThreadPool() {
+        return isAdaptiveThreadPool;
+    }
+
+    public void setAdaptiveThreadPool(boolean adaptiveThreadPool) {
+        isAdaptiveThreadPool = adaptiveThreadPool;
     }
 
     public boolean isServerActive() {
@@ -202,6 +225,18 @@ public class LetterwindControls {
         return Validator.isValid(this.remoteHost) && this.remotePort != 0;
     }
 
+    private static class InstanceHolder {
+        private static final LetterwindControls INSTANCE = new LetterwindControls();
+    }
+
+    public static LetterwindControls getInstance(){
+        return InstanceHolder.INSTANCE;
+    }
+
+
+    // ================================= Private Methods =================================
+
+
     private void addToMessageTypes(LetterwindTopic topic) throws IOException {
         Set<Class> messageTypes = topic.getConsumerMessageTypes();
 
@@ -223,13 +258,5 @@ public class LetterwindControls {
             if (topicNames != null) topicNames.remove(topic.getName());
             // For safety reasons nothing is removed from messageTypes map since @LetterwindMessage can be reused between consumers
         }
-    }
-
-    private static class InstanceHolder {
-        private static final LetterwindControls INSTANCE = new LetterwindControls();
-    }
-
-    public static LetterwindControls getInstance(){
-        return InstanceHolder.INSTANCE;
     }
 }

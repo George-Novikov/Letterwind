@@ -3,7 +3,7 @@ package com.georgen.letterwind.broker;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
 import com.georgen.letterwind.util.AnnotationGuard;
@@ -27,7 +27,7 @@ public class MessageBroker {
 
         for (LetterwindTopic topic : topics){
             Envelope<T> envelope = new Envelope<>(message, topic);
-            MessageFlow.push(envelope, FlowEvent.DISPATCH);
+            MessageFlow.push(envelope, MessageFlowEvent.DISPATCH);
         }
 
         return true;
@@ -48,7 +48,7 @@ public class MessageBroker {
         if (!topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
 
         Envelope<T> envelope = new Envelope<>(message, topic);
-        MessageFlow.push(envelope, FlowEvent.DISPATCH);
+        MessageFlow.push(envelope, MessageFlowEvent.DISPATCH);
 
         return true;
     }
@@ -62,7 +62,7 @@ public class MessageBroker {
         if (topic == null || !topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
 
         Envelope<T> envelope = new Envelope<>(message, topic);
-        MessageFlow.push(envelope, FlowEvent.DISPATCH);
+        MessageFlow.push(envelope, MessageFlowEvent.DISPATCH);
 
         return true;
     }

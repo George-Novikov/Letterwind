@@ -2,7 +2,7 @@ package com.georgen.letterwind.transport.handlers;
 
 import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.model.constants.Locality;
 import com.georgen.letterwind.model.transport.TransportEnvelope;
 import com.georgen.letterwind.model.transport.TransportStatus;
@@ -19,7 +19,7 @@ public class IncomingEnvelopeHandler extends ChannelInboundHandlerAdapter {
 
         Envelope envelope = transportEnvelope.toRegularEnvelope(Locality.REMOTE);
 
-        MessageFlow.push(envelope, FlowEvent.RECEPTION);
+        MessageFlow.push(envelope, MessageFlowEvent.RECEPTION);
 
         ChannelFuture responseFuture = ctx.writeAndFlush(TransportStatus.OK.getCode());
         responseFuture.addListener(ChannelFutureListener.CLOSE);

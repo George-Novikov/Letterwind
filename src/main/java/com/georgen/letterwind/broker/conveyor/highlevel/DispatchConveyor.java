@@ -3,7 +3,7 @@ package com.georgen.letterwind.broker.conveyor.highlevel;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.conveyor.lowlevel.*;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 
 public class DispatchConveyor<T> extends MessageConveyor<T> {
     @Override
@@ -25,7 +25,7 @@ public class DispatchConveyor<T> extends MessageConveyor<T> {
         MessageConveyor<T> validation = new ValidationConveyor<>();
         MessageConveyor<T> serialization = new SerializationConveyor();
         MessageConveyor<T> queueing = new QueueWritingConveyor();
-        MessageConveyor<T> informing = new InformingConveyor(FlowEvent.RECEPTION);
+        MessageConveyor<T> informing = new InformingConveyor(MessageFlowEvent.RECEPTION);
 
         this.setConveyor(validation);
         validation.setConveyor(serialization);

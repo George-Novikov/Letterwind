@@ -3,7 +3,7 @@ package com.georgen.letterwind.broker.conveyor.highlevel;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.conveyor.lowlevel.*;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 
 public class ReceptionConveyor<T> extends MessageConveyor<T> {
     @Override
@@ -26,7 +26,7 @@ public class ReceptionConveyor<T> extends MessageConveyor<T> {
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
         MessageConveyor<T> consumerInvocation = new ConsumerInvokingConveyor<>();
         MessageConveyor<T> cleanUp = new CleanUpConveyor<>();
-        MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.SUCCESS);
+        MessageConveyor<T> informing = new InformingConveyor<>(MessageFlowEvent.SUCCESS);
 
         this.setConveyor(retrieving);
         retrieving.setConveyor(deserialization);
@@ -42,7 +42,7 @@ public class ReceptionConveyor<T> extends MessageConveyor<T> {
         MessageConveyor<T> deserialization = new DeserializationConveyor<>();
         MessageConveyor<T> consumerInvocation = new ConsumerInvokingConveyor<>();
         MessageConveyor<T> cleanUp = new CleanUpConveyor<>();
-        MessageConveyor<T> informing = new InformingConveyor<>(FlowEvent.SUCCESS);
+        MessageConveyor<T> informing = new InformingConveyor<>(MessageFlowEvent.SUCCESS);
 
         this.setConveyor(queueing);
         queueing.setConveyor(retrieving);

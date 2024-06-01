@@ -85,13 +85,33 @@ public class Configuration {
         }
     }
 
-    public int getFaultyMessageReadAttempts(){
+    public int getEventThreadsLimit(){
         try {
-            String faultyMessageReadAttempts = this.configReader.getProperty(FAULTY_MESSAGE_READ_ATTEMPTS);
-            boolean isValidParam = Validator.isValid(faultyMessageReadAttempts);
-            return isValidParam ? Integer.valueOf(faultyMessageReadAttempts) : FAULTY_MESSAGE_READ_ATTEMPTS.getDefaultIntValue();
+            String eventThreadsString = this.configReader.getProperty(EVENT_HANDLING_THREADS);
+            boolean isValidParam = Validator.isValid(eventThreadsString);
+            return isValidParam ? Integer.valueOf(eventThreadsString) : EVENT_HANDLING_THREADS.getDefaultIntValue();
         } catch (Exception e){
-            return FAULTY_MESSAGE_READ_ATTEMPTS.getDefaultIntValue();
+            return EVENT_HANDLING_THREADS.getDefaultIntValue();
+        }
+    }
+
+    public boolean isThreadPoolAdaptive(){
+        try {
+            String isAdaptiveString = this.configReader.getProperty(EVENT_HANDLING_THREADS);
+            boolean isValidParam = Validator.isValid(isAdaptiveString);
+            return isValidParam ? Boolean.valueOf(isAdaptiveString) : IS_THREAD_POOL_ADAPTIVE.getDefaultBooleanValue();
+        } catch (Exception e){
+            return IS_THREAD_POOL_ADAPTIVE.getDefaultBooleanValue();
+        }
+    }
+
+    public int getIORetriesOnFault(){
+        try {
+            String faultyMessageReadAttempts = this.configReader.getProperty(IO_RETRIES_ON_FAULT);
+            boolean isValidParam = Validator.isValid(faultyMessageReadAttempts);
+            return isValidParam ? Integer.valueOf(faultyMessageReadAttempts) : IO_RETRIES_ON_FAULT.getDefaultIntValue();
+        } catch (Exception e){
+            return IO_RETRIES_ON_FAULT.getDefaultIntValue();
         }
     }
 

@@ -33,7 +33,10 @@ public class Application {
             LetterwindControls.getInstance()
                     .registerTopic(topic)
                     .setSendersLimit(20)
-                    .setReceiversLimit(20);
+                    .setReceiversLimit(20)
+                    .setConsumersLimit(80)
+                    .setEventHandlersLimit(20)
+                    .setAdaptiveThreadPool(true);
 
             for (int i = 0; i < 1000; i++){
                 SampleMessage message = new SampleMessage();

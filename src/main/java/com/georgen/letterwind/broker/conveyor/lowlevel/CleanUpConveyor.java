@@ -4,7 +4,7 @@ import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.io.FileOperation;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.util.PathBuilder;
 
 import java.io.File;
@@ -29,11 +29,12 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
 
         try (FileOperation operation = new FileOperation(bufferedMessagePath, false)){
             System.out.println("Deleting file: " + bufferedMessagePath);
-            File bufferedMessage = operation.getFile();
-            if (bufferedMessage.exists()){
+            if (operation.isExistingFile()){
                 operation.delete();
                 System.out.println("File is deleted: " + bufferedMessagePath);
             }
+        } catch (Exception e){
+            System.out.println("Clean-up exception: " + e.getMessage());
         }
 
         cleanUpFirstBuffered(envelope, bufferPath);
@@ -46,23 +47,23 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
             File firstBuffered = operation.getFirstFromDirectory();
             if (firstBuffered == null) return;
 
-            boolean isPresentInExchange = isPresentInExchange(exchangePath, firstBuffered.getName());
+            boolean isPresentInExchange = isPresentInDirectory(exchangePath, firstBuffered.getName());
 
             if (isPresentInExchange) {
-                MessageFlow.push(envelope, FlowEvent.REPROCESSING);
+                MessageFlow.push(envelope, MessageFlowEvent.REPROCESSING);
             } else {
                 operation.delete(firstBuffered);
             }
+        } catch (Exception e){
+            System.out.println("Clean-up exception: " + e.getMessage());
         }
     }
 
-    private boolean isPresentInExchange(String exchangePath, String fileName) throws Exception {
-        String exchangeMessagePath = PathBuilder.concatenate(exchangePath, fileName);
+    private boolean isPresentInDirectory(String directoryPath, String fileName) throws Exception {
+        String filePath = PathBuilder.concatenate(directoryPath, fileName);
 
-        try (FileOperation operation = new FileOperation(exchangeMessagePath, false)){
-            File exchangeFile = operation.getFile();
-            if (exchangeFile == null) return false;
-            return exchangeFile.exists();
+        try (FileOperation operation = new FileOperation(filePath, false)){
+            return operation.isExistingFile();
         }
     }
 
@@ -75,7 +76,7 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
                  * If there are no messages in the queue, the QueueRetrievingConveyor.retrieveMessage() method stops
                  * the process, preventing an eternal loop.
                  * */
-                MessageFlow.push(envelope, FlowEvent.REPROCESSING);
+                MessageFlow.push(envelope, MessageFlowEvent.REPROCESSING);
             }
         }
     }

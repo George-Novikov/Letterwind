@@ -3,12 +3,12 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 
 public class InformingConveyor<T> extends MessageConveyor<T> {
-    private FlowEvent operation;
+    private MessageFlowEvent operation;
 
-    public InformingConveyor(FlowEvent operation){
+    public InformingConveyor(MessageFlowEvent operation){
         this.operation = operation;
     }
 

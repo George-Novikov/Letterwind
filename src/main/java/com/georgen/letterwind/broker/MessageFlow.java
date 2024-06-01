@@ -3,10 +3,9 @@ package com.georgen.letterwind.broker;
 import com.georgen.letterwind.broker.conveyor.ConveyorFactory;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.constants.FlowEvent;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.multihtreading.ThreadPool;
 
-import java.time.LocalDateTime;
 import java.util.concurrent.*;
 
 public class MessageFlow {
@@ -19,7 +18,7 @@ public class MessageFlow {
      * This approach allows you to configure the number of threads available for each part.
      * Also, it is handy for processing both local and remote calls, errors, and success events.
      */
-    public static <T> Future push(Envelope<T> envelope, FlowEvent event){
+    public static <T> Future push(Envelope<T> envelope, MessageFlowEvent event){
         MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(event);
         Runnable runnable = getRunnable(conveyor, envelope);
         return ThreadPool.getInstance().startThreadForEvent(runnable, event);
@@ -31,7 +30,7 @@ public class MessageFlow {
                 conveyor.process(envelope);
             } catch (Exception e) {
                 envelope.setException(e);
-                push(envelope, FlowEvent.ERROR);
+                push(envelope, MessageFlowEvent.ERROR);
             }
         };
     }
