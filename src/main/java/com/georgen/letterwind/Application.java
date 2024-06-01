@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.MessageBroker;
-import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.model.SampleConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.broker.serializers.MessageSerializer;
@@ -24,19 +23,20 @@ public class Application {
     public static void main(String[] args){
         try {
 
+            int sendersLimit = LetterwindControls.get().sendersLimit();
+
             LetterwindTopic topic = LetterwindTopic.build()
                     .setName("SampleTopic")
                     .setConsumers(CONSUMERS);
 //                    .setRemoteHost("localhost")
 //                    .setRemotePort(8080);
 
-            LetterwindControls.getInstance()
-                    .registerTopic(topic)
-                    .setSendersLimit(20)
-                    .setReceiversLimit(20)
-                    .setConsumersLimit(80)
-                    .setEventHandlersLimit(20)
-                    .setAdaptiveThreadPool(true);
+            LetterwindControls.set()
+                    .topic(topic)
+                    .sendersLimit(20)
+                    .receiversLimit(20)
+                    .consumersLimit(80)
+                    .eventHandlersLimit(20);
 
             for (int i = 0; i < 1000; i++){
                 SampleMessage message = new SampleMessage();
@@ -56,7 +56,7 @@ public class Application {
     private static void testClassSend() throws Exception {
         LetterwindTopic topic = new LetterwindTopic("SampleTopic", CONSUMERS);
 
-        LetterwindControls.getInstance().registerTopic(topic);
+        LetterwindControls.getInstance().addTopic(topic);
 
         SampleMessage message = new SampleMessage("How are you?");
 

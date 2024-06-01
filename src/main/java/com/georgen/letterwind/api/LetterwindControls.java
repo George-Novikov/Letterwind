@@ -3,11 +3,12 @@ package com.georgen.letterwind.api;
 import com.georgen.letterwind.broker.handlers.ErrorHandler;
 import com.georgen.letterwind.broker.handlers.SuccessHandler;
 import com.georgen.letterwind.broker.ordering.MessageOrderManager;
+import com.georgen.letterwind.model.broker.ControlsGetter;
+import com.georgen.letterwind.model.broker.ControlsSetter;
 import com.georgen.letterwind.util.Validator;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * Letterwind main configuration class
  */
 public class LetterwindControls {
+
+
+    // ============================ Multithreading: Dispatch, Reception, Consuming, Events =============================
+
 
     /** Determines how many threads can simultaneously perform the dispatch process. */
     private int sendersLimit;
@@ -30,7 +35,11 @@ public class LetterwindControls {
     private int eventHandlersLimit;
 
     /** This flag will scale the total number of threads to the limits of the system processor. */
-    private boolean isAdaptiveThreadPool = true;
+    private boolean isThreadPoolAdaptive = true;
+
+
+    // ======================================= Remote access: Server and Client ========================================
+
 
     /**
      * Global settings for listening messages from other Letterwind instances.
@@ -46,14 +55,21 @@ public class LetterwindControls {
     private int remotePort;
 
 
+    // =========================================== Topics and message types ============================================
+
+
     /** Registered topics. Unregistered ones will not participate in messaging. */
     private Map<String, LetterwindTopic> topics = new ConcurrentHashMap<>();
 
     /** Message types mapped to the names of all registered topics */
-    private Map<Class, Set<String>> messageTypeTopicsMap = new ConcurrentHashMap();
+    private Map<Class, Set<String>> topicsByMessageType = new ConcurrentHashMap();
 
     /** To quickly find a message type by its simple class name. */
     private Map<String, Class> messageTypes = new ConcurrentHashMap<>();
+
+
+    // ================================================ Event handlers =================================================
+
 
     /**
      * A global error handler.
@@ -67,7 +83,52 @@ public class LetterwindControls {
      * */
     private SuccessHandler successHandler;
 
+
+    // ===================================== Private constructor and public access =====================================
+
+
     private LetterwindControls(){}
+
+    /** Thread safety wrapper. For more info, see "Bill Pugh Singleton" or "Holder Pattern". */
+    private static class InstanceHolder {
+        private static final LetterwindControls INSTANCE = new LetterwindControls();
+        private static final ControlsGetter GETTER = new ControlsGetter();
+        private static final ControlsSetter SETTER = new ControlsSetter();
+    }
+
+    /** Common public access method. */
+    public static LetterwindControls getInstance(){ return InstanceHolder.INSTANCE; }
+
+    /**
+     * <p>    Syntax sugar.    </p>
+     * <p>    This allows you to access LetterwindControls in a manner similar to the Builder Pattern.    </p>
+     * <br>
+     * <p>    So, you can do this:    </p>
+     * <p>    int sendersLimit = LetterwindControls.get().sendersLimit();    </p>
+     * <br>
+     * <p>    Instead of this:    </p>
+     * <p>    int sendersLimit = LetterwindControls.getInstance().getSendersLimit();    </p>
+     * */
+    public static ControlsGetter get(){ return InstanceHolder.GETTER; }
+
+    /**
+     * <p>    Syntax sugar.    </p>
+     * <p>    This allows you to set LetterwindControls in a manner similar to the Builder Pattern.    </p>
+     * <br>
+     * <p>    So, you can do this:    </p>
+     * <p>    LetterwindControls.set().sendersLimit(20);    </p>
+     * <br>
+     * <p>    Instead of this:    </p>
+     * <p>    LetterwindControls.getInstance().setSendersLimit(20);    </p>
+     * <br>
+     * <p>    All operations via the set() method can be chained as follows:    </p>
+     * <p>    LetterwindControls.set().remoteHost("localhost").remotePort(8080);    </p>
+     * */
+    public static ControlsSetter set(){ return InstanceHolder.SETTER; }
+
+
+    //=========================================== Common accessors and logic ===========================================
+
 
     public int getSendersLimit() {
         return sendersLimit;
@@ -105,12 +166,12 @@ public class LetterwindControls {
         return this;
     }
 
-    public boolean isAdaptiveThreadPool() {
-        return isAdaptiveThreadPool;
+    public boolean isThreadPoolAdaptive() {
+        return isThreadPoolAdaptive;
     }
 
-    public void setAdaptiveThreadPool(boolean adaptiveThreadPool) {
-        isAdaptiveThreadPool = adaptiveThreadPool;
+    public void setThreadPoolAdaptive(boolean threadPoolAdaptive) {
+        isThreadPoolAdaptive = threadPoolAdaptive;
     }
 
     public boolean isServerActive() {
@@ -176,21 +237,26 @@ public class LetterwindControls {
         return this;
     }
 
-    public Map<Class, Set<String>> getMessageTypeTopicsMap() {
-        return messageTypeTopicsMap;
-    }
-
-    public void setMessageTypeTopicsMap(Map<Class, Set<String>> messageTypeTopicsMap) {
-        this.messageTypeTopicsMap = messageTypeTopicsMap;
-    }
-
-    public LetterwindControls registerTopic(LetterwindTopic topic) throws Exception {
+    public LetterwindControls addTopic(LetterwindTopic topic) throws Exception {
         topics.put(topic.getName(), topic);
         addToMessageTypes(topic);
         return this;
     }
 
-    public boolean unregisterTopic(String topicName) throws Exception {
+    private void addToMessageTypes(LetterwindTopic topic) throws IOException {
+        Set<Class> messageTypes = topic.getConsumerMessageTypes();
+
+        for (Class messageType : messageTypes){
+            Set<String> topicNames = this.topicsByMessageType.get(messageType);
+            if (topicNames == null) topicNames = new HashSet<>();
+            topicNames.add(topic.getName());
+            this.topicsByMessageType.put(messageType, topicNames);
+            this.messageTypes.put(messageType.getSimpleName(), messageType);
+            MessageOrderManager.initForAllTopics(messageType, topicNames);
+        }
+    }
+
+    public boolean removeTopic(String topicName) throws Exception {
         LetterwindTopic topic = topics.get(topicName);
         if (topic != null){
             topics.remove(topicName);
@@ -201,13 +267,23 @@ public class LetterwindControls {
         }
     }
 
+    private void deleteFromMessageTypes(LetterwindTopic topic){
+        Set<Class> messageTypes = topic.getConsumerMessageTypes();
+
+        for (Class messageType : messageTypes){
+            Set<String> topicNames = this.topicsByMessageType.get(messageType);
+            if (topicNames != null) topicNames.remove(topic.getName());
+            // For safety reasons nothing is removed from messageTypes map since @LetterwindMessage can be reused between consumers
+        }
+    }
+
     public LetterwindTopic getTopic(String topicName){
         return topics.get(topicName);
     }
 
     public Set<LetterwindTopic> getAllTopicsWithMessageType(Class messageType){
         Set<LetterwindTopic> responseTopics = new HashSet<>();
-        Set<String> topicNames = messageTypeTopicsMap.get(messageType);
+        Set<String> topicNames = topicsByMessageType.get(messageType);
         if (topicNames == null) return null;
         for (String topicName : topicNames){
             LetterwindTopic topic = this.topics.get(topicName);
@@ -223,40 +299,5 @@ public class LetterwindControls {
 
     public boolean hasRemoteListener(){
         return Validator.isValid(this.remoteHost) && this.remotePort != 0;
-    }
-
-    private static class InstanceHolder {
-        private static final LetterwindControls INSTANCE = new LetterwindControls();
-    }
-
-    public static LetterwindControls getInstance(){
-        return InstanceHolder.INSTANCE;
-    }
-
-
-    // ================================= Private Methods =================================
-
-
-    private void addToMessageTypes(LetterwindTopic topic) throws IOException {
-        Set<Class> messageTypes = topic.getConsumerMessageTypes();
-
-        for (Class messageType : messageTypes){
-            Set<String> topicNames = this.messageTypeTopicsMap.get(messageType);
-            if (topicNames == null) topicNames = new HashSet<>();
-            topicNames.add(topic.getName());
-            this.messageTypeTopicsMap.put(messageType, topicNames);
-            this.messageTypes.put(messageType.getSimpleName(), messageType);
-            MessageOrderManager.initForAllTopics(messageType, topicNames);
-        }
-    }
-
-    private void deleteFromMessageTypes(LetterwindTopic topic){
-        Set<Class> messageTypes = topic.getConsumerMessageTypes();
-
-        for (Class messageType : messageTypes){
-            Set<String> topicNames = this.messageTypeTopicsMap.get(messageType);
-            if (topicNames != null) topicNames.remove(topic.getName());
-            // For safety reasons nothing is removed from messageTypes map since @LetterwindMessage can be reused between consumers
-        }
     }
 }

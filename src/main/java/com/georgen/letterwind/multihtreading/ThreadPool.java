@@ -30,6 +30,9 @@ public class ThreadPool {
             case REPROCESSING: {
                 return startConsumerThread(runnable);
             }
+            case CLEANING: {
+                return startCleaningThread(runnable);
+            }
             case ERROR: {
                 return startEventThread(runnable);
             }
@@ -51,6 +54,8 @@ public class ThreadPool {
     public Future startConsumerThread(Runnable runnable){ return this.consumerExecutor.submit(runnable); }
 
     public Future startEventThread(Runnable runnable){ return this.eventExecutor.submit(runnable); }
+
+    public Future startCleaningThread(Runnable runnable){ return this.cleanUpExecutor.submit(runnable); }
 
     public boolean isInit() {
         return isInit
@@ -81,7 +86,7 @@ public class ThreadPool {
         if (consumersLimit < 1) consumersLimit = ConfigProperty.CONSUMING_THREADS.getDefaultIntValue();
         if (eventHandlersLimit < 1) eventHandlersLimit = ConfigProperty.EVENT_HANDLING_THREADS.getDefaultIntValue();
 
-        if (controls.isAdaptiveThreadPool()){
+        if (controls.isThreadPoolAdaptive()){
             double systemThreshold = Runtime.getRuntime().availableProcessors() * 2;
             double threadsSum = sendersLimit + receiversLimit + consumersLimit + eventHandlersLimit;
             double multiplier = threadsSum > systemThreshold ? systemThreshold/threadsSum : 1;
@@ -91,15 +96,10 @@ public class ThreadPool {
             consumersLimit *= multiplier;
             eventHandlersLimit *= multiplier;
 
-            System.out.println(
-                    String.format(
-                            "Executors pool: %d %d %d %d",
-                            sendersLimit,
-                            receiversLimit,
-                            consumersLimit,
-                            eventHandlersLimit
-                    )
-            );
+            if (sendersLimit < 1) sendersLimit = 1;
+            if (receiversLimit < 1) receiversLimit = 1;
+            if (consumersLimit < 1) consumersLimit = 1;
+            if (eventHandlersLimit < 1) eventHandlersLimit = 1;
         }
 
         this.senderExecutor = Executors.newFixedThreadPool(sendersLimit);

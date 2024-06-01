@@ -34,12 +34,4 @@ public class MessageFlow {
             }
         };
     }
-
-    private static class MessageFlowHolder {
-        private static final MessageFlow INSTANCE = new MessageFlow();
-    }
-
-    public static MessageFlow getInstance(){
-        return MessageFlowHolder.INSTANCE;
-    }
 }

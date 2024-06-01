@@ -15,14 +15,13 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
         if (envelope == null || !envelope.hasBufferedResiduals()) return;
 
         cleanUpBuffer(envelope);
-        //cleanUpExchange(envelope);
 
         if (hasConveyor()){
             this.getConveyor().process(envelope);
         }
     }
 
-    private void cleanUpBuffer(Envelope<T> envelope) throws Exception {
+    private void cleanUpBuffer(Envelope<T> envelope) {
 
         String bufferPath = PathBuilder.getBufferPath(envelope);
         String bufferedMessagePath = PathBuilder.concatenate(bufferPath, envelope.getBufferedFileName());
@@ -34,13 +33,13 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
                 System.out.println("File is deleted: " + bufferedMessagePath);
             }
         } catch (Exception e){
-            System.out.println("Clean-up exception: " + e.getMessage());
+            MessageFlow.push(envelope, MessageFlowEvent.CLEANING);
         }
 
         cleanUpFirstBuffered(envelope, bufferPath);
     }
 
-    private void cleanUpFirstBuffered(Envelope<T> envelope, String bufferPath) throws Exception {
+    private void cleanUpFirstBuffered(Envelope<T> envelope, String bufferPath) {
         String exchangePath = PathBuilder.getExchangePath(envelope);
 
         try (FileOperation operation = new FileOperation(bufferPath, false)){
@@ -55,7 +54,7 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
                 operation.delete(firstBuffered);
             }
         } catch (Exception e){
-            System.out.println("Clean-up exception: " + e.getMessage());
+            MessageFlow.push(envelope, MessageFlowEvent.CLEANING);
         }
     }
 
@@ -64,20 +63,6 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
 
         try (FileOperation operation = new FileOperation(filePath, false)){
             return operation.isExistingFile();
-        }
-    }
-
-    private void cleanUpExchange(Envelope<T> envelope) throws Exception {
-        String exchangePath = PathBuilder.getExchangePath(envelope);
-        try (FileOperation operation = new FileOperation(exchangePath, false)){
-            if (operation.hasDirectoryContents()){
-                /**
-                 * This ensures that there are no residual messages left in the queue due to intense concurrency or read failures.
-                 * If there are no messages in the queue, the QueueRetrievingConveyor.retrieveMessage() method stops
-                 * the process, preventing an eternal loop.
-                 * */
-                MessageFlow.push(envelope, MessageFlowEvent.REPROCESSING);
-            }
         }
     }
 }
