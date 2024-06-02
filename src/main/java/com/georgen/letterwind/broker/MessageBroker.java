@@ -55,12 +55,12 @@ public class MessageBroker {
 
     /**
      * Send a message to all consumers in the topic that accept the specified (T) message type.
-     * The topic will not be registered, so this method should be considered a one-time interaction.
+     * The topic be registered at the same time.
      * */
     public static <T> boolean send(T message, LetterwindTopic topic) throws Exception {
         validateMessage(message);
         if (topic == null || !topic.isValid()) throw new LetterwindException("LetterwindTopic cannot be null or empty.");
-
+        LetterwindControls.set().topic(topic);
         Envelope<T> envelope = new Envelope<>(message, topic);
         MessageFlow.push(envelope, MessageFlowEvent.DISPATCH);
 

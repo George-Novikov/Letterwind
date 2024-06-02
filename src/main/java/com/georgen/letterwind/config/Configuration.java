@@ -115,14 +115,6 @@ public class Configuration {
         }
     }
 
-    public File getControlFile() {
-        try {
-            return FileFactory.getInstance().getFile(configReader.getControlFilePath(), true);
-        } catch (Exception e){
-            throw new InitializationException(SystemMessage.CONTROL_FILE_LOAD_FAIL, e);
-        }
-    }
-
     private String getPathRelativeToRoot(String path){
         return PathBuilder.concatenate(getRootPath(), path);
     }

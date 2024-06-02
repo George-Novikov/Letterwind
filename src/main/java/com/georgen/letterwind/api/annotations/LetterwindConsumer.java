@@ -18,20 +18,4 @@ public @interface LetterwindConsumer {
      * If set to less than 1, the consumer will stop working.
      * */
     int concurrentInstances() default 1;
-    /**
-     * Pre-activation will immediately create a number of concurrent copies specified in "concurrentInstances" parameter.
-     * If set to false, instantiation will occur on demand.
-     * */
-    boolean isPreActivated() default false;
-    /**
-     * Controls the type of multithreading executor used to process consumer operations.
-     * If set to true, the UnclosedExecutor will be selected and remain active for an extended period of time.
-     * */
-    boolean isReused() default false;
-    /**
-     * Controls the type of multithreading executor used to process consumer operations.
-     * If set to a value greater than 0, it overrides the "isReused" parameter and terminates all consumer processes after timeout.
-     * Interrupted processes will be reset to the list of unfinished tasks.
-     * */
-    long terminationMilliseconds() default 0L;
 }

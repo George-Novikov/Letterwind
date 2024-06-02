@@ -14,7 +14,6 @@ import java.util.Set;
 
 public class LetterwindTopic {
     private String name;
-    private Integer concurrencyLimit;
     private String remoteHost;
     private int remotePort;
     private Set<Class> consumers = new HashSet<>();
@@ -39,12 +38,6 @@ public class LetterwindTopic {
         this(name);
         this.consumers = new HashSet<>(Arrays.asList(consumers));
     }
-    public LetterwindTopic(String name,
-                           Integer concurrencyLimit,
-                           Class... consumers) {
-        this(name, consumers);
-        this.concurrencyLimit = concurrencyLimit;
-    }
 
     public String getName() {
         return name;
@@ -52,15 +45,6 @@ public class LetterwindTopic {
 
     public LetterwindTopic setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public Integer getConcurrencyLimit() {
-        return concurrencyLimit;
-    }
-
-    public LetterwindTopic setConcurrencyLimit(Integer concurrencyLimit) {
-        this.concurrencyLimit = concurrencyLimit;
         return this;
     }
 
@@ -145,10 +129,6 @@ public class LetterwindTopic {
 
     public boolean isValid(){
         return Validator.isValid(this.name) && !this.consumers.isEmpty();
-    }
-
-    public boolean hasConcurrencyLimit(){
-        return this.concurrencyLimit != null && this.concurrencyLimit > 0;
     }
 
     public static LetterwindTopic build(){ return new LetterwindTopic(); }

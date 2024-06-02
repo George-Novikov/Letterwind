@@ -39,6 +39,10 @@ public class ControlsGetter {
         return LetterwindControls.getInstance().getAllTopicsWithMessageType(messageType);
     }
 
+    public Class messageType(String simpleName){
+        return LetterwindControls.getInstance().getMessageTypeBySimpleName(simpleName);
+    }
+
     public ErrorHandler errorHandler(){ return LetterwindControls.getInstance().getErrorHandler(); }
 
     public SuccessHandler successHandler(){ return LetterwindControls.getInstance().getSuccessHandler(); }

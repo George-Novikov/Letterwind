@@ -4,12 +4,12 @@ import com.georgen.letterwind.api.annotations.LetterwindConsumer;
 
 
 public class SampleConsumer {
-    @LetterwindConsumer(concurrentInstances = 3)
+    @LetterwindConsumer
     public void receive(SampleMessage message){
         System.out.println("SampleConsumer.receive(): " + message);
     }
 
-    @LetterwindConsumer(concurrentInstances = 3)
+    @LetterwindConsumer
     public void receiveString(String message){
         System.out.println("SampleConsumer.receiveString(): " + message);
     }

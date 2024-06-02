@@ -22,8 +22,6 @@ public class YamlProperties extends LetterwindProperties {
         NamingNode naming = letterwind.getNaming();
 
         switch (property){
-            case CONTROL_FILE_NAME:
-                return naming.getControlFile();
             case ROOT_PATH:
                 return naming.getRootDirectory();
             case EXCHANGE_PATH:

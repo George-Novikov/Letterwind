@@ -38,7 +38,7 @@ public class ControlsSetter {
         return this;
     }
 
-    public ControlsSetter isServerActive(boolean isServerActive){
+    public ControlsSetter serverActive(boolean isServerActive){
         LetterwindControls.getInstance().setServerActive(isServerActive);
         return this;
     }

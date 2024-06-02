@@ -28,6 +28,7 @@ public class ThreadPool {
                 return startReceiverThread(runnable);
             }
             case REPROCESSING: {
+                /** Although counterintuitive, this setup provides both maximum performance and stability. */
                 return startConsumerThread(runnable);
             }
             case CLEANING: {
@@ -62,7 +63,8 @@ public class ThreadPool {
                 && senderExecutor != null
                 && receiverExecutor != null
                 && consumerExecutor != null
-                && eventExecutor != null;
+                && eventExecutor != null
+                && cleanUpExecutor != null;
     }
 
     private void init(){

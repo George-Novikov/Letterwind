@@ -19,16 +19,6 @@ public class ConfigReader {
     private LetterwindProperties properties;
     private boolean isDefaultValue;
 
-    public String getControlFilePath() {
-        String rootFolderName = getProperty(ConfigProperty.ROOT_PATH);
-        String controlFileName = getProperty(ConfigProperty.CONTROL_FILE_NAME);
-
-        if (rootFolderName == null) rootFolderName = ConfigProperty.ROOT_PATH.getDefaultValue();
-        if (controlFileName == null) controlFileName = ConfigProperty.CONTROL_FILE_NAME.getDefaultValue();
-
-        return PathBuilder.concatenate(rootFolderName, controlFileName);
-    }
-
     public String getProperty(ConfigProperty property) {
         if (isDefaultValue) return property.getDefaultValue();
 
