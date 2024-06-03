@@ -2,6 +2,7 @@ package com.georgen.letterwind.model.broker;
 
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.model.constants.Locality;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.model.transport.TransportEnvelope;
 import com.georgen.letterwind.util.Validator;
 
@@ -118,18 +119,13 @@ public class Envelope<T> {
     public boolean hasMessage(){
         return this.message != null;
     }
-    public boolean hasSerializedMessage(){
-        return Validator.isValid(this.serializedMessage);
-    }
     public boolean hasTopic(){ return this.topic != null; }
-    public boolean hasBufferedResiduals(){ return Validator.isValid(this.bufferedFileName); }
+    public boolean hasMessageTypeName(){ return this.messageTypeName != null && !this.messageTypeName.isEmpty(); }
+    public boolean hasSerializedMessage(){ return this.serializedMessage != null && !this.serializedMessage.isEmpty(); }
+    public boolean hasBufferedResiduals(){ return this.bufferedFileName != null && !this.bufferedFileName.isEmpty(); }
 
     public boolean isValid(){
         return hasMessage() && this.topic != null && this.topic.isValid() && this.locality != null ;
-    }
-
-    public boolean isSerialized(){
-        return this.serializedMessage != null && !this.serializedMessage.isEmpty();
     }
 
     public TransportEnvelope toTransportEnvelope(){

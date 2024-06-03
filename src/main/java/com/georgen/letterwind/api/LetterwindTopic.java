@@ -131,5 +131,9 @@ public class LetterwindTopic {
         return Validator.isValid(this.name) && !this.consumers.isEmpty();
     }
 
+    public boolean hasFinalEventHandlers(){
+        return this.errorHandler != null || this.successHandler != null;
+    }
+
     public static LetterwindTopic build(){ return new LetterwindTopic(); }
 }

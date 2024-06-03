@@ -5,6 +5,9 @@ import com.georgen.letterwind.broker.handlers.SuccessHandler;
 import com.georgen.letterwind.broker.ordering.MessageOrderManager;
 import com.georgen.letterwind.model.broker.ControlsGetter;
 import com.georgen.letterwind.model.broker.ControlsSetter;
+import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.broker.storages.MessageInfoStorage;
+import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.util.Validator;
 
 import java.io.IOException;
@@ -299,5 +302,24 @@ public class LetterwindControls {
 
     public boolean hasRemoteListener(){
         return Validator.isValid(this.remoteHost) && this.remotePort != 0;
+    }
+
+    public boolean hasFinalEventHandlers(){
+        return this.errorHandler != null || this.successHandler != null;
+    }
+
+    /** This method is intended to prevent the unnecessary overhead of creating new threads with no event handling */
+    public boolean isAllowedToProceed(Envelope envelope, MessageFlowEvent event){
+        if (!event.isFinal()) return true;
+
+        if (envelope == null || !envelope.hasMessageTypeName()) return false;
+
+        if (MessageInfoStorage.getInstance().hasFinalEventHandlers(envelope, event)) return true;
+
+        LetterwindTopic topic = envelope.getTopic();
+        if (topic == null) return false;
+        if (topic.hasFinalEventHandlers()) return true;
+
+        return this.hasFinalEventHandlers();
     }
 }

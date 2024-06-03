@@ -20,18 +20,6 @@ public class ConsumerExtractor {
                                 && method.isAnnotationPresent(LetterwindConsumer.class));
     }
 
-
-    public static Set<Method> extractConsumingMethods(Class consumerClass){
-        Method[] methods = consumerClass.getDeclaredMethods();
-
-        return Arrays
-                .stream(methods)
-                .filter(method ->
-                        Modifier.isPublic(method.getModifiers())
-                                && method.isAnnotationPresent(LetterwindConsumer.class))
-                .collect(Collectors.toSet());
-    }
-
     public static Set<Method> extractConsumingMethods(Class consumerClass, Class messageType){
         Method[] methods = consumerClass.getDeclaredMethods();
 

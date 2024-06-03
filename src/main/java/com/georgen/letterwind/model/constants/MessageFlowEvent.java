@@ -6,5 +6,9 @@ public enum MessageFlowEvent {
     REPROCESSING,
     CLEANING,
     SUCCESS,
-    ERROR
+    ERROR;
+
+    public boolean isFinal(){
+        return SUCCESS.equals(this) || ERROR.equals(this);
+    }
 }

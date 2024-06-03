@@ -1,8 +1,10 @@
 package com.georgen.letterwind.broker;
 
+import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.broker.conveyor.ConveyorFactory;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.broker.storages.MessageInfoStorage;
 import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.multihtreading.ThreadPool;
 
@@ -19,6 +21,7 @@ public class MessageFlow {
      * Also, it is handy for processing both local and remote calls, errors, and success events.
      */
     public static <T> Future push(Envelope<T> envelope, MessageFlowEvent event){
+        if (!LetterwindControls.getInstance().isAllowedToProceed(envelope, event)) return null;
         MessageConveyor<T> conveyor = ConveyorFactory.createConveyor(event);
         Runnable runnable = getRunnable(conveyor, envelope);
         return ThreadPool.getInstance().startThreadForEvent(runnable, event);
