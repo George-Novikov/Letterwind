@@ -6,7 +6,7 @@ import com.georgen.letterwind.broker.ordering.MessageOrderManager;
 import com.georgen.letterwind.model.broker.ControlsGetter;
 import com.georgen.letterwind.model.broker.ControlsSetter;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.broker.storages.MessageInfoStorage;
+import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.util.Validator;
 
@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Letterwind main configuration class
@@ -252,10 +253,13 @@ public class LetterwindControls {
         for (Class messageType : messageTypes){
             Set<String> topicNames = this.topicsByMessageType.get(messageType);
             if (topicNames == null) topicNames = new HashSet<>();
+
             topicNames.add(topic.getName());
             this.topicsByMessageType.put(messageType, topicNames);
+
             this.messageTypes.put(messageType.getSimpleName(), messageType);
-            MessageOrderManager.initForAllTopics(messageType, topicNames);
+            MessageHandlerStorage.getInstance().register(messageType);
+            MessageOrderManager.initForTopics(messageType, topicNames);
         }
     }
 
@@ -284,15 +288,13 @@ public class LetterwindControls {
         return topics.get(topicName);
     }
 
-    public Set<LetterwindTopic> getAllTopicsWithMessageType(Class messageType){
-        Set<LetterwindTopic> responseTopics = new HashSet<>();
+    public Set<LetterwindTopic> getTopicsWithMessageType(Class messageType){
         Set<String> topicNames = topicsByMessageType.get(messageType);
         if (topicNames == null) return null;
-        for (String topicName : topicNames){
-            LetterwindTopic topic = this.topics.get(topicName);
-            if (topic != null) responseTopics.add(topic);
-        }
-        return responseTopics;
+        return topicNames
+                .stream()
+                .map(topicName -> topics.get(topicName))
+                .collect(Collectors.toSet());
     }
 
     public Class getMessageTypeBySimpleName(String messageTypeSimpleName){
@@ -311,14 +313,15 @@ public class LetterwindControls {
     /** This method is intended to prevent the unnecessary overhead of creating new threads with no event handling */
     public boolean isAllowedToProceed(Envelope envelope, MessageFlowEvent event){
         if (!event.isFinal()) return true;
+        if (envelope == null || !envelope.hasMessageTypeName() || !envelope.hasTopicName()) return false;
 
-        if (envelope == null || !envelope.hasMessageTypeName()) return false;
+        Class messageType = messageTypes.get(envelope.getMessageTypeName());
+        if (messageType == null) return false;
 
-        if (MessageInfoStorage.getInstance().hasFinalEventHandlers(envelope, event)) return true;
+        if (MessageHandlerStorage.getInstance().hasFinalEventHandlers(messageType, event)) return true;
 
-        LetterwindTopic topic = envelope.getTopic();
-        if (topic == null) return false;
-        if (topic.hasFinalEventHandlers()) return true;
+        LetterwindTopic topic = envelope.hasTopic() ? envelope.getTopic() : this.topics.get(envelope.getTopicName());
+        if (topic != null && topic.hasFinalEventHandlers()) return true;
 
         return this.hasFinalEventHandlers();
     }

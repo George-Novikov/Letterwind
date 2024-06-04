@@ -7,10 +7,9 @@ import com.georgen.letterwind.util.AnnotationGuard;
 import com.georgen.letterwind.util.Validator;
 import com.georgen.letterwind.util.extractors.MessageTypeExtractor;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LetterwindTopic {
     private String name;
@@ -115,12 +114,10 @@ public class LetterwindTopic {
     public boolean hasSuccessHandler(){ return this.successHandler != null; }
 
     public Set<Class> getConsumerMessageTypes(){
-        Set<Class> messageTypes = new HashSet<>();
-        for (Class consumer : consumers){
-            Set<Class> consumerMessageTypes = MessageTypeExtractor.extract(consumer);
-            if (consumerMessageTypes != null) messageTypes.addAll(consumerMessageTypes);
-        }
-        return messageTypes;
+        return consumers.stream()
+                .map(MessageTypeExtractor::extract)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
     }
 
     public boolean hasRemoteListener(){

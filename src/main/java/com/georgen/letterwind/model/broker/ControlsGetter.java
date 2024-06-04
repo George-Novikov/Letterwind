@@ -36,7 +36,7 @@ public class ControlsGetter {
     public LetterwindTopic topic(String topicName){ return LetterwindControls.getInstance().getTopic(topicName); }
 
     public Set<LetterwindTopic> topicsWithMessageType(Class messageType){
-        return LetterwindControls.getInstance().getAllTopicsWithMessageType(messageType);
+        return LetterwindControls.getInstance().getTopicsWithMessageType(messageType);
     }
 
     public Class messageType(String simpleName){

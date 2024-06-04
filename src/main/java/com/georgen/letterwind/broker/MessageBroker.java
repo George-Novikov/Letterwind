@@ -22,7 +22,7 @@ public class MessageBroker {
 
         LetterwindControls controls = LetterwindControls.getInstance();
 
-        Set<LetterwindTopic> topics = controls.getAllTopicsWithMessageType(messageType);
+        Set<LetterwindTopic> topics = controls.getTopicsWithMessageType(messageType);
         if (topics == null) throw new LetterwindException("No registered topics with the specified message type were found.");
 
         for (LetterwindTopic topic : topics){

@@ -1,6 +1,5 @@
 package com.georgen.letterwind.broker.ordering;
 
-import com.georgen.letterwind.config.Configuration;
 import com.georgen.letterwind.io.FileFactory;
 import com.georgen.letterwind.util.PathBuilder;
 
@@ -18,12 +17,9 @@ import java.util.stream.StreamSupport;
 public class MessageOrderManager {
     private MessageOrderManager(){}
 
-    public static void initForAllTopics(Class messageType, Set<String> topicNames) throws IOException {
+    public static void initForTopics(Class messageType, Set<String> topicNames) throws IOException {
         for (String topicName : topicNames){
-            String messageTypePath = PathBuilder.concatenate(
-                    Configuration.getInstance().getExchangePath(),
-                    topicName, messageType.getSimpleName()
-            );
+            String messageTypePath = PathBuilder.getExchangePath(topicName, messageType);
 
             AtomicLong counter = MessageCounterHolder.COUNTERS.get(messageTypePath);
             if (counter != null) return;
@@ -34,8 +30,7 @@ public class MessageOrderManager {
 
     public static long assign(String messageTypePath) throws IOException {
         AtomicLong counter = MessageCounterHolder.COUNTERS.get(messageTypePath);
-        if (counter != null) return counter.incrementAndGet();
-        counter = initCounter(messageTypePath);
+        if (counter == null) counter = initCounter(messageTypePath);
         return counter.incrementAndGet();
     }
 

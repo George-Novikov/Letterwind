@@ -4,9 +4,9 @@ import com.georgen.letterwind.api.annotations.LetterwindMessage;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.serializers.MessageSerializer;
 import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.util.extractors.MessageSerializerExtractor;
 
 public class SerializationConveyor<T> extends MessageConveyor<T> {
 
@@ -37,7 +37,7 @@ public class SerializationConveyor<T> extends MessageConveyor<T> {
 
     private MessageSerializer<T> extractSerializer(T message){
         try {
-            Class serializerClass = MessageSerializerExtractor.extract(message);
+            Class<? extends MessageSerializer> serializerClass = MessageHandlerStorage.getInstance().getSerializer(message.getClass());
             return (MessageSerializer<T>) serializerClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
             return null;

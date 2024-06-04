@@ -4,7 +4,6 @@ import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.broker.conveyor.ConveyorFactory;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.broker.storages.MessageInfoStorage;
 import com.georgen.letterwind.model.constants.MessageFlowEvent;
 import com.georgen.letterwind.multihtreading.ThreadPool;
 

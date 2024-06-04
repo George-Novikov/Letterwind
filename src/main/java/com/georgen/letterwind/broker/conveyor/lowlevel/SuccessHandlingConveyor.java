@@ -2,14 +2,9 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
-import com.georgen.letterwind.broker.handlers.EmptySuccessHandler;
-import com.georgen.letterwind.broker.handlers.ErrorHandler;
 import com.georgen.letterwind.broker.handlers.SuccessHandler;
 import com.georgen.letterwind.model.broker.Envelope;
-import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.util.extractors.EventHandlerExtractor;
-
-import java.lang.reflect.InvocationTargetException;
+import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 
 public class SuccessHandlingConveyor<T> extends MessageConveyor<T> {
     @Override
@@ -37,9 +32,10 @@ public class SuccessHandlingConveyor<T> extends MessageConveyor<T> {
 
     public SuccessHandler<T> getMessageSuccessHandler(Envelope<T> envelope) {
         try {
-            Class messageSuccessHandlerClass = EventHandlerExtractor.extractSuccessHandler(envelope.getMessage());
-            if (messageSuccessHandlerClass == null || EmptySuccessHandler.class.equals(messageSuccessHandlerClass)) return null;
-            return (SuccessHandler<T>) messageSuccessHandlerClass.getDeclaredConstructor().newInstance();
+            Class messageType = envelope.getMessage().getClass();
+            Class<? extends SuccessHandler> successHandlerClass = MessageHandlerStorage.getInstance().getSuccessHandler(messageType);
+            if (!SuccessHandler.isValid(successHandlerClass)) return null;
+            return (SuccessHandler<T>) successHandlerClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
             System.out.println(e.getMessage());
             return null;

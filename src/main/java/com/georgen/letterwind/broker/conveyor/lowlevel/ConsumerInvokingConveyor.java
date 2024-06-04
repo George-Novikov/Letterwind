@@ -35,14 +35,9 @@ public class ConsumerInvokingConveyor<T> extends MessageConveyor<T> {
         Object consumerInstance = consumerType.getDeclaredConstructor().newInstance();
 
         for (Method method : consumingMethods){
-//            method.invoke(consumerInstance, message);
             Runnable runnable = getRunnable(method, consumerInstance, message, envelope);
             ThreadPool.getInstance().startConsumerThread(runnable);
         }
-    }
-
-    private void invokeDirectly(Method method, Object consumerInstance, T message) throws InvocationTargetException, IllegalAccessException {
-        method.invoke(consumerInstance, message);
     }
 
     private Runnable getRunnable(Method method, Object consumerInstance, T message, Envelope<T> envelope){

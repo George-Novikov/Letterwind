@@ -19,6 +19,13 @@ public class PathBuilder {
         return Arrays.stream(paths).collect(Collectors.joining(File.separator));
     }
 
+    public static String getExchangePath(String topicName, Class messageType){
+        return concatenate(
+                Configuration.getInstance().getExchangePath(),
+                topicName, messageType.getSimpleName()
+        );
+    }
+
     public static String getExchangePath(Envelope envelope){
         return getMessagePath(Configuration.getInstance().getExchangePath(), envelope);
     }

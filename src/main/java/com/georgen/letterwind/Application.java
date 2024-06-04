@@ -7,10 +7,10 @@ import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.MessageBroker;
 import com.georgen.letterwind.model.SampleConsumer;
+import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.broker.serializers.MessageSerializer;
 import com.georgen.letterwind.model.SampleMessage;
-import com.georgen.letterwind.util.extractors.MessageSerializerExtractor;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -51,7 +51,7 @@ public class Application {
         SampleMessage message = new SampleMessage();
         message.setValue("How are you?");
 
-        Class serializerClass = MessageSerializerExtractor.extract(message);
+        Class serializerClass = MessageHandlerStorage.getInstance().getSerializer(message.getClass());
 
         MessageSerializer<SampleMessage> serializer = (MessageSerializer<SampleMessage>) serializerClass.getDeclaredConstructor().newInstance();
 

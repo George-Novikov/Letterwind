@@ -3,9 +3,9 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.validators.MessageValidator;
 import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.messages.BrokerMessage;
-import com.georgen.letterwind.util.extractors.MessageValidatorExtractor;
 
 public class ValidationConveyor<T> extends MessageConveyor<T> {
 
@@ -29,7 +29,7 @@ public class ValidationConveyor<T> extends MessageConveyor<T> {
 
     private MessageValidator<T> extractValidator(T message){
         try {
-            Class validatorClass = MessageValidatorExtractor.extract(message);
+            Class<? extends MessageValidator> validatorClass = MessageHandlerStorage.getInstance().getValidator(message.getClass());
             return (MessageValidator<T>) validatorClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
             return null;

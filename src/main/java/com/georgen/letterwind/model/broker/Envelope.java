@@ -120,6 +120,7 @@ public class Envelope<T> {
         return this.message != null;
     }
     public boolean hasTopic(){ return this.topic != null; }
+    public boolean hasTopicName(){ return this.topicName != null && !this.topicName.isEmpty(); }
     public boolean hasMessageTypeName(){ return this.messageTypeName != null && !this.messageTypeName.isEmpty(); }
     public boolean hasSerializedMessage(){ return this.serializedMessage != null && !this.serializedMessage.isEmpty(); }
     public boolean hasBufferedResiduals(){ return this.bufferedFileName != null && !this.bufferedFileName.isEmpty(); }

@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConsumerTypeStorage {
+public class ConsumerInfoStorage {
     private ConcurrentHashMap<Class, Set<Method>> consumingMethods = new ConcurrentHashMap<>();
 
 }
