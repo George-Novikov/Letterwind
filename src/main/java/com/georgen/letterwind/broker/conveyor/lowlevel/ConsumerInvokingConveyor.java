@@ -3,9 +3,10 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 import com.georgen.letterwind.broker.MessageFlow;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.model.broker.Envelope;
+import com.georgen.letterwind.model.broker.storages.ConsumerMethodStorage;
 import com.georgen.letterwind.model.constants.MessageFlowEvent;
+import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.multihtreading.ThreadPool;
-import com.georgen.letterwind.util.extractors.ConsumerExtractor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,8 +31,16 @@ public class ConsumerInvokingConveyor<T> extends MessageConveyor<T> {
         }
     }
 
-    private void invokeConsumerMethods(Class consumerType, T message, Envelope<T> envelope) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
-        Set<Method> consumingMethods = ConsumerExtractor.extractConsumingMethods(consumerType, message.getClass());
+    private void invokeConsumerMethods(
+            Class consumerType, T message, Envelope<T> envelope
+    ) throws
+            InvocationTargetException,
+            IllegalAccessException,
+            InstantiationException,
+            NoSuchMethodException,
+            LetterwindException {
+
+        Set<Method> consumingMethods = ConsumerMethodStorage.getInstance().getForConsumerMessageType(consumerType, message.getClass());
         Object consumerInstance = consumerType.getDeclaredConstructor().newInstance();
 
         for (Method method : consumingMethods){

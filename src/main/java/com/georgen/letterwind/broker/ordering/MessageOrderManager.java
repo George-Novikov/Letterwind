@@ -28,7 +28,7 @@ public class MessageOrderManager {
         }
     }
 
-    public static long assign(String messageTypePath) throws IOException {
+    public static long assignOrder(String messageTypePath) throws IOException {
         AtomicLong counter = MessageCounterHolder.COUNTERS.get(messageTypePath);
         if (counter == null) counter = initCounter(messageTypePath);
         return counter.incrementAndGet();

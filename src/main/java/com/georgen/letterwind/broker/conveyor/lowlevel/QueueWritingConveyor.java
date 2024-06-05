@@ -40,7 +40,7 @@ public class QueueWritingConveyor<T> extends MessageConveyor<T> {
         String messageExchangePath = PathBuilder.getExchangePath(topic, envelope);
         String messageBufferPath = PathBuilder.getBufferPath(topic, envelope);
 
-        long order = MessageOrderManager.assign(messageExchangePath);
+        long order = MessageOrderManager.assignOrder(messageExchangePath);
         String messageFileName = String.format("%s-%s", order, envelope.getId());
 
         String fullExchangePath = getFullPath(messageExchangePath, messageFileName);

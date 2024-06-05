@@ -2,14 +2,13 @@ package com.georgen.letterwind.api;
 
 import com.georgen.letterwind.broker.handlers.ErrorHandler;
 import com.georgen.letterwind.broker.handlers.SuccessHandler;
+import com.georgen.letterwind.model.broker.storages.ConsumerMethodStorage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
-import com.georgen.letterwind.util.AnnotationGuard;
 import com.georgen.letterwind.util.Validator;
-import com.georgen.letterwind.util.extractors.MessageTypeExtractor;
+import com.georgen.letterwind.util.MessageTypeExtractor;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LetterwindTopic {
     private String name;
@@ -82,8 +81,8 @@ public class LetterwindTopic {
     }
 
     public LetterwindTopic addConsumer(Class consumerClass) throws LetterwindException {
-        AnnotationGuard.validateConsumer(consumerClass);
         this.consumers.add(consumerClass);
+        ConsumerMethodStorage.getInstance().register(consumerClass);
         return this;
     }
 
