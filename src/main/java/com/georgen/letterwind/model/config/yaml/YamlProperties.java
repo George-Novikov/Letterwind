@@ -19,13 +19,33 @@ public class YamlProperties extends LetterwindProperties {
     @Override
     public String getProperty(ConfigProperty property){
         if (letterwind == null || letterwind.isEmpty()) return null;
+
         NamingNode naming = letterwind.getNaming();
+        ConcurrencyNode concurrency = letterwind.getConcurrency();
+        ServerNode server = letterwind.getServer();
+        IoNode io = letterwind.getIo();
 
         switch (property){
             case ROOT_PATH:
-                return naming.getRootDirectory();
+                return naming != null ? naming.getRootDirectory() : null;
             case EXCHANGE_PATH:
-                return naming.getEntitiesDirectory();
+                return naming != null ?  naming.getExchangeDirectory() : null;
+            case BUFFER_PATH:
+                return naming != null ? naming.getBufferDirectory() : null;
+            case SENDING_THREADS:
+                return concurrency != null ? concurrency.getSendingThreads() : null;
+            case RECEIVING_THREADS:
+                return concurrency != null ? concurrency.getReceivingThreads() : null;
+            case CONSUMING_THREADS:
+                return concurrency != null ? concurrency.getConsumingThreads() : null;
+            case EVENT_HANDLING_THREADS:
+                return concurrency != null ? concurrency.getEventHandlingThreads() : null;
+            case IS_THREAD_POOL_ADAPTIVE:
+                return concurrency != null ? concurrency.getAdaptive() : null;
+            case SERVER_PORT:
+                return server != null ? server.getPort() : null;
+            case IO_RETRIES_ON_FAULT:
+                return io != null ? io.getRetriesOnFault() : null;
             default:
                 return null;
         }
