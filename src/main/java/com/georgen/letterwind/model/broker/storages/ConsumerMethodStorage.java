@@ -26,11 +26,7 @@ public class ConsumerMethodStorage {
     public Set<Method> getForConsumerMessageType(Class consumerClass, Class messageType) throws LetterwindException {
         Set<Method> methods = consumingMethods.get(consumerClass);
         if (methods == null) throwNotRegisteredConsumer(consumerClass);
-
-        methods = getForMessageType(methods, messageType);
-        if (methods.isEmpty()) throwNoMethodsForMessageType(consumerClass, messageType);
-
-        return methods;
+        return getForMessageType(methods, messageType);
     }
 
     private Set<Method> getForMessageType(Set<Method> methods, Class messageType){

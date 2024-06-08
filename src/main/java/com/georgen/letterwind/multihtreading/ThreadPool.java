@@ -88,7 +88,8 @@ public class ThreadPool {
         if (consumersLimit < 1) consumersLimit = ConfigProperty.CONSUMING_THREADS.getDefaultIntValue();
         if (eventHandlersLimit < 1) eventHandlersLimit = ConfigProperty.EVENT_HANDLING_THREADS.getDefaultIntValue();
 
-        if (controls.isThreadPoolAdaptive()){
+        if (controls.isScaledToSystemCPU()){
+            /** Since the message flow is I/O-intensive process, the x2 multiplier is used to properly saturate the CPU */
             double systemThreshold = Runtime.getRuntime().availableProcessors() * 2;
             double threadsSum = sendersLimit + receiversLimit + consumersLimit + eventHandlersLimit;
             double multiplier = threadsSum > systemThreshold ? systemThreshold/threadsSum : 1;

@@ -21,7 +21,7 @@ public class ControlsGetter {
 
     public int eventHandlersLimit(){ return LetterwindControls.getInstance().getEventHandlersLimit(); }
 
-    public boolean isThreadPoolAdaptive(){ return LetterwindControls.getInstance().isThreadPoolAdaptive(); }
+    public boolean isScaledToSystemCPU(){ return LetterwindControls.getInstance().isScaledToSystemCPU(); }
 
     public boolean isServerActive(){ return LetterwindControls.getInstance().isServerActive(); }
 

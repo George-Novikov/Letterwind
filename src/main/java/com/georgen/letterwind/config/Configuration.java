@@ -1,13 +1,8 @@
 package com.georgen.letterwind.config;
 
 
-import com.georgen.letterwind.io.FileFactory;
-import com.georgen.letterwind.model.exceptions.InitializationException;
-import com.georgen.letterwind.model.messages.SystemMessage;
 import com.georgen.letterwind.util.PathBuilder;
 import com.georgen.letterwind.util.Validator;
-
-import java.io.File;
 
 import static com.georgen.letterwind.model.constants.ConfigProperty.*;
 
@@ -99,9 +94,9 @@ public class Configuration {
         try {
             String isAdaptiveString = this.configReader.getProperty(EVENT_HANDLING_THREADS);
             boolean isValidParam = Validator.isValid(isAdaptiveString);
-            return isValidParam ? Boolean.valueOf(isAdaptiveString) : IS_THREAD_POOL_ADAPTIVE.getDefaultBooleanValue();
+            return isValidParam ? Boolean.valueOf(isAdaptiveString) : IS_SCALED_TO_CPU.getDefaultBooleanValue();
         } catch (Exception e){
-            return IS_THREAD_POOL_ADAPTIVE.getDefaultBooleanValue();
+            return IS_SCALED_TO_CPU.getDefaultBooleanValue();
         }
     }
 

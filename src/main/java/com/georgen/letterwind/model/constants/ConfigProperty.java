@@ -8,7 +8,7 @@ public enum ConfigProperty {
     RECEIVING_THREADS("letterwind.concurrency.receiving-threads", 10),
     CONSUMING_THREADS("letterwind.concurrency.consuming-threads", 40),
     EVENT_HANDLING_THREADS("letterwind.concurrency.event-handling-threads", 10),
-    IS_THREAD_POOL_ADAPTIVE("letterwind.concurrency.is-adaptive", true),
+    IS_SCALED_TO_CPU("letterwind.concurrency.is-scaled-to-cpu", true),
 
     SERVER_PORT("letterwind.server.port", 17566),
     IO_RETRIES_ON_FAULT("letterwind.io.retries-on-fault", 10)

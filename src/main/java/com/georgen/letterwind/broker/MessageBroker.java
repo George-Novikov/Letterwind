@@ -34,7 +34,7 @@ public class MessageBroker {
     }
 
     /**
-     * Send a message to all consumers with the specified (T) message type, associated with the topic with the specified name.
+     * Send a message to all consumers with the specified (T) message type, tied to the topic with the specified name.
      * This method requires the topics to be registered in advance.
      * */
     public static <T> boolean send(T message, String topicName) throws Exception {

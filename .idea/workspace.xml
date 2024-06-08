@@ -6,20 +6,42 @@
   <component name="ChangeListManager">
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/letterwind.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/ConcurrencyNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/IoNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/ServerNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/LocalDispatchTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MessageSerializerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MessageValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/SampleConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/SampleMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/StringConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/ExceptionsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MixedDispatchTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/StringDispatchTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/TestConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/TestMessageSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/consumers/MixedTestConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/consumers/StringTestConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/consumers/TestConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/message/DefaultAnnotationMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/message/NoAnnotationMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/util/ResultsStorage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/util/TimeLimiter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/LetterwindNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/LetterwindNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/NamingNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/NamingNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindControls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindControls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/annotations/LetterwindConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/annotations/LetterwindConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageBroker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/MessageBroker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/ReprocessingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/highlevel/ReprocessingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/CleanUpConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/CleanUpConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/conveyor/lowlevel/ConsumerInvokingConveyor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/serializers/UniversalSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/broker/serializers/UniversalSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/config/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/ControlsGetter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/ControlsGetter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/ControlsSetter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/ControlsSetter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/storages/ConsumerMethodStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/storages/ConsumerMethodStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/ConcurrencyNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/ConcurrencyNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/YamlProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/config/yaml/YamlProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/letterwind.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/ConfigProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/constants/ConfigProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ThreadPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/multihtreading/ThreadPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/LocalDispatchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/LocalDispatchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MessageSerializerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MessageValidatorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/SampleConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/SampleMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/model/message/TestMessage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +77,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/java-projects/Letterwind",
+    "last_opened_file_path": "C:/java-projects/Letterwind/src/test",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
@@ -75,6 +97,9 @@
       <recent name="C:\java-projects\Letterwind" />
       <recent name="C:\Users\fatem\java-workspace\Letterwind\src\main\resources" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.georgen.letterwind.util" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.georgen.letterwind.model.transport" />
       <recent name="com.georgen.letterwind.io" />
@@ -82,7 +107,7 @@
       <recent name="com.georgen.letterwind.model.exceptions" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.StringDispatchTest">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.georgen.letterwind.Application" />
       <module name="Letterwind" />
@@ -90,6 +115,92 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ExceptionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Letterwind" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.georgen.letterwind.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.georgen.letterwind" />
+      <option name="MAIN_CLASS_NAME" value="com.georgen.letterwind.ExceptionsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LocalDispatchTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="Letterwind" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.georgen.letterwind.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.georgen.letterwind" />
+      <option name="MAIN_CLASS_NAME" value="com.georgen.letterwind.LocalDispatchTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MixedDispatchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Letterwind" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.georgen.letterwind.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.georgen.letterwind" />
+      <option name="MAIN_CLASS_NAME" value="com.georgen.letterwind.MixedDispatchTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StringDispatchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Letterwind" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.georgen.letterwind.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.georgen.letterwind" />
+      <option name="MAIN_CLASS_NAME" value="com.georgen.letterwind.StringDispatchTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tests" type="JUnit" factoryName="JUnit">
+      <module name="Letterwind" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Application" />
+      <item itemvalue="JUnit.Tests" />
+      <item itemvalue="JUnit.LocalDispatchTest" />
+      <item itemvalue="JUnit.ExceptionsTest" />
+      <item itemvalue="JUnit.MixedDispatchTest" />
+      <item itemvalue="JUnit.StringDispatchTest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StringDispatchTest" />
+        <item itemvalue="JUnit.MixedDispatchTest" />
+        <item itemvalue="JUnit.ExceptionsTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -182,7 +293,8 @@
       <workItem from="1717605443392" duration="5683000" />
       <workItem from="1717648115752" duration="6000" />
       <workItem from="1717690323638" duration="7727000" />
-      <workItem from="1717779403916" duration="3472000" />
+      <workItem from="1717779403916" duration="4221000" />
+      <workItem from="1717818584485" duration="21518000" />
     </task>
     <servers />
   </component>
@@ -206,6 +318,11 @@
         <PinnedItemInfo parentTag="com.georgen.letterwind.broker.conveyor.highlevel.ReceptionConveyor" memberName="conveyor" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="this.mapper._deserializationContext" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Letterwind$Application.ic" NAME="Application Coverage Results" MODIFIED="1713557311455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

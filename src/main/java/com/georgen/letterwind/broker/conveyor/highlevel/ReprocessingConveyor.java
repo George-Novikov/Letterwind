@@ -24,8 +24,6 @@ public class ReprocessingConveyor<T> extends MessageConveyor<T> {
         consumerInvocation.setConveyor(cleanUp);
         cleanUp.setConveyor(informing);
 
-        System.out.println("Reprocessing. " + LocalDateTime.now());
-
         if (hasConveyor()){
             this.getConveyor().process(envelope);
         }

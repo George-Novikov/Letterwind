@@ -68,10 +68,10 @@ public class LetterwindTopic {
         return consumers;
     }
 
-    public LetterwindTopic setConsumers(Class... consumers) {
-        if (this.consumers == null) this.consumers = new HashSet<>();
-        List<Class> consumersList = Arrays.asList(consumers);
-        this.consumers.addAll(consumersList);
+    public LetterwindTopic setConsumers(Class... consumers) throws Exception {
+        for (Class consumerType : consumers){
+            addConsumer(consumerType);
+        }
         return this;
     }
 
@@ -80,7 +80,7 @@ public class LetterwindTopic {
         return this;
     }
 
-    public LetterwindTopic addConsumer(Class consumerClass) throws LetterwindException {
+    public LetterwindTopic addConsumer(Class consumerClass) throws Exception {
         this.consumers.add(consumerClass);
         ConsumerMethodStorage.getInstance().register(consumerClass);
         return this;

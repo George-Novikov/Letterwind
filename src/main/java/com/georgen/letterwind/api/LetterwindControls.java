@@ -39,7 +39,7 @@ public class LetterwindControls {
     private int eventHandlersLimit;
 
     /** This flag will scale the total number of threads to the limits of the system processor. */
-    private boolean isThreadPoolAdaptive = true;
+    private boolean isScaledToSystemCPU = true;
 
 
     // ======================================= Remote access: Server and Client ========================================
@@ -170,12 +170,12 @@ public class LetterwindControls {
         return this;
     }
 
-    public boolean isThreadPoolAdaptive() {
-        return isThreadPoolAdaptive;
+    public boolean isScaledToSystemCPU() {
+        return isScaledToSystemCPU;
     }
 
-    public void setThreadPoolAdaptive(boolean threadPoolAdaptive) {
-        isThreadPoolAdaptive = threadPoolAdaptive;
+    public void setScaledToSystemCPU(boolean scaledToSystemCPU) {
+        isScaledToSystemCPU = scaledToSystemCPU;
     }
 
     public boolean isServerActive() {

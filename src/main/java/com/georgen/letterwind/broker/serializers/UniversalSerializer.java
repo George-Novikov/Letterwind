@@ -1,5 +1,6 @@
 package com.georgen.letterwind.broker.serializers;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.georgen.letterwind.api.LetterwindControls;
@@ -15,6 +16,7 @@ public class UniversalSerializer<@LetterwindMessage T> implements MessageSeriali
 
     public UniversalSerializer(){
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
         this.objectMapper.findAndRegisterModules();
     }
 

@@ -1,0 +1,15 @@
+letterwind:
+  naming:
+    root-directory: letterwind
+    exchange-directory: exchange
+    buffer-directory: buffer
+  concurrency:
+    sending-threads: 10
+    receiving-threads: 10
+    consuming-threads: 40
+    event-handling-threads: 10
+    is-scaled-to-cpu: true
+  server:
+    port: 17566
+  io:
+    retries-on-fault: 100

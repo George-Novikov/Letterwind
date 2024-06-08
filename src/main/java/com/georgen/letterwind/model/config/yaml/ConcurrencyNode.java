@@ -10,7 +10,7 @@ public class ConcurrencyNode {
     private String receivingThreads;
     private String consumingThreads;
     private String eventHandlingThreads;
-    private String isAdaptive;
+    private String scaledToSystemCPU;
 
     @JsonProperty("sending-threads")
     public String getSendingThreads() {
@@ -52,14 +52,14 @@ public class ConcurrencyNode {
         this.eventHandlingThreads = eventHandlingThreads;
     }
 
-    @JsonProperty("is-adaptive")
-    public String getAdaptive() {
-        return isAdaptive;
+    @JsonProperty("is-scaled-to-cpu")
+    public String getScaledToCPU() {
+        return scaledToSystemCPU;
     }
 
-    @JsonProperty("is-adaptive")
-    public void setAdaptive(String adaptive) {
-        isAdaptive = adaptive;
+    @JsonProperty("is-scaled-to-cpu")
+    public void setScaledToCPU(String scaledToSystemCPU) {
+        this.scaledToSystemCPU = scaledToSystemCPU;
     }
 
     @JsonIgnore
@@ -68,6 +68,6 @@ public class ConcurrencyNode {
                 && (this.receivingThreads == null || this.receivingThreads.isEmpty())
                 && (this.consumingThreads == null || this.consumingThreads.isEmpty())
                 && (this.eventHandlingThreads == null || this.eventHandlingThreads.isEmpty())
-                && (this.isAdaptive == null || this.isAdaptive.isEmpty());
+                && (this.scaledToSystemCPU == null || this.scaledToSystemCPU.isEmpty());
     }
 }

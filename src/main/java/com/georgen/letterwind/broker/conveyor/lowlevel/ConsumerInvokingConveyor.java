@@ -41,6 +41,7 @@ public class ConsumerInvokingConveyor<T> extends MessageConveyor<T> {
             LetterwindException {
 
         Set<Method> consumingMethods = ConsumerMethodStorage.getInstance().getForConsumerMessageType(consumerType, message.getClass());
+        if (consumingMethods == null || consumingMethods.isEmpty()) return;
         Object consumerInstance = consumerType.getDeclaredConstructor().newInstance();
 
         for (Method method : consumingMethods){

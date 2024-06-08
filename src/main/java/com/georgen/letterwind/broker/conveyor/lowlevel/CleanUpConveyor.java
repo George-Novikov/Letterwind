@@ -27,10 +27,8 @@ public class CleanUpConveyor<T> extends MessageConveyor<T> {
         String bufferedMessagePath = PathBuilder.concatenate(bufferPath, envelope.getBufferedFileName());
 
         try (FileOperation operation = new FileOperation(bufferedMessagePath, false)){
-            System.out.println("Deleting file: " + bufferedMessagePath);
             if (operation.isExistingFile()){
                 operation.delete();
-                System.out.println("File is deleted: " + bufferedMessagePath);
             }
         } catch (Exception e){
             MessageFlow.push(envelope, MessageFlowEvent.CLEANING);

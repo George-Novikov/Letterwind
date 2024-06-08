@@ -40,8 +40,8 @@ public class YamlProperties extends LetterwindProperties {
                 return concurrency != null ? concurrency.getConsumingThreads() : null;
             case EVENT_HANDLING_THREADS:
                 return concurrency != null ? concurrency.getEventHandlingThreads() : null;
-            case IS_THREAD_POOL_ADAPTIVE:
-                return concurrency != null ? concurrency.getAdaptive() : null;
+            case IS_SCALED_TO_CPU:
+                return concurrency != null ? concurrency.getScaledToCPU() : null;
             case SERVER_PORT:
                 return server != null ? server.getPort() : null;
             case IO_RETRIES_ON_FAULT:

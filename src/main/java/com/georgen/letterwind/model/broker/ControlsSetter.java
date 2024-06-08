@@ -34,7 +34,7 @@ public class ControlsSetter {
     }
 
     public ControlsSetter isThreadPoolAdaptive(boolean isThreadPoolAdaptive){
-        LetterwindControls.getInstance().setThreadPoolAdaptive(isThreadPoolAdaptive);
+        LetterwindControls.getInstance().setScaledToSystemCPU(isThreadPoolAdaptive);
         return this;
     }
 
