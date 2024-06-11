@@ -7,17 +7,19 @@ import java.time.LocalDateTime;
 
 @Disabled
 @LetterwindMessage
-public class DefaultAnnotationMessage {
+public class DefaultAnnotationMessage extends GeneralMessage {
     private int id;
     private LocalDateTime time;
     private String value;
+    private Class sourceClass;
 
     public DefaultAnnotationMessage(){}
 
-    public DefaultAnnotationMessage(int id, String value) {
+    public DefaultAnnotationMessage(int id, String value, Class sourceClass) {
         this.id = id;
         this.time = LocalDateTime.now();
         this.value = value;
+        this.sourceClass = sourceClass;
     }
 
     public int getId() {
@@ -42,6 +44,14 @@ public class DefaultAnnotationMessage {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Class getSourceClass() {
+        return sourceClass;
+    }
+
+    public void setSourceClass(Class sourceClass) {
+        this.sourceClass = sourceClass;
     }
 
     @Override

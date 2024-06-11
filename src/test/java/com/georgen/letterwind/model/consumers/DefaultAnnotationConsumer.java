@@ -1,15 +1,12 @@
 package com.georgen.letterwind.model.consumers;
 
 import com.georgen.letterwind.api.annotations.LetterwindConsumer;
+import com.georgen.letterwind.model.message.DefaultAnnotationMessage;
 import com.georgen.letterwind.util.ResultsStorage;
-import com.georgen.letterwind.model.message.TestMessage;
-import org.junit.jupiter.api.Disabled;
 
-
-@Disabled
-public class TestConsumer {
+public class DefaultAnnotationConsumer {
     @LetterwindConsumer
-    public void receive(TestMessage message){
+    public void receive(DefaultAnnotationMessage message){
         ResultsStorage.getForClass(message.getSourceClass()).add(message);
     }
 }

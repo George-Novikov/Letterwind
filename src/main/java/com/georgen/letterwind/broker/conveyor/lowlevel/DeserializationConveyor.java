@@ -3,6 +3,7 @@ package com.georgen.letterwind.broker.conveyor.lowlevel;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.serializers.MessageSerializer;
+import com.georgen.letterwind.broker.serializers.UniversalSerializer;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
@@ -42,6 +43,7 @@ public class DeserializationConveyor<T> extends MessageConveyor<T> {
     private MessageSerializer<T> extractSerializer(Class<T> messageType){
         try {
             Class<? extends MessageSerializer> serializerClass = MessageHandlerStorage.getInstance().getSerializer(messageType);
+            if (UniversalSerializer.class.equals(serializerClass)) return new UniversalSerializer<>(messageType);
             return (MessageSerializer<T>) serializerClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
             return null;

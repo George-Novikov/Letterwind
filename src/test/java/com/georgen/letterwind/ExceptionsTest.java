@@ -8,13 +8,15 @@ import com.georgen.letterwind.model.consumers.TestConsumer;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.model.message.NoAnnotationMessage;
 import org.junit.jupiter.api.ClassOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-@TestClassOrder(ClassOrderer.ClassName.class)
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(1)
 public class ExceptionsTest {
     @Test
     public void testUnregisteredStringMessage(){

@@ -5,9 +5,10 @@ import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.util.ResultsStorage;
 import com.georgen.letterwind.model.TestConstants;
-import com.georgen.letterwind.model.consumers.StringTestConsumer;
+import com.georgen.letterwind.model.consumers.StringConsumer;
 import com.georgen.letterwind.util.TimeLimiter;
 import org.junit.jupiter.api.ClassOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 
@@ -16,14 +17,15 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestClassOrder(ClassOrderer.ClassName.class)
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(4)
 public class StringDispatchTest {
     @Test
     public void testLocalStringMessageDispatch(){
         try {
             LetterwindTopic topic = LetterwindTopic.build()
                     .setName(TestConstants.TEST_TOPIC_NAME)
-                    .setConsumers(StringTestConsumer.class);
+                    .setConsumers(StringConsumer.class);
 
             LetterwindControls.set().topic(topic);
 
@@ -34,7 +36,7 @@ public class StringDispatchTest {
             }
 
             /** TestConsumer will place messages here */
-            ResultsStorage storage = ResultsStorage.getInstance();
+            ResultsStorage storage = ResultsStorage.getForClass(StringDispatchTest.class);
 
             /** This is the way to wait for messages to be received by all consumers */
             while (storage.getCounter().get() < TestConstants.SENDS_COUNT){

@@ -18,8 +18,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE_PARAMETER, ElementType.TYPE, ElementType.PARAMETER, ElementType.TYPE_USE})
-@JsonTypeInfo(use = JsonTypeInfo.Id.SIMPLE_NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-@JacksonAnnotationsInside
 public @interface LetterwindMessage {
     Class<? extends MessageSerializer> serializer() default UniversalSerializer.class;
     Class<? extends MessageValidator> validator() default EmptyValidator.class;

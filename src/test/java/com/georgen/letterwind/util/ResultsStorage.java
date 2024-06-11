@@ -1,5 +1,6 @@
 package com.georgen.letterwind.util;
 
+import com.georgen.letterwind.model.message.GeneralMessage;
 import com.georgen.letterwind.model.message.TestMessage;
 import org.junit.jupiter.api.Disabled;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Disabled
 public class ResultsStorage {
-    private ConcurrentMap<Integer, TestMessage> results;
+    private ConcurrentMap<Integer, GeneralMessage> results;
     private ConcurrentMap<Integer, String> stringResults;
     private ConcurrentLinkedQueue<Exception> errors;
     private volatile AtomicInteger counter;
@@ -22,7 +23,7 @@ public class ResultsStorage {
         this.counter = new AtomicInteger(0);
     }
 
-    public ConcurrentMap<Integer, TestMessage> getResults() {
+    public ConcurrentMap<Integer, GeneralMessage> getResults() {
         return results;
     }
 
@@ -38,7 +39,7 @@ public class ResultsStorage {
         return counter;
     }
 
-    public void add(TestMessage message){
+    public void add(GeneralMessage message){
         results.put(counter.getAndIncrement(), message);
     }
 
@@ -57,10 +58,17 @@ public class ResultsStorage {
     }
 
     private static class ResultsStorageHolder {
-        private static final ResultsStorage INSTANCE = new ResultsStorage();
+        private static final ConcurrentMap<Class, ResultsStorage> STORAGES = new ConcurrentHashMap<>();
     }
 
-    public static ResultsStorage getInstance(){
-        return ResultsStorageHolder.INSTANCE;
+    public static ResultsStorage getForClass(Class relatedClass){
+        ResultsStorage storage = ResultsStorageHolder.STORAGES.get(relatedClass);
+
+        if (storage == null){
+            storage = new ResultsStorage();
+            ResultsStorageHolder.STORAGES.put(relatedClass, storage);
+        }
+
+        return storage;
     }
 }

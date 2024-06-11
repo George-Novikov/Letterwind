@@ -3,6 +3,7 @@ package com.georgen.letterwind;
 import com.georgen.letterwind.api.Letterwind;
 import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
+import com.georgen.letterwind.model.message.GeneralMessage;
 import com.georgen.letterwind.util.ResultsStorage;
 import com.georgen.letterwind.model.TestConstants;
 import com.georgen.letterwind.model.consumers.TestConsumer;
@@ -17,10 +18,10 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestClassOrder(ClassOrderer.ClassName.class)
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(2)
 public class LocalDispatchTest {
     @Test
-    @Order(1)
     public void testInit(){
         try {
             LetterwindTopic topic = LetterwindTopic.build()
@@ -52,19 +53,19 @@ public class LocalDispatchTest {
             LocalDateTime timeLimit = LocalDateTime.now().plusSeconds(10);
 
             for (int i = 0; i < TestConstants.SENDS_COUNT; i++){
-                TestMessage message = new TestMessage(i, TestConstants.TEST_MESSAGE_VALUE);
+                TestMessage message = new TestMessage(i, TestConstants.TEST_MESSAGE_VALUE, LocalDispatchTest.class);
                 Letterwind.send(message);
             }
 
             /** TestConsumer will place messages here */
-            ResultsStorage storage = ResultsStorage.getInstance();
+            ResultsStorage storage = ResultsStorage.getForClass(LocalDispatchTest.class);
 
             /** This is the way to wait for messages to be received by all consumers */
             while (storage.getCounter().get() < TestConstants.SENDS_COUNT){
                 TimeLimiter.throwIfExceeds(timeLimit);
             }
 
-            Map<Integer, TestMessage> results = storage.getResults();
+            Map<Integer, GeneralMessage> results = storage.getResults();
             Set<Integer> keys = results.keySet();
             Set<Integer> messageIDs = results.values().stream().map(message -> message.getId()).collect(Collectors.toSet());
 
