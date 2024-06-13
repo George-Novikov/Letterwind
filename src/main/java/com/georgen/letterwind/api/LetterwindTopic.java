@@ -108,6 +108,12 @@ public class LetterwindTopic {
         return this;
     }
 
+    public boolean hasName(){
+        return Validator.isValid(this.name);
+    }
+
+    public boolean hasConsumers(){ return this.consumers != null && !this.consumers.isEmpty(); }
+
     public boolean hasErrorHandler(){ return this.errorHandler != null; }
 
     public boolean hasSuccessHandler(){ return this.successHandler != null; }
@@ -119,12 +125,22 @@ public class LetterwindTopic {
                 .collect(Collectors.toSet());
     }
 
+    public void activate() throws Exception {
+        if (!hasName()) throw new LetterwindException("The topic name cannot be null or empty.");
+        LetterwindControls.getInstance().addTopic(this);
+    }
+
+    public void deactivate() throws Exception {
+        if (!hasName()) throw new LetterwindException("The topic name cannot be null or empty.");
+        LetterwindControls.getInstance().removeTopic(this.name);
+    }
+
     public boolean hasRemoteListener(){
         return Validator.isValid(this.remoteHost) && this.remotePort != 0;
     }
 
     public boolean isValid(){
-        return Validator.isValid(this.name) && !this.consumers.isEmpty();
+        return hasName() && hasConsumers();
     }
 
     public boolean hasFinalEventHandlers(){
