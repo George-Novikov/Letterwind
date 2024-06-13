@@ -53,12 +53,10 @@ public class FileFactory {
 
     public void cache(File file){
         fileCache.put(file.getPath(), file);
-        System.out.println("The file was cached: " + file.getPath());
     }
 
     public void cache(Path path){
         fileCache.put(path.toString(), path.toFile());
-        System.out.println("The file was cached: " + path);
     }
 
     public boolean isCached(File file){

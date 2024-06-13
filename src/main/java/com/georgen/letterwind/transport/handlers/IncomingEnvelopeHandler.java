@@ -23,7 +23,5 @@ public class IncomingEnvelopeHandler extends ChannelInboundHandlerAdapter {
 
         ChannelFuture responseFuture = ctx.writeAndFlush(TransportStatus.OK.getCode());
         responseFuture.addListener(ChannelFutureListener.CLOSE);
-
-        System.out.println("The request reached the server.");
     }
 }

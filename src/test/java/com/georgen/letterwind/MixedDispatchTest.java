@@ -19,7 +19,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestClassOrder(ClassOrderer.ClassName.class)
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(3)
 public class MixedDispatchTest {
     @Test
     public void testCombinedConsumersDispatch(){

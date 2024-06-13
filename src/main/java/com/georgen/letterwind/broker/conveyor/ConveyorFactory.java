@@ -22,7 +22,6 @@ public class ConveyorFactory {
                 return new ReprocessingConveyor<>();
             }
             case CLEANING: {
-                System.out.println("CLEANING MESSAGE FLOW EVENT");
                 return new CleanUpConveyor<>();
             }
             case SUCCESS: {

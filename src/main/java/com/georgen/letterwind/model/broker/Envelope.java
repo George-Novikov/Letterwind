@@ -131,6 +131,7 @@ public class Envelope<T> {
 
     public TransportEnvelope toTransportEnvelope(){
         TransportEnvelope envelope = new TransportEnvelope();
+        envelope.setId(this.id);
         envelope.setTopicName(this.topicName);
         envelope.setMessageTypeName(this.messageTypeName);
         envelope.setSerializedMessage(this.serializedMessage);

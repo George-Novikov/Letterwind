@@ -16,6 +16,9 @@ public class TransportEnvelopeEncoder extends MessageToByteEncoder<TransportEnve
             TransportEnvelope envelope,
             ByteBuf output
     ) throws Exception {
+        output.writeInt(envelope.getId().length());
+        output.writeCharSequence(envelope.getId(), UTF_8);
+
         output.writeInt(envelope.getTopicName().length());
         output.writeCharSequence(envelope.getTopicName(), UTF_8);
 

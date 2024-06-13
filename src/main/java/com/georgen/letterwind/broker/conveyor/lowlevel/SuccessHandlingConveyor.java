@@ -37,7 +37,6 @@ public class SuccessHandlingConveyor<T> extends MessageConveyor<T> {
             if (!SuccessHandler.isValid(successHandlerClass)) return null;
             return (SuccessHandler<T>) successHandlerClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
-            System.out.println(e.getMessage());
             return null;
         }
     }

@@ -42,7 +42,9 @@ public class TransportClient implements AutoCloseable {
     }
 
     public void shutdown(){
-        this.workerGroup.shutdownGracefully();
+        if (!this.workerGroup.isShutdown() && !this.workerGroup.isShuttingDown()){
+            this.workerGroup.shutdownGracefully();
+        }
     }
 
     @Override

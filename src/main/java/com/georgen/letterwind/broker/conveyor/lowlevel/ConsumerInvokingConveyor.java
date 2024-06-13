@@ -55,7 +55,6 @@ public class ConsumerInvokingConveyor<T> extends MessageConveyor<T> {
           try {
               method.invoke(consumerInstance, message);
           } catch (Exception e){
-              System.out.println("CONSUMER EXCEPTION");
               envelope.setException(e);
               MessageFlow.push(envelope, MessageFlowEvent.ERROR);
           }

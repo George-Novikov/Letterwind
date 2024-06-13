@@ -6,17 +6,14 @@ import com.georgen.letterwind.model.constants.Locality;
 import java.time.LocalDateTime;
 
 public class TransportEnvelope {
+    private String id;
     private String topicName;
     private String messageTypeName;
     private String serializedMessage;
 
-    public TransportEnvelope() {}
+    public String getId() { return id; }
 
-    public TransportEnvelope(String topicName, String messageTypeName, String serializedMessage) {
-        this.topicName = topicName;
-        this.messageTypeName = messageTypeName;
-        this.serializedMessage = serializedMessage;
-    }
+    public void setId(String id) { this.id = id; }
 
     public String getTopicName() {
         return topicName;
@@ -48,11 +45,22 @@ public class TransportEnvelope {
 
     public Envelope toRegularEnvelope(Locality locality){
         Envelope envelope = new Envelope();
+        envelope.setId(this.id);
         envelope.setCreationTime(LocalDateTime.now());
         envelope.setTopicName(this.topicName);
         envelope.setMessageTypeName(this.messageTypeName);
         envelope.setSerializedMessage(this.serializedMessage);
         envelope.setLocality(locality);
         return envelope;
+    }
+
+    @Override
+    public String toString() {
+        return "TransportEnvelope{" +
+                "id='" + id + '\'' +
+                ", topicName='" + topicName + '\'' +
+                ", messageTypeName='" + messageTypeName + '\'' +
+                ", serializedMessage='" + serializedMessage + '\'' +
+                '}';
     }
 }

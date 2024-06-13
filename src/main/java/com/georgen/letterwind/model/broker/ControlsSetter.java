@@ -4,6 +4,7 @@ import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.handlers.ErrorHandler;
 import com.georgen.letterwind.broker.handlers.SuccessHandler;
+import com.georgen.letterwind.model.exceptions.LetterwindException;
 
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class ControlsSetter {
         return this;
     }
 
-    public ControlsSetter serverActive(boolean isServerActive){
+    public ControlsSetter serverActive(boolean isServerActive) throws LetterwindException {
         LetterwindControls.getInstance().setServerActive(isServerActive);
         return this;
     }

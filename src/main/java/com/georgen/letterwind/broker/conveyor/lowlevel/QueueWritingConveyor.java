@@ -1,5 +1,6 @@
 package com.georgen.letterwind.broker.conveyor.lowlevel;
 
+import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.api.LetterwindTopic;
 import com.georgen.letterwind.broker.ordering.MessageOrderManager;
 import com.georgen.letterwind.config.Configuration;
@@ -35,10 +36,9 @@ public class QueueWritingConveyor<T> extends MessageConveyor<T> {
         if (!envelope.hasSerializedMessage()) throw new LetterwindException(BrokerMessage.NULL_MESSAGE);
 
         String message = envelope.getSerializedMessage();
-        LetterwindTopic topic = envelope.getTopic();
 
-        String messageExchangePath = PathBuilder.getExchangePath(topic, envelope);
-        String messageBufferPath = PathBuilder.getBufferPath(topic, envelope);
+        String messageExchangePath = PathBuilder.getExchangePath(envelope);
+        String messageBufferPath = PathBuilder.getBufferPath(envelope);
 
         long order = MessageOrderManager.assignOrder(messageExchangePath);
         String messageFileName = String.format("%s-%s", order, envelope.getId());

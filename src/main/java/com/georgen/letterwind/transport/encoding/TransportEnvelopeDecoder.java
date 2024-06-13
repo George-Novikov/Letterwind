@@ -18,6 +18,10 @@ public class TransportEnvelopeDecoder extends ReplayingDecoder<TransportEnvelope
     ) throws Exception {
         TransportEnvelope envelope = new TransportEnvelope();
 
+        int idLength = input.readInt();
+        CharSequence idChars = input.readCharSequence(idLength, UTF_8);
+        if (idChars != null) envelope.setId(idChars.toString());
+
         int topicNameLength = input.readInt();
         CharSequence topicChars = input.readCharSequence(topicNameLength, UTF_8);
         if (topicChars != null) envelope.setTopicName(topicChars.toString());

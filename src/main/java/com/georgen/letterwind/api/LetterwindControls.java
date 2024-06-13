@@ -8,6 +8,8 @@ import com.georgen.letterwind.model.broker.ControlsSetter;
 import com.georgen.letterwind.model.broker.Envelope;
 import com.georgen.letterwind.model.broker.storages.MessageHandlerStorage;
 import com.georgen.letterwind.model.constants.MessageFlowEvent;
+import com.georgen.letterwind.model.exceptions.LetterwindException;
+import com.georgen.letterwind.transport.TransportLayer;
 import com.georgen.letterwind.util.Validator;
 
 import java.io.IOException;
@@ -182,8 +184,16 @@ public class LetterwindControls {
         return isServerActive;
     }
 
-    public LetterwindControls setServerActive(boolean serverActive) {
-        isServerActive = serverActive;
+    public LetterwindControls setServerActive(boolean serverActive) throws LetterwindException {
+        this.isServerActive = serverActive;
+
+        if (isServerActive){
+            if (this.serverPort == 0) throw new LetterwindException("Server startup failed. Set a valid port.");
+            TransportLayer.getInstance().initServer(this);
+        }else {
+            TransportLayer.getInstance().shutdownServer();
+        }
+
         return this;
     }
 
@@ -220,6 +230,7 @@ public class LetterwindControls {
 
     public LetterwindControls setTopics(Map<String, LetterwindTopic> topics) {
         this.topics = topics;
+        TransportLayer.getInstance().initAllTopicClients(this);
         return this;
     }
 
@@ -244,6 +255,9 @@ public class LetterwindControls {
     public LetterwindControls addTopic(LetterwindTopic topic) throws Exception {
         topics.put(topic.getName(), topic);
         addToMessageTypes(topic);
+        if (topic.hasRemoteListener()){
+            TransportLayer.getInstance().initTopicClient(topic);
+        }
         return this;
     }
 

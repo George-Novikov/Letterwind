@@ -45,8 +45,13 @@ public class TransportServer {
     }
 
     public void shutdown() {
-        masterGroup.shutdownGracefully();
-        workerGroup.shutdownGracefully();
+        if (!masterGroup.isShutdown() && !masterGroup.isShuttingDown()){
+            masterGroup.shutdownGracefully();
+        }
+
+        if (!workerGroup.isShutdown() && !workerGroup.isShuttingDown()){
+            workerGroup.shutdownGracefully();
+        }
     }
 
     private ChannelInitializer<SocketChannel> getChildHandler(){
