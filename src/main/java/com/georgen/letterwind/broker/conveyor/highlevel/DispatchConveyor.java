@@ -1,5 +1,6 @@
 package com.georgen.letterwind.broker.conveyor.highlevel;
 
+import com.georgen.letterwind.api.LetterwindControls;
 import com.georgen.letterwind.broker.conveyor.MessageConveyor;
 import com.georgen.letterwind.broker.conveyor.lowlevel.*;
 import com.georgen.letterwind.model.broker.Envelope;
@@ -10,7 +11,7 @@ public class DispatchConveyor<T> extends MessageConveyor<T> {
     public void process(Envelope<T> envelope) throws Exception {
         if (envelope == null || !envelope.isValid()) return;
 
-        if (envelope.isRemote()){
+        if (envelope.isRemote() || LetterwindControls.getInstance().hasRemoteListener()){
             setRemoteDispatchConveyor();
         } else {
             setLocalDispatchConveyor();

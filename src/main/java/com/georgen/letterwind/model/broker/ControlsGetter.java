@@ -46,4 +46,6 @@ public class ControlsGetter {
     public ErrorHandler errorHandler(){ return LetterwindControls.getInstance().getErrorHandler(); }
 
     public SuccessHandler successHandler(){ return LetterwindControls.getInstance().getSuccessHandler(); }
+
+    public boolean hasRemoteListener(){ return LetterwindControls.getInstance().hasRemoteListener(); }
 }

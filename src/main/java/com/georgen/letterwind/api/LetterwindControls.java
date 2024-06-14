@@ -212,6 +212,11 @@ public class LetterwindControls {
 
     public LetterwindControls setRemoteHost(String remoteHost) {
         this.remoteHost = remoteHost;
+
+        if (this.hasRemoteListener()){
+            TransportLayer.getInstance().initGlobalClient(this);
+        }
+
         return this;
     }
 
@@ -221,6 +226,11 @@ public class LetterwindControls {
 
     public LetterwindControls setRemotePort(int remotePort) {
         this.remotePort = remotePort;
+
+        if (this.hasRemoteListener()){
+            TransportLayer.getInstance().initGlobalClient(this);
+        }
+
         return this;
     }
 
@@ -230,7 +240,9 @@ public class LetterwindControls {
 
     public LetterwindControls setTopics(Map<String, LetterwindTopic> topics) {
         this.topics = topics;
+
         TransportLayer.getInstance().initAllTopicClients(this);
+
         return this;
     }
 
@@ -255,9 +267,11 @@ public class LetterwindControls {
     public LetterwindControls addTopic(LetterwindTopic topic) throws Exception {
         topics.put(topic.getName(), topic);
         addToMessageTypes(topic);
+
         if (topic.hasRemoteListener()){
             TransportLayer.getInstance().initTopicClient(topic);
         }
+
         return this;
     }
 

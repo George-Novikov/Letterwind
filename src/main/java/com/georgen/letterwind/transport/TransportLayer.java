@@ -38,7 +38,7 @@ public class TransportLayer {
     }
 
     public void initGlobalClient(LetterwindControls controls){
-        if (controls.hasRemoteListener()){
+        if (controls.hasRemoteListener() && this.globalClient == null){
             this.globalClient = new TransportClient(
                     controls.getRemoteHost(),
                     controls.getRemotePort()
@@ -54,14 +54,15 @@ public class TransportLayer {
 
     public void initTopicClient(LetterwindTopic topic){
         if (topic.hasRemoteListener()){
+            if (this.topicClients.containsKey(topic.getName())) return;
             this.topicClients.put(topic.getName(), new TransportClient(topic));
         }
     }
 
     public void initAllTopicClients(LetterwindControls controls){
-        controls.getTopics().values()
-                .stream()
+        controls.getTopics().values().stream()
                 .filter(LetterwindTopic::hasRemoteListener)
+                .filter(topic -> !this.topicClients.containsKey(topic.getName()))
                 .forEach(topic -> {
                     this.topicClients.put(topic.getName(), new TransportClient(topic));
                 });
