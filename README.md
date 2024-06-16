@@ -97,8 +97,8 @@ If your architecture requires more than one application deployed on multiple mac
 Your consumer application must have server configuration enabled:
 ```java
 LetterwindControls.set()
-        .serverActive(true)
-        .serverPort(17566);
+        .serverPort(17566)
+        .serverActive(true);
 ```
 ### 2. Configure client
 Your producer application must be configured to connect to the server.
