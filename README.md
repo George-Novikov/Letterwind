@@ -39,25 +39,15 @@ public class SampleConsumer {
 ```
 Your consumer class can also have any other methods (private of public) if you need.
 
-### 2. Configure topic
+### 3. Configure topic
 Messages are distributed among consumers via topics represented by the LetterwindTopic class.  
 Each topic can have multiple consumer classes.  
 ```java
-LetterwindTopic topic = LetterwindTopic.build()
+LetterwindTopic topic = LetterwindTopic.create()
         .setName("SampleTopic")
-        .addConsumer(SampleConsumer.class);
+        .addConsumer(SampleConsumer.class)
+        .activate();
 ```
-
-### 3. Register the topic. Configure global settings
-
-Global settings are made through the LetterwindControls class.  
-In order for a topic to be available for sending messages, it must be registered there.
-```java
-LetterwindControls.set()
-        .topic(topic)
-        .consumersLimit(40);
-```
-Here you can also configure other global settings, such as the number of threads available for all consumer operations, etc.
 
 ### 4. Send  
 
@@ -100,14 +90,51 @@ LetterwindControls.set()
 
 Or you can configure it only for a specific LetterwindTopic.
 ```java
-LetterwindTopic topic = LetterwindTopic.build()
-        .setName("SampleTopic")
-        .addConsumer(SampleConsumer.class)
+LetterwindTopic topic = LetterwindTopic.create()
+        .setName("RemoteTopic")
         .setRemoteHost("localhost")
         .setRemotePort(17566);
 ```
 
 The latter will allow you to send remote messages exclusively on this topic — all other sendings will work locally.  
 
-The process of sending a message is similar to local.  
-But of course, you should configure your LetterwindTopic, LetterwindConsumer and LetterwindMessage with the same names on both sides.
+### 2. Send  
+
+**OPTION 1** — In order for the system to recognize your topic when sending remotely, you can specify its name in the send() method:  
+```java
+LetterwindTopic topic = LetterwindTopic.create()
+        .setName("RemoteTopic");
+
+Letterwind.send(message, "RemoteTopic");
+```
+
+**OPTION 2** — Or initialize the topic with the local "mirror" of your remote @LetterwindConsumer.  
+In this case you don't need to recreate all the consumer logic — just declare empty methods with the desired message type.  
+Now the send() method will not require the topic name, since it finds it by the message type:  
+
+```java
+public class RemoteConsumer {
+    @LetterwindConsumer
+    public void receive(RemoteMessage message){}
+}
+
+LetterwindTopic topic = LetterwindTopic.create()
+        .setName("RemoteTopic")
+        .addConsumer(RemoteConsumer.class);
+
+Letterwind.send(message);
+```
+
+Both options wil work the same.  
+
+
+## Configure global settings if you need  
+
+Global settings are made through the LetterwindControls class.  
+Here you can configure the number of threads available for all consumer operations, specify a global error handler, manually register topics, etc.
+```java
+LetterwindControls.set()
+        .consumersLimit(40)
+        .errorHandler(new YourErrorHandler())
+        .topic(topic);
+```

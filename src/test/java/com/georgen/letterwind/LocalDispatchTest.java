@@ -24,7 +24,7 @@ public class LocalDispatchTest {
     @Test
     public void testInit(){
         try {
-            LetterwindTopic topic = LetterwindTopic.build()
+            LetterwindTopic topic = LetterwindTopic.create()
                     .setName(TestConstants.TEST_TOPIC_NAME)
                     .addConsumer(TestConsumer.class);
 
@@ -44,11 +44,10 @@ public class LocalDispatchTest {
     @Test
     public void testLocalMessageDispatch(){
         try {
-            LetterwindTopic topic = LetterwindTopic.build()
+            LetterwindTopic topic = LetterwindTopic.create()
                     .setName(TestConstants.TEST_TOPIC_NAME)
-                    .addConsumer(TestConsumer.class);
-
-            LetterwindControls.set().topic(topic);
+                    .addConsumer(TestConsumer.class)
+                    .activate();
 
             LocalDateTime timeLimit = LocalDateTime.now().plusSeconds(10);
 

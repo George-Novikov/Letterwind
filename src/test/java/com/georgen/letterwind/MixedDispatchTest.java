@@ -25,7 +25,7 @@ public class MixedDispatchTest {
     @Test
     public void testCombinedConsumersDispatch(){
         try {
-            LetterwindTopic topic = LetterwindTopic.build()
+            LetterwindTopic topic = LetterwindTopic.create()
                     .setName(TestConstants.TEST_TOPIC_NAME)
                     .setConsumers(TestConsumer.class, DefaultAnnotationConsumer.class, MixedTypeConsumer.class);
 

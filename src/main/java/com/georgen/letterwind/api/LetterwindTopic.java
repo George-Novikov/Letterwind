@@ -2,6 +2,7 @@ package com.georgen.letterwind.api;
 
 import com.georgen.letterwind.broker.handlers.ErrorHandler;
 import com.georgen.letterwind.broker.handlers.SuccessHandler;
+import com.georgen.letterwind.model.broker.TopicBuilder;
 import com.georgen.letterwind.model.broker.storages.ConsumerMethodStorage;
 import com.georgen.letterwind.model.exceptions.LetterwindException;
 import com.georgen.letterwind.util.Validator;
@@ -125,14 +126,16 @@ public class LetterwindTopic {
                 .collect(Collectors.toSet());
     }
 
-    public void activate() throws Exception {
+    public LetterwindTopic activate() throws Exception {
         if (!hasName()) throw new LetterwindException("The topic name cannot be null or empty.");
         LetterwindControls.getInstance().addTopic(this);
+        return this;
     }
 
-    public void deactivate() throws Exception {
+    public LetterwindTopic deactivate() throws Exception {
         if (!hasName()) throw new LetterwindException("The topic name cannot be null or empty.");
         LetterwindControls.getInstance().removeTopic(this.name);
+        return this;
     }
 
     public boolean hasRemoteListener(){
@@ -140,12 +143,14 @@ public class LetterwindTopic {
     }
 
     public boolean isValid(){
-        return hasName() && hasConsumers();
+        return hasName();
     }
 
     public boolean hasFinalEventHandlers(){
         return this.errorHandler != null || this.successHandler != null;
     }
 
-    public static LetterwindTopic build(){ return new LetterwindTopic(); }
+    public static LetterwindTopic create(){ return new LetterwindTopic(); }
+
+    public static TopicBuilder builder(){ return new TopicBuilder(); }
 }

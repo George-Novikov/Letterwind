@@ -23,11 +23,10 @@ public class StringDispatchTest {
     @Test
     public void testLocalStringMessageDispatch(){
         try {
-            LetterwindTopic topic = LetterwindTopic.build()
+            LetterwindTopic topic = LetterwindTopic.create()
                     .setName(TestConstants.TEST_TOPIC_NAME)
-                    .setConsumers(StringConsumer.class);
-
-            LetterwindControls.set().topic(topic);
+                    .setConsumers(StringConsumer.class)
+                    .activate();
 
             LocalDateTime timeLimit = LocalDateTime.now().plusSeconds(10);
 

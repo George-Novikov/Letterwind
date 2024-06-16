@@ -21,7 +21,7 @@ public class ExceptionsTest {
     @Test
     public void testUnregisteredStringMessage(){
         try {
-            LetterwindTopic topic = LetterwindTopic.build()
+            LetterwindTopic topic = LetterwindTopic.create()
                     .setName(TestConstants.TEST_TOPIC_NAME)
                     .addConsumer(TestConsumer.class);
 
@@ -39,7 +39,7 @@ public class ExceptionsTest {
     @Test
     public void testNoAnnotationMessage(){
         try {
-            LetterwindTopic topic = LetterwindTopic.build()
+            LetterwindTopic topic = LetterwindTopic.create()
                     .setName(TestConstants.TEST_TOPIC_NAME)
                     .addConsumer(TestConsumer.class);
 
