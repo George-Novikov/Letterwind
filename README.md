@@ -2,13 +2,36 @@
 
 Letterwind is an embedded Java message broker/event bus library.  
 
-* It is capable of handling multi-threaded tasks both locally and remotely.  
+* It is capable of sending asynchronous messages and handling multi-threaded tasks both locally and remotely.  
+
+* Messages can be sent to individual topics or in fan-out manner. Consumers can be shared between topics.
 
 * The remote transport layer is built on the Netty server.  
 
 * Message propagation uses serialization / deserialization through the OS file system. 
 This ensures a more consistent and reliable sending and receiving mechanism.
 Future releases will continue to expand fault tolerance features.
+* Requires Java 8 or higher. No additional software required.  
+
+An example project can be found [here](https://github.com/George-Novikov/Letterwind-Example).
+
+## Installation  
+
+To use the dependency in your projects, install it like this:  
+
+Gradle:  
+```
+implementation 'com.george-n:letterwind:1.0.0'
+```
+
+Maven:  
+```
+<dependency>
+    <groupId>com.george-n</groupId>
+    <artifactId>letterwind</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 ## Usage
 ### 1. Declare a message class
@@ -43,9 +66,9 @@ Your consumer class can also have any other methods (private of public) if you n
 Messages are distributed among consumers via topics represented by the LetterwindTopic class.  
 Each topic can have multiple consumer classes.  
 ```java
-LetterwindTopic topic = LetterwindTopic.create()
-        .setName("SampleTopic")
-        .addConsumer(SampleConsumer.class)
+LetterwindTopic topic = LetterwindTopic.builder()
+        .name("SampleTopic")
+        .consumer(SampleConsumer.class)
         .activate();
 ```
 
@@ -90,10 +113,11 @@ LetterwindControls.set()
 
 Or you can configure it only for a specific LetterwindTopic.
 ```java
-LetterwindTopic topic = LetterwindTopic.create()
-        .setName("RemoteTopic")
-        .setRemoteHost("localhost")
-        .setRemotePort(17566);
+LetterwindTopic topic = LetterwindTopic.builder()
+        .name("RemoteTopic")
+        .remoteHost("localhost")
+        .remotePort(17566)
+        .activate();
 ```
 
 The latter will allow you to send remote messages exclusively on this topic — all other sendings will work locally.  
@@ -102,8 +126,9 @@ The latter will allow you to send remote messages exclusively on this topic — 
 
 **OPTION 1** — In order for the system to recognize your topic when sending remotely, you can specify its name in the send() method:  
 ```java
-LetterwindTopic topic = LetterwindTopic.create()
-        .setName("RemoteTopic");
+LetterwindTopic topic = LetterwindTopic.builder()
+        .name("RemoteTopic")
+        .activate();
 
 Letterwind.send(message, "RemoteTopic");
 ```
@@ -118,9 +143,10 @@ public class RemoteConsumer {
     public void receive(RemoteMessage message){}
 }
 
-LetterwindTopic topic = LetterwindTopic.create()
-        .setName("RemoteTopic")
-        .addConsumer(RemoteConsumer.class);
+LetterwindTopic topic = LetterwindTopic.builder()
+        .name("RemoteTopic")
+        .consumer(RemoteConsumer.class)
+        .activate();
 
 Letterwind.send(message);
 ```

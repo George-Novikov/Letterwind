@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f85fe04-d92e-4c5f-b6f3-dab50aeee073" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/model/broker/TopicBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/georgen/letterwind/api/LetterwindTopic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/ExceptionsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/ExceptionsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/LocalDispatchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/LocalDispatchTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MixedDispatchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/MixedDispatchTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/StringDispatchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/georgen/letterwind/StringDispatchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,7 +267,11 @@
       <workItem from="1718436706109" duration="1725000" />
       <workItem from="1718458977427" duration="72000" />
       <workItem from="1718474569884" duration="2262000" />
-      <workItem from="1718512378402" duration="6684000" />
+      <workItem from="1718512378402" duration="13321000" />
+      <workItem from="1718544423249" duration="156000" />
+      <workItem from="1718547468012" duration="21000" />
+      <workItem from="1718547541069" duration="7000" />
+      <workItem from="1718550052048" duration="3258000" />
     </task>
     <servers />
   </component>

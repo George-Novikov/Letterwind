@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.georgen</groupId>
+    <groupId>com.george-n</groupId>
     <artifactId>letterwind</artifactId>
-    <version>0.0.2</version>
+    <version>1.0.0</version>
 
     <properties>
         <developerId>georgen</developerId>
@@ -22,11 +22,33 @@
     <description>An embedded message broker in the form of a Java library. Performs multi-threaded tasks both locally and remotely without additional applications.</description>
     <url>https://github.com/George-Novikov/Letterwind</url>
 
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>${developerId}</id>
+            <name>${developerName}</name>
+            <email>${developerEmail}</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:George-Novikov/Letterwind.git</connection>
+        <developerConnection>scm:git:git@github.com:George-Novikov/Letterwind.git</developerConnection>
+        <url>https://github.com/George-Novikov/Letterwind</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.109.Final</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
